@@ -9,6 +9,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-console": 1,
     "quotes": "off",
     "linebreak-style": ["off", "windows"]
   }
