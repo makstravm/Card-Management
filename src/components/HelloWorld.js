@@ -1,6 +1,7 @@
 const HelloWorld = () => {
   console.log("hi");
   console.log("hi");
+  console.log("dfsghi");
   return `<h1>Hello</h1>`;
 };
-HelloWorld();
+export default HelloWorld;
