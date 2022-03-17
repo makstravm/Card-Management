@@ -8,7 +8,7 @@
   font-size: 2rem;
   font-family: "MyFont";
   text-align: center;
-  background: url("./img.png");
+  background: url("./images/img.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
