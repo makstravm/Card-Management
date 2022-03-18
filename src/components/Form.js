@@ -1,24 +1,23 @@
 import Button from "./Button";
-import Input from "./Input";
 
-const root = document.getElementById("root");
-// root.innerHTML = "<h1>sdfsd</h1>";
-
-class Form {
+export default class Form {
   constructor() {
-    const formEl = document.createElement("div");
-    this.input = new Input(formEl, "text");
-    this.btn = new Button(formEl);
-    console.log(this.btn);
-    console.log(this.input.value);
-    root.appendChild(formEl);
+    this.id = "formId";
+    this.btn = new Button("Button", this.id, "button", "buttonId");
+    this.root = document.getElementById("root");
   }
 
-  sentMessege() {
-    console.log(1);
-    return this.btn.click;
+  createElement() {
+    const element = document.createElement("form");
+    element.id = this.id;
+    return element;
+  }
+
+  initForm() {
+    this.root.appendChild(this.createElement());
+  }
+
+  render() {
+    this.btn.render();
   }
 }
-
-const createForm = new Form(root);
-console.log(createForm.sentMessege());
