@@ -1,24 +1,21 @@
 export default class Button {
   constructor(text, parentId, type, buttonId) {
-    this.text = text;
+    this.createElement(text, type, buttonId);
     this.parentId = parentId;
-    this.type = type;
-    this.buttonId = buttonId;
   }
 
   get parentElement() {
     return document.getElementById(this.parentId);
   }
 
-  createElement() {
-    const btn = document.createElement("button");
-    btn.innerText = this.text;
-    btn.type = this.type;
-    btn.id = this.buttonId;
-    return btn;
+  createElement(text, type, buttonId) {
+    this.element = document.createElement("button");
+    this.element.innerText = text;
+    this.element.type = type;
+    this.element.id = buttonId;
   }
 
   render() {
-    this.parentElement.appendChild(this.createElement());
+    this.parentElement.appendChild(this.element);
   }
 }
