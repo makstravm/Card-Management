@@ -10,4 +10,8 @@ export default class Checkbox extends Element {
   get status() {
     return this.element.checked;
   }
+
+  set status(flag) {
+    this.element.checked = flag;
+  }
 }

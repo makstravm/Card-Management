@@ -13,7 +13,6 @@ export default class Form extends Element {
       parentId: this.element.id,
       elementId: "buttonId",
     });
-
     this.input = new Input({
       text: "Enter text",
       parentId: this.element.id,
@@ -25,27 +24,22 @@ export default class Form extends Element {
       elementId: "checkboxId",
       flag: true,
     });
-    this.postBox = new Post({
-      parentId: this.element.id,
-      value: this.input.value,
-      elementId: "postBox",
-    });
+    this.createElementPostBox("postBox");
+  }
+
+  createElementPostBox(elementId) {
+    this.postBox = document.createElement("div");
+    this.postBox.id = elementId;
   }
 
   onSubmit = () => {
     if (this.input.value) {
       new Post({
-        parentId: "postBox",
+        parentId: this.postBox.id,
         value: this.input.value,
-        elementId: `post ${new Date().getTime()}`,
-      }).render();
-
-      new Checkbox({
-        parentId: "postBox",
-        elementId: `checkbox ${new Date().getTime()}`,
         flag: this.checkbox.status,
+        elementId: `post-${new Date().getTime()}`,
       }).render();
-
       this.input.value = "";
     }
   };
@@ -59,6 +53,6 @@ export default class Form extends Element {
     this.btn.click(this.onSubmit);
     this.input.render();
     this.checkbox.render();
-    this.postBox.render();
+    this.element.appendChild(this.postBox);
   }
 }
