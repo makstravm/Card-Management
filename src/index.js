@@ -1,9 +1,10 @@
-import "./style.css";
 import Form from "./components/Form";
+
+const root = document.getElementById("root");
 
 class App {
   constructor() {
-    this.form = new Form();
+    this.form = new Form("formId", root);
   }
 
   render() {

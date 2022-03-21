@@ -1,23 +1,21 @@
 import Button from "./Button";
 
 export default class Form {
-  constructor() {
-    this.id = "formId";
-    this.btn = new Button("Button", this.id, "button", "buttonId");
-    this.root = document.getElementById("root");
+  constructor(formId, parrentId) {
+    this.createElement(formId);
+    this.parrentId = parrentId;
   }
 
-  createElement() {
-    const element = document.createElement("form");
-    element.id = this.id;
-    return element;
+  createElement(formId) {
+    this.element = document.createElement("form");
+    this.element.id = formId;
   }
 
   initForm() {
-    this.root.appendChild(this.createElement());
+    this.parrentId.appendChild(this.element);
   }
 
   render() {
-    this.btn.render();
+    new Button("Button", this.element.id, "button", "buttonId").render();
   }
 }
