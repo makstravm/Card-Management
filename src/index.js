@@ -1,11 +1,10 @@
 import Form from "./components/Form";
-import "./style.css";
 
 const root = document.getElementById("root");
 
 class App {
-  constructor(formId, parrentId) {
-    this.form = new Form(formId, parrentId);
+  constructor() {
+    this.form = new Form("formId", root);
   }
 
   render() {
@@ -14,4 +13,4 @@ class App {
   }
 }
 
-new App("formId", root).render();
+new App().render();
