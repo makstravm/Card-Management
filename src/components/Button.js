@@ -6,4 +6,8 @@ export default class Button extends Element {
     this.element.type = "button";
     this.element.innerText = data.text;
   }
+
+  click(func) {
+    this.element.onclick = () => func();
+  }
 }
