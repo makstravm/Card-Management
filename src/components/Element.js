@@ -1,6 +1,6 @@
 export default class Element {
-  constructor({ parentId, type, elementId }, el) {
-    this.createElement(type, elementId, el);
+  constructor({ parentId, elementId }, el) {
+    this.createElement(elementId, el);
     this.parentId = parentId;
   }
 
@@ -8,9 +8,8 @@ export default class Element {
     return document.getElementById(this.parentId);
   }
 
-  createElement(type, elementId, el) {
+  createElement(elementId, el) {
     this.element = document.createElement(el);
-    this.element.type = type;
     this.element.id = elementId;
   }
 
