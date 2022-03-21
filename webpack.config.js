@@ -6,7 +6,6 @@ module.exports = {
   mode: "development",
   entry: {
     index: "./index.js",
-    print: "./print.js",
   },
   output: {
     filename: "[name].bundle.js",
