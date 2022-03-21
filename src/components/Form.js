@@ -1,3 +1,4 @@
+import Input from "./Input";
 import Button from "./Button";
 
 export default class Form {
@@ -16,6 +17,17 @@ export default class Form {
   }
 
   render() {
-    new Button("Button", this.element.id, "button", "buttonId").render();
+    new Button({
+      text: "Button",
+      parentId: this.element.id,
+      type: "button",
+      elementId: "buttonId",
+    }).render();
+    new Input({
+      text: "Enter text",
+      parentId: this.element.id,
+      type: "text",
+      elementId: "textId",
+    }).render();
   }
 }
