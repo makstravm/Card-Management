@@ -12,7 +12,8 @@ export default class Post extends Element {
     this.element.innerHTML = `<span>${data.value}</span>`;
   }
 
-  renderCheckbox() {
+  render() {
+    super.render();
     this.checkbox.render();
   }
 }
