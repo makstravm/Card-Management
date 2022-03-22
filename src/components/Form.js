@@ -2,6 +2,7 @@ import Input from "./Input";
 import Button from "./Button";
 import Element from "./Element";
 import Checkbox from "./Checkbox";
+import Post from "./Post";
 
 export default class Form extends Element {
   constructor(data) {
@@ -23,7 +24,27 @@ export default class Form extends Element {
       elementId: "checkboxId",
       flag: true,
     });
+    this.createElementPostBox("postBox");
   }
+
+  createElementPostBox(elementId) {
+    this.postBox = document.createElement("div");
+    this.postBox.id = elementId;
+  }
+
+  onSubmit = () => {
+    if (this.input.value) {
+      const post = new Post({
+        parentId: this.postBox.id,
+        value: this.input.value,
+        flag: this.checkbox.status,
+        elementId: `post-${new Date().getTime()}`,
+      });
+      post.render();
+      post.renderCheckbox();
+      this.input.value = "";
+    }
+  };
 
   initForm() {
     this.parentId.appendChild(this.element);
@@ -31,7 +52,9 @@ export default class Form extends Element {
 
   render() {
     this.btn.render();
+    this.btn.click(this.onSubmit);
     this.input.render();
     this.checkbox.render();
+    this.element.appendChild(this.postBox);
   }
 }
