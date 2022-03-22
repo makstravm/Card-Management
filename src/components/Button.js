@@ -7,7 +7,7 @@ export default class Button extends Element {
     this.element.innerText = data.text;
   }
 
-  click(formOnSubmit) {
-    this.element.onclick = () => formOnSubmit();
+  click(onClick) {
+    this.element.onclick = () => onClick();
   }
 }

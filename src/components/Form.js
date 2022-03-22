@@ -34,12 +34,14 @@ export default class Form extends Element {
 
   onSubmit = () => {
     if (this.input.value) {
-      new Post({
+      const post = new Post({
         parentId: this.postBox.id,
         value: this.input.value,
         flag: this.checkbox.status,
         elementId: `post-${new Date().getTime()}`,
-      }).render();
+      });
+      post.render();
+      post.renderCheckbox();
       this.input.value = "";
     }
   };

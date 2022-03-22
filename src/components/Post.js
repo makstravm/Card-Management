@@ -1,28 +1,18 @@
 import Checkbox from "./Checkbox";
+import Element from "./Element";
 
-export default class Post {
-  constructor({ parentId, value, flag, elementId }) {
-    this.createElement(elementId, value);
-    this.parentId = parentId;
+export default class Post extends Element {
+  constructor(data) {
+    super(data, "div");
     this.checkbox = new Checkbox({
-      parentId: elementId,
+      parentId: data.elementId,
       elementId: `checkbox-${new Date().getTime()}`,
-      flag,
+      flag: data.flag,
     });
+    this.element.innerHTML = `<span>${data.value}</span>`;
   }
 
-  get parentElement() {
-    return document.getElementById(this.parentId);
-  }
-
-  createElement(elementId, value) {
-    this.element = document.createElement("div");
-    this.element.id = elementId;
-    this.element.innerHTML = `<span>${value}</span>`;
-  }
-
-  render() {
-    this.parentElement.appendChild(this.element);
+  renderCheckbox() {
     this.checkbox.render();
   }
 }
