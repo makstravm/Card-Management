@@ -31,6 +31,11 @@ export default class Form extends Element {
   createElementPostBox(elementId) {
     this.postBox = document.createElement("div");
     this.postBox.id = elementId;
+    this.postBox.onclick = (e) => {
+      if (e.target.tagName === "INPUT") {
+        Post.click(e.target);
+      }
+    };
   }
 
   onSubmit = async () => {
