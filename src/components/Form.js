@@ -3,6 +3,7 @@ import Button from "./Button";
 import Element from "./Element";
 import Checkbox from "./Checkbox";
 import Post from "./Post";
+import ApiService from "./APIservice";
 
 export default class Form extends Element {
   constructor(data) {
@@ -32,22 +33,42 @@ export default class Form extends Element {
     this.postBox.id = elementId;
   }
 
-  onSubmit = () => {
+  onSubmit = async () => {
     if (this.input.value) {
-      const post = new Post({
-        parentId: this.postBox.id,
-        value: this.input.value,
-        flag: this.checkbox.status,
-        elementId: `post-${new Date().getTime()}`,
+      const result = await ApiService.post("posts", {
+        id: `post-${new Date().getTime()}`,
+        text: this.input.value,
+        status: this.checkbox.status,
       });
-      post.render();
-      post.renderCheckbox();
+      if (result) {
+        const post = new Post({
+          parentId: this.postBox.id,
+          value: result.text,
+          flag: result.status,
+          elementId: result.id,
+        });
+        post.render();
+      }
       this.input.value = "";
     }
   };
 
   initForm() {
     this.parentId.appendChild(this.element);
+    this.parentId.appendChild(this.postBox);
+  }
+
+  async renderPostInit() {
+    const postsList = await ApiService.get("posts");
+    postsList?.forEach((postMessege) => {
+      const post = new Post({
+        parentId: this.postBox.id,
+        value: postMessege.text,
+        flag: postMessege.status,
+        elementId: postMessege.id,
+      });
+      post.render();
+    });
   }
 
   render() {
@@ -55,6 +76,6 @@ export default class Form extends Element {
     this.btn.click(this.onSubmit);
     this.input.render();
     this.checkbox.render();
-    this.element.appendChild(this.postBox);
+    this.renderPostInit();
   }
 }
