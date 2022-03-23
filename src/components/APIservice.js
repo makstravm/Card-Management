@@ -24,4 +24,9 @@ export default class ApiService {
     const resolved = await this.request(endpoints, "post", requestBody);
     return resolved;
   }
+
+  static async put(endpoints, requestBody) {
+    const resolved = await this.request(endpoints, "put", requestBody);
+    return resolved;
+  }
 }
