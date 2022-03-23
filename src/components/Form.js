@@ -33,7 +33,7 @@ export default class Form extends Element {
     this.postBox.id = elementId;
     this.postBox.onclick = (e) => {
       if (e.target.tagName === "INPUT") {
-        Post.click(e.target);
+        Post.onClick(e.target);
       }
     };
   }

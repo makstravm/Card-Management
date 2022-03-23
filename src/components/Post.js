@@ -13,7 +13,7 @@ export default class Post extends Element {
     this.element.innerHTML = `${data.value}`;
   }
 
-  static async click(el) {
+  static async onClick(el) {
     await ApiService.put(`posts/${el.parentElement.id}`, {
       text: el.parentElement.innerText,
       status: el.checked,
