@@ -8,7 +8,7 @@ module.exports = {
   context: path.join(__dirname, "src"),
   mode: "development",
   entry: {
-    index: ["@babel/polyfill", "./index.jsx"],
+    index: ["@babel/polyfill", "./index.tsx"],
   },
   output: {
     filename: "[name].bundle.js",
@@ -19,7 +19,7 @@ module.exports = {
     static: "./dist",
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".tsx", ".ts", ".js", "jsx"],
   },
   devtool: "source-map",
   plugins: [
@@ -61,23 +61,16 @@ module.exports = {
         type: "asset/resource",
       },
       {
-        test: /\.js$/,
+        test: /\.[jt]sx$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"],
-            plugins: ["@babel/plugin-proposal-class-properties"],
-          },
-        },
-      },
-      {
-        test: /\.jsx$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
+            presets: [
+              "@babel/preset-env",
+              "@babel/preset-react",
+              "@babel/preset-typescript",
+            ],
             plugins: ["@babel/plugin-proposal-class-properties"],
           },
         },
