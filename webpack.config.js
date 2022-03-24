@@ -18,6 +18,9 @@ module.exports = {
   devServer: {
     static: "./dist",
   },
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
   devtool: "source-map",
   plugins: [
     new HtmlWebpackPlugin({
