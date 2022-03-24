@@ -7,10 +7,15 @@
 }
 
 body {
-  font-size: 2rem;
+  font-size: 16px;
   font-family: "MyFont";
+}
+
+h1 {
+  font-style: 2.3rem;
   text-align: center;
-  background: url("./images/img.png");
-  background-repeat: no-repeat;
-  background-size: cover;
+}
+
+.nav-link {
+  text-decoration: none;
 }
