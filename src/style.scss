@@ -1,10 +1,12 @@
+@import "~normalize.css";
 @font-face {
   font-family: "MyFont";
   src: url("./Roboto-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
-.hello {
+
+body {
   font-size: 2rem;
   font-family: "MyFont";
   text-align: center;
