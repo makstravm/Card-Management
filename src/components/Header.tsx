@@ -9,7 +9,7 @@ export const Header = () => (
         <Link className="nav-link" to="/login">
           <Button color="primary">LogIn</Button>
         </Link>
-        <Link className="nav-link" to="/register">
+        <Link className="nav-link" to="/">
           <Button color="primary">Registration</Button>
         </Link>
         <Link className="nav-link" to="/board">
