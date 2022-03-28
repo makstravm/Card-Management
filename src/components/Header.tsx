@@ -6,7 +6,7 @@ export const Header = () => (
   <AppBar className="Header" color="transparent" position="relative">
     <Container>
       <Toolbar>
-        <NavLink className="nav-link" to="/">
+        <NavLink className="nav-link" to="/login">
           <Button color="primary">LogIn</Button>
         </NavLink>
         <NavLink className="nav-link" to="/registration">

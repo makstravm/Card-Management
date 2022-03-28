@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const registerSchema = Yup.object().shape({
+export const registerValidSchema = Yup.object().shape({
   name: Yup.string().required("Field required"),
   lastName: Yup.string().required("Field required"),
   email: Yup.string()
@@ -18,5 +18,3 @@ const registerSchema = Yup.object().shape({
     .trim("Field cann't contain spaces")
     .required(),
 });
-
-export default registerSchema;

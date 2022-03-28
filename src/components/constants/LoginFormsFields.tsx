@@ -1,4 +1,4 @@
-const loginFormFields = [
+export const loginFormFields = [
   {
     id: `email-${new Date().getTime()}`,
     name: "email",
@@ -13,4 +13,12 @@ const loginFormFields = [
   },
 ];
 
-export default loginFormFields;
+export type LoginInitialValueType = {
+  email: string;
+  password: string;
+};
+
+export const loginInitialValue = {
+  email: "",
+  password: "",
+};

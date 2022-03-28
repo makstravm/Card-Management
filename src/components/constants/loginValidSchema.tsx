@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const loginSchema = Yup.object().shape({
+export const loginValidSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email")
     .trim("Field cann't contain spaces")
@@ -12,5 +12,3 @@ const loginSchema = Yup.object().shape({
     })
     .required("Field required"),
 });
-
-export default loginSchema;
