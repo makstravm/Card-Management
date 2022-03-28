@@ -2,14 +2,11 @@ import React from "react";
 import { FormikProps, useFormik } from "formik";
 import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import registerSchema from "../constants/RegistrationValidSchema";
-import registrationFormFields from "../constants/RegistrationFormsFields";
+import loginSchema from "../constants/LoginSchema";
+import { FormicValues } from "../Registration/Registration";
+import loginFormFields from "../constants/LoginFormsFields";
 
-export type FormicValues = {
-  [index: string]: string;
-};
-
-export const Registration = () => {
+export const Login = () => {
   const {
     values,
     errors,
@@ -20,25 +17,22 @@ export const Registration = () => {
     dirty,
   }: FormikProps<FormicValues> = useFormik({
     initialValues: {
-      name: "",
-      lastName: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
     onSubmit: (values) => console.log(values),
-    validationSchema: registerSchema,
+    validationSchema: loginSchema,
   });
 
   return (
     <Container maxWidth="sm">
       <Box sx={{ py: 3, px: 2 }}>
         <Typography variant="h4" align="center" sx={{ pb: 2 }}>
-          Registration
+          Log In
         </Typography>
         <form onSubmit={handleSubmit}>
           <Grid container justifyContent="center" spacing={2}>
-            {registrationFormFields.map(({ id, name, type, label }) => (
+            {loginFormFields.map(({ id, name, type, label }) => (
               <Grid key={id} item xs={10}>
                 <TextField
                   name={name}
@@ -61,7 +55,7 @@ export const Registration = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Sign In
             </Button>
           </Box>
         </form>
