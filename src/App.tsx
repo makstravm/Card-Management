@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Board } from "./components/Board";
-import { Form } from "./components/common/Form";
 import {
   loginFormFields,
   loginInitialValue,
@@ -12,8 +11,12 @@ import {
 } from "./components/constants/RegistrationFormsFields";
 import { Layout } from "./Layout";
 import { Provider } from "react-redux";
-
 import store from "./store";
+import { Form } from "./components/common/Form";
+import { loginAction, registrationAction } from "./store/auth/actions";
+import { registerValidationSchema } from "./components/constants/RegistrationValidationSchema";
+import { loginValidationSchema } from "./components/constants/loginValidationSchema";
+
 const App = () => (
   <BrowserRouter>
     <Provider store={store}>
@@ -27,6 +30,8 @@ const App = () => (
                 buttonText="Sign In"
                 initialValues={loginInitialValue}
                 formFields={loginFormFields}
+                onSubmit={loginAction}
+                validationSchema={loginValidationSchema}
               />
             }
           />
@@ -38,6 +43,8 @@ const App = () => (
                 buttonText="Sign Up"
                 initialValues={registrationInitialValue}
                 formFields={registrationFormFields}
+                onSubmit={registrationAction}
+                validationSchema={registerValidationSchema}
               />
             }
           />
@@ -47,5 +54,7 @@ const App = () => (
     </Provider>
   </BrowserRouter>
 );
+
+store.subscribe(() => console.log(store.getState()));
 
 export default App;

@@ -7,9 +7,6 @@ import {
   RegistrationInitialValueType,
 } from "../constants/RegistrationFormsFields";
 import { LoginInitialValueType } from "../constants/LoginFormsFields";
-import { registerValidSchema } from "../constants/registrationValidSchema";
-import { loginValidSchema } from "../constants/loginValidSchema";
-import { addNameAC, AddNameACType } from "../../store/auth/actions";
 import { useDispatch } from "react-redux";
 
 export type FormicValues = {
@@ -23,6 +20,8 @@ type FormPropsType = {
   formFields: FormFieldType[];
   title: string;
   buttonText: string;
+  onSubmit: (values: any) => void;
+  validationSchema: any;
 };
 
 export const Form = ({
@@ -30,6 +29,8 @@ export const Form = ({
   formFields,
   title,
   buttonText,
+  onSubmit,
+  validationSchema,
 }: FormPropsType) => {
   const dispatch = useDispatch();
 
@@ -43,9 +44,8 @@ export const Form = ({
     dirty,
   }: FormikProps<FormicValues> = useFormik({
     initialValues,
-    onSubmit: async (values) => dispatch(addNameAC(values.email)),
-    validationSchema:
-      title !== "Log In" ? registerValidSchema : loginValidSchema,
+    onSubmit: (values: any) => dispatch(onSubmit(values)),
+    validationSchema,
   });
 
   return (

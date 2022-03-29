@@ -1,3 +1,4 @@
-export enum auth {
-  ADD_NAME = "ADD_NAME",
+export enum ActionTypes {
+  REGISTER_SUCCESSED = "REGISTER_SUCCESSED",
+  LOGIN_SUCCESSED = "LOGIN_SUCCESSED",
 }

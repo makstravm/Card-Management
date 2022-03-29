@@ -1,19 +1,20 @@
-import { AddNameACType } from "./actions";
-import { auth } from "./actionsTypes";
+import { LoginSuccessType } from "./actions";
+import { ActionTypes } from "./actionsTypes";
 
 export type InitialStateType = {
-  name: string;
+  user: string;
 };
 
 const initialState: InitialStateType = {
-  name: "",
+  user: "",
 };
 
-export const authReducer = (state = initialState, action: AddNameACType) => {
-  switch (action.type) {
-    case auth.ADD_NAME:
-      return { ...state, name: action.name };
+const { LOGIN_SUCCESSED } = ActionTypes;
 
+export const authReducer = (state = initialState, action: LoginSuccessType) => {
+  switch (action.type) {
+    case LOGIN_SUCCESSED:
+      return { ...action.data };
     default:
       return state;
   }
