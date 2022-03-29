@@ -16,10 +16,11 @@ module.exports = {
     clean: true,
   },
   devServer: {
+    historyApiFallback: true,
     static: "./dist",
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js", "jsx"],
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   devtool: "source-map",
   plugins: [
@@ -61,7 +62,7 @@ module.exports = {
         type: "asset/resource",
       },
       {
-        test: /\.[jt]sx$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",

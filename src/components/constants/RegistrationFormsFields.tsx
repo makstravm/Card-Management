@@ -1,4 +1,11 @@
-const registrationFormFields = [
+export type FormFieldType = {
+  id: string;
+  name: string;
+  type: string;
+  label: string;
+};
+
+export const registrationFormFields = [
   {
     id: `name-${new Date().getTime()}`,
     name: "name",
@@ -31,4 +38,18 @@ const registrationFormFields = [
   },
 ];
 
-export default registrationFormFields;
+export type RegistrationInitialValueType = {
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+
+export const registrationInitialValue = {
+  name: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
