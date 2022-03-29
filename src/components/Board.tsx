@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { InitialStateType } from "../redux/AuthReducer";
-import { RootState } from "../redux/store";
+import { InitialStateType } from "../store/auth/authReducer";
+import { RootState } from "../store";
 
 export const Board = () => {
   const { name } = useSelector<RootState, InitialStateType>(

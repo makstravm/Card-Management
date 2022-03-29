@@ -9,7 +9,7 @@ import {
 import { LoginInitialValueType } from "../constants/LoginFormsFields";
 import { registerValidSchema } from "../constants/registrationValidSchema";
 import { loginValidSchema } from "../constants/loginValidSchema";
-import { addNameAC, AddNameACType } from "../../redux/Action";
+import { addNameAC, AddNameACType } from "../../store/auth/actions";
 import { useDispatch } from "react-redux";
 
 export type FormicValues = {

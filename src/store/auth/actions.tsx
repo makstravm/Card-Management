@@ -1,9 +1,11 @@
+import { auth } from "./actionsTypes";
+
 export type AddNameACType = {
-  type: "ADD-NAME";
+  type: auth.ADD_NAME;
   name: string;
 };
 
 export const addNameAC = (name: string): AddNameACType => ({
-  type: "ADD-NAME",
+  type: auth.ADD_NAME,
   name,
 });
