@@ -4,22 +4,24 @@ import { Board } from "./components/Board";
 import {
   loginFormFields,
   loginInitialValue,
-} from "./components/constants/LoginFormsFields";
+} from "./constants/LoginFormsFields";
 import {
   registrationFormFields,
   registrationInitialValue,
-} from "./components/constants/RegistrationFormsFields";
-import { Layout } from "./Layout";
+} from "./constants/RegistrationFormsFields";
+import { Layout } from "./components/Layout";
 import { Provider } from "react-redux";
 import store from "./store";
 import { Form } from "./components/common/Form";
 import { loginAction, registrationAction } from "./store/auth/actions";
-import { registerValidationSchema } from "./components/constants/RegistrationValidationSchema";
-import { loginValidationSchema } from "./components/constants/loginValidationSchema";
+import { loginValidationSchema } from "./helpers/loginValidationSchema";
+import { CssBaseline } from "@mui/material";
+import { registerValidationSchema } from "./helpers/RegistrationValidationSchema";
 
 const App = () => (
   <BrowserRouter>
     <Provider store={store}>
+      <CssBaseline />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route

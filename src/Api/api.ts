@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const axiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: "http://localhost:3000/",
 });
 
@@ -14,5 +14,17 @@ axiosInstance.interceptors.request.use((config: any) => {
 
 axiosInstance.interceptors.response.use(
   (res) => res.data,
-  (err) => console.log(err)
+  (err) => {
+    throw err;
+  }
 );
+
+export const GET = (api: string) => {
+  const result = axiosInstance.get(api);
+  return result;
+};
+
+export const POST = (api: string, values: any) => {
+  const result = axiosInstance.post(api, values);
+  return result;
+};

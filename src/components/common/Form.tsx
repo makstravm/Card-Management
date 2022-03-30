@@ -5,16 +5,13 @@ import { Box } from "@mui/system";
 import {
   FormFieldType,
   RegistrationInitialValueType,
-} from "../constants/RegistrationFormsFields";
-import { LoginInitialValueType } from "../constants/LoginFormsFields";
+} from "../../constants/RegistrationFormsFields";
+import { LoginInitialValueType } from "../../constants/LoginFormsFields";
 import { useDispatch } from "react-redux";
-
 export type FormicValues = {
   [index: string]: string;
 };
-
 type initialValuesType = RegistrationInitialValueType | LoginInitialValueType;
-
 type FormPropsType = {
   initialValues: initialValuesType;
   formFields: FormFieldType[];
@@ -23,7 +20,6 @@ type FormPropsType = {
   onSubmit: (values: any) => void;
   validationSchema: any;
 };
-
 export const Form = ({
   initialValues,
   formFields,
