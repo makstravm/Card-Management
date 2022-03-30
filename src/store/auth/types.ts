@@ -7,7 +7,7 @@ export enum ActionTypes {
   REGISTER_FAILURE = "REGISTER_FAILURE",
 }
 
-type AuthUserType = {
+export type AuthUserType = {
   name: string;
   email: string;
   lastName: string;
@@ -17,9 +17,14 @@ type AuthUserType = {
 };
 
 export type InitialStateAuthType = {
-  user: null | AuthUserType;
+  user: AuthUserType | null;
   error: string | null;
   loading: boolean;
+};
+
+export type AuthResponseType = {
+  accessToken: string | null;
+  user: AuthUserType | null;
 };
 
 export type LoginStartedType = {

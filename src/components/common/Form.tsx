@@ -1,25 +1,12 @@
 import React from "react";
 import { FormikProps, useFormik } from "formik";
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import {
-  FormFieldType,
-  RegistrationInitialValueType,
-} from "../../constants/RegistrationFormsFields";
-import { LoginInitialValueType } from "../../constants/LoginFormsFields";
 import { useDispatch } from "react-redux";
-export type FormicValues = {
-  [index: string]: string;
-};
-type initialValuesType = RegistrationInitialValueType | LoginInitialValueType;
-type FormPropsType = {
-  initialValues: initialValuesType;
-  formFields: FormFieldType[];
-  title: string;
-  buttonText: string;
-  onSubmit: (values: any) => void;
-  validationSchema: any;
-};
+
+import { FormicValues, FormPropsType, InitialValuesFormType } from "./types";
+
+import { Box } from "@mui/system";
+import { Button, Container, Grid, TextField, Typography } from "@mui/material";
+
 export const Form = ({
   initialValues,
   formFields,
@@ -40,7 +27,7 @@ export const Form = ({
     dirty,
   }: FormikProps<FormicValues> = useFormik({
     initialValues,
-    onSubmit: (values: any) => dispatch(onSubmit(values)),
+    onSubmit: (values: InitialValuesFormType) => dispatch(onSubmit(values)),
     validationSchema,
   });
 

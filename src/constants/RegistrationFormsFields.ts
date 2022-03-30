@@ -1,10 +1,3 @@
-export type FormFieldType = {
-  id: string;
-  name: string;
-  type: string;
-  label: string;
-};
-
 export const registrationFormFields = [
   {
     id: `name-${new Date().getTime()}`,
@@ -37,14 +30,6 @@ export const registrationFormFields = [
     label: "Confirm password",
   },
 ];
-
-export type RegistrationInitialValueType = {
-  name: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
 
 export const registrationInitialValue = {
   name: "",

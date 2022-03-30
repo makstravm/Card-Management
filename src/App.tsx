@@ -4,11 +4,11 @@ import { Board } from "./components/Board";
 import {
   loginFormFields,
   loginInitialValue,
-} from "./constants/LoginFormsFields";
+} from "./constants/loginFormsFields";
 import {
   registrationFormFields,
   registrationInitialValue,
-} from "./constants/RegistrationFormsFields";
+} from "./constants/registrationFormsFields";
 import { Layout } from "./components/Layout";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -16,7 +16,7 @@ import { Form } from "./components/common/Form";
 import { loginAction, registrationAction } from "./store/auth/actions";
 import { loginValidationSchema } from "./helpers/loginValidationSchema";
 import { CssBaseline } from "@mui/material";
-import { registerValidationSchema } from "./helpers/RegistrationValidationSchema";
+import { registerValidationSchema } from "./helpers/registrationValidationSchema";
 
 const App = () => (
   <BrowserRouter>

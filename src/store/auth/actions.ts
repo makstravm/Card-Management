@@ -1,17 +1,28 @@
+import { InitialValuesFormType } from "./../../components/common/types";
 import { POST } from "../../Api/api";
-import { ActionTypes } from "./types";
+import {
+  ActionTypes,
+  AuthResponseType,
+  AuthUserType,
+  InitialStateAuthType,
+} from "./types";
 import Cookies from "js-cookie";
+import {
+  LoginInitialValueType,
+  RegistrationInitialValueType,
+} from "../../constants/types";
+import { AxiosResponse, AxiosResponseHeaders } from "axios";
 
 export const loginStarted = () => ({
   type: ActionTypes.LOGIN_STARTED,
 });
 
-export const loginSuccess = (payload: any) => ({
+export const loginSuccess = (payload: AuthUserType) => ({
   type: ActionTypes.LOGIN_SUCCESS,
   payload,
 });
 
-export const loginFailure = (payload: any) => ({
+export const loginFailure = (payload: string) => ({
   type: ActionTypes.LOGIN_FAILURE,
   payload,
 });
@@ -20,37 +31,39 @@ export const registerStarted = () => ({
   type: ActionTypes.REGISTER_STARTED,
 });
 
-export const registerSuccess = (payload: any) => ({
+export const registerSuccess = (payload: AuthUserType) => ({
   type: ActionTypes.REGISTER_SUCCESS,
   payload,
 });
 
-export const registerFailure = (payload: any) => ({
+export const registerFailure = (payload: string) => ({
   type: ActionTypes.REGISTER_FAILURE,
   payload,
 });
 
 export const registrationAction =
-  (values: any): any =>
-  async (dispatch: any) => {
+  (values: RegistrationInitialValueType) => async (dispatch: any) => {
     dispatch(registerStarted());
     try {
-      const response: any = await POST("register", values);
-      if (response) {
-        dispatch(registerSuccess(response));
-        dispatch(loginAction(values));
-      }
+      const { user }: AuthResponseType = await POST("register", values);
+      dispatch(registerSuccess(user));
+      dispatch(loginAction(values));
     } catch (error) {
       dispatch(registerFailure(error));
     }
   };
 
+export type AuthResponseType = {
+  accessToken: string | null;
+  user: AuthUserType | null;
+};
+
 export const loginAction =
-  (values: any): any =>
-  async (dispatch: any) => {
+  (values: LoginInitialValueType) => async (dispatch: any) => {
     dispatch(loginStarted());
     try {
-      const { user, accessToken }: any = await POST("login", values);
+      const response = await POST("login", values);
+      const { user, accessToken } = response;
       Cookies.set("token", accessToken);
       dispatch(loginSuccess(user));
     } catch (error) {

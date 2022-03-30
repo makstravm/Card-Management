@@ -13,11 +13,6 @@ export const loginFormFields = [
   },
 ];
 
-export type LoginInitialValueType = {
-  email: string;
-  password: string;
-};
-
 export const loginInitialValue = {
   email: "",
   password: "",
