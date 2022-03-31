@@ -1,74 +1,81 @@
-import { InitialValuesFormType } from "./../../components/common/types";
+import { ThunkAction } from "redux-thunk";
+import Cookies from "js-cookie";
 import { POST } from "../../Api/api";
 import {
   ActionTypes,
+  AuthReducerActionsTypes,
   AuthResponseType,
   AuthUserType,
-  InitialStateAuthType,
+  LoginFailureType,
+  LoginStartedType,
+  LoginSuccessType,
+  RegisterFailureType,
+  RegisterStartedType,
+  RegisterSuccessType,
 } from "./types";
-import Cookies from "js-cookie";
 import {
   LoginInitialValueType,
   RegistrationInitialValueType,
 } from "../../constants/types";
-import { AxiosResponse, AxiosResponseHeaders } from "axios";
+import { RootStateType } from "..";
 
-export const loginStarted = () => ({
+export const loginStarted = (): LoginStartedType => ({
   type: ActionTypes.LOGIN_STARTED,
 });
 
-export const loginSuccess = (payload: AuthUserType) => ({
+export const loginSuccess = (payload: AuthUserType): LoginSuccessType => ({
   type: ActionTypes.LOGIN_SUCCESS,
   payload,
 });
 
-export const loginFailure = (payload: string) => ({
+export const loginFailure = (payload: string): LoginFailureType => ({
   type: ActionTypes.LOGIN_FAILURE,
   payload,
 });
 
-export const registerStarted = () => ({
+export const registerStarted = (): RegisterStartedType => ({
   type: ActionTypes.REGISTER_STARTED,
 });
 
-export const registerSuccess = (payload: AuthUserType) => ({
+export const registerSuccess = (): RegisterSuccessType => ({
   type: ActionTypes.REGISTER_SUCCESS,
-  payload,
 });
 
-export const registerFailure = (payload: string) => ({
+export const registerFailure = (payload: string): RegisterFailureType => ({
   type: ActionTypes.REGISTER_FAILURE,
   payload,
 });
 
-export const registrationAction =
-  (values: RegistrationInitialValueType) => async (dispatch: any) => {
-    dispatch(registerStarted());
+export const loginAction =
+  (
+    values: LoginInitialValueType
+  ): ThunkAction<void, RootStateType, unknown, AuthReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(loginStarted());
     try {
-      const { user }: AuthResponseType = await POST("register", values);
-      dispatch(registerSuccess(user));
-      dispatch(loginAction(values));
+      const {
+        data: { user, accessToken },
+      } = await POST<AuthResponseType>("login", values);
+
+      Cookies.set("token", accessToken);
+
+      dispatch(loginSuccess(user));
     } catch (error) {
-      dispatch(registerFailure(error));
+      dispatch(loginFailure(error));
     }
   };
 
-export type AuthResponseType = {
-  accessToken: string | null;
-  user: AuthUserType | null;
-};
-
-export const loginAction =
-  (values: LoginInitialValueType) => async (dispatch: any) => {
-    dispatch(loginStarted());
+export const registrationAction =
+  (
+    values: RegistrationInitialValueType
+  ): ThunkAction<void, RootStateType, unknown, AuthReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(registerStarted());
     try {
-      const response = await POST("login", values);
-      const { user, accessToken } = response;
-      Cookies.set("token", accessToken);
-      dispatch(loginSuccess(user));
+      await POST<AuthResponseType>("register", values);
+      dispatch(registerSuccess());
+      dispatch(loginAction(values));
     } catch (error) {
-      console.log(typeof error);
-
-      dispatch(loginFailure(error));
+      dispatch(registerFailure(error));
     }
   };

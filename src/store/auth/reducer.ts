@@ -21,7 +21,7 @@ const {
 
 export const authReducer = (
   state = initialState,
-  action: AuthReducerActionsTypes
+  action?: AuthReducerActionsTypes
 ) => {
   switch (action.type) {
     case LOGIN_STARTED:
@@ -29,6 +29,7 @@ export const authReducer = (
         ...state,
         loading: true,
       };
+
     case LOGIN_SUCCESS:
       return {
         ...state,
@@ -36,6 +37,7 @@ export const authReducer = (
         user: { ...action.payload },
         error: null,
       };
+
     case LOGIN_FAILURE:
       return {
         ...state,
@@ -43,18 +45,19 @@ export const authReducer = (
         user: null,
         error: action.payload,
       };
+
     case REGISTER_STARTED:
       return {
         ...state,
         loading: true,
       };
+
     case REGISTER_SUCCESS:
       return {
         ...state,
         loading: false,
-        user: { ...action.payload },
-        error: null,
       };
+
     case REGISTER_FAILURE:
       return {
         ...state,
@@ -62,6 +65,7 @@ export const authReducer = (
         user: null,
         error: action.payload,
       };
+
     default:
       return state;
   }

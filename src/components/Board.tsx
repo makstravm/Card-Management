@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { RootStateType } from "../store";
 import { InitialStateAuthType } from "../store/auth/types";
 
 export const Board = () => {
-  const { user } = useSelector<RootState, InitialStateAuthType>(
+  const { user } = useSelector<RootStateType, InitialStateAuthType>(
     (state) => state?.auth
   );
 

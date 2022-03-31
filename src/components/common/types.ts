@@ -9,18 +9,14 @@ import {
   RegisterValidationSchemaType,
 } from "../../helpers/types";
 
-export type FormicValues = {
-  [index: string]: string;
-};
+export type FormicValues = Record<string, string>;
 
 export type InitialValuesFormType =
   | RegistrationInitialValueType
   | LoginInitialValueType;
-
 export type ValidationSchemaTypes =
   | RegisterValidationSchemaType
   | LoginValidationSchemaType;
-
 export type FormPropsType = {
   initialValues: InitialValuesFormType;
   formFields: FormFieldType[];

@@ -1,4 +1,6 @@
+import { Provider } from "react-redux";
 import React from "react";
+import { CssBaseline } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Board } from "./components/Board";
 import {
@@ -10,12 +12,10 @@ import {
   registrationInitialValue,
 } from "./constants/registrationFormsFields";
 import { Layout } from "./components/Layout";
-import { Provider } from "react-redux";
 import store from "./store";
 import { Form } from "./components/common/Form";
 import { loginAction, registrationAction } from "./store/auth/actions";
 import { loginValidationSchema } from "./helpers/loginValidationSchema";
-import { CssBaseline } from "@mui/material";
 import { registerValidationSchema } from "./helpers/registrationValidationSchema";
 
 const App = () => (
@@ -56,7 +56,5 @@ const App = () => (
     </Provider>
   </BrowserRouter>
 );
-
-store.subscribe(() => console.log(store.getState()));
 
 export default App;

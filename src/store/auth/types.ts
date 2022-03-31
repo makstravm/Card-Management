@@ -47,13 +47,13 @@ export type RegisterStartedType = {
 
 export type RegisterSuccessType = {
   type: ActionTypes.REGISTER_SUCCESS;
-  payload: AuthUserType;
 };
 
 export type RegisterFailureType = {
   type: ActionTypes.REGISTER_FAILURE;
   payload: string | null;
 };
+
 export type AuthReducerActionsTypes =
   | RegisterFailureType
   | RegisterSuccessType

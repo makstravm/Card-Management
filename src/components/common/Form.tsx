@@ -1,11 +1,15 @@
 import React from "react";
 import { FormikProps, useFormik } from "formik";
 import { useDispatch } from "react-redux";
-
-import { FormicValues, FormPropsType, InitialValuesFormType } from "./types";
-
-import { Box } from "@mui/system";
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { FormicValues, FormPropsType } from "./types";
 
 export const Form = ({
   initialValues,
@@ -16,7 +20,7 @@ export const Form = ({
   validationSchema,
 }: FormPropsType) => {
   const dispatch = useDispatch();
-
+  
   const {
     values,
     errors,
@@ -27,7 +31,7 @@ export const Form = ({
     dirty,
   }: FormikProps<FormicValues> = useFormik({
     initialValues,
-    onSubmit: (values: InitialValuesFormType) => dispatch(onSubmit(values)),
+    onSubmit: (values) => dispatch(onSubmit(values)),
     validationSchema,
   });
 
@@ -48,7 +52,7 @@ export const Form = ({
                   type={type}
                   autoComplete="given-name"
                   fullWidth
-                  error={touched[name] && errors[name] ? true : false}
+                  error={!!(touched[name] && errors[name])}
                   helperText={touched[name] && errors[name]}
                   onChange={handleChange}
                 />
@@ -57,7 +61,7 @@ export const Form = ({
           </Grid>
           <Box display="flex" justifyContent="center">
             <Button
-              type={"submit"}
+              type="submit"
               disabled={!isValid && !dirty}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
