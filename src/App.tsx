@@ -1,22 +1,27 @@
+import { Provider } from "react-redux";
 import React from "react";
+import { CssBaseline } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Board } from "./components/Board";
-import { Form } from "./components/common/Form";
 import {
   loginFormFields,
   loginInitialValue,
-} from "./components/constants/LoginFormsFields";
+} from "./constants/loginFormsFields";
 import {
   registrationFormFields,
   registrationInitialValue,
-} from "./components/constants/RegistrationFormsFields";
-import { Layout } from "./Layout";
-import { Provider } from "react-redux";
-
+} from "./constants/registrationFormsFields";
+import { Layout } from "./components/Layout";
 import store from "./store";
+import { Form } from "./components/common/Form";
+import { loginAction, registrationAction } from "./store/auth/actions";
+import { loginValidationSchema } from "./helpers/loginValidationSchema";
+import { registerValidationSchema } from "./helpers/registrationValidationSchema";
+
 const App = () => (
   <BrowserRouter>
     <Provider store={store}>
+      <CssBaseline />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route
@@ -27,6 +32,8 @@ const App = () => (
                 buttonText="Sign In"
                 initialValues={loginInitialValue}
                 formFields={loginFormFields}
+                onSubmit={loginAction}
+                validationSchema={loginValidationSchema}
               />
             }
           />
@@ -38,6 +45,8 @@ const App = () => (
                 buttonText="Sign Up"
                 initialValues={registrationInitialValue}
                 formFields={registrationFormFields}
+                onSubmit={registrationAction}
+                validationSchema={registerValidationSchema}
               />
             }
           />

@@ -1,6 +1,8 @@
 import * as Yup from "yup";
 
-export const loginValidSchema = Yup.object().shape({
+export const registerValidationSchema = Yup.object().shape({
+  name: Yup.string().required("Field required"),
+  lastName: Yup.string().required("Field required"),
   email: Yup.string()
     .email("Invalid email")
     .trim("Field cann't contain spaces")
@@ -11,4 +13,8 @@ export const loginValidSchema = Yup.object().shape({
       message: "Password is incorrect",
     })
     .required("Field required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Password don't match")
+    .trim("Field cann't contain spaces")
+    .required(),
 });

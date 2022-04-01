@@ -1,7 +1,11 @@
 const path = require("path");
+
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const OptimizeCssAssetWebpackPlugin = require("optimize-css-assets-webpack-plugin");
+
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 
 module.exports = {
@@ -31,6 +35,9 @@ module.exports = {
       filename: `[name].[hash].css`,
     }),
   ],
+  alias: {
+    "@": path.join(__dirname, "../"),
+  },
   optimization: {
     splitChunks: {
       chunks: "all",

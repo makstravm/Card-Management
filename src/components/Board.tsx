@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { InitialStateType } from "../store/auth/authReducer";
-import { RootState } from "../store";
+import { RootStateType } from "../store";
+import { InitialStateAuthType } from "../store/auth/types";
 
 export const Board = () => {
-  const { name } = useSelector<RootState, InitialStateType>(
+  const { user } = useSelector<RootStateType, InitialStateAuthType>(
     (state) => state?.auth
   );
 
-  return <h1>{`Your email: ${name}`}</h1>;
+  return <h1>{`Your name: ${user?.name || "No name"}`}</h1>;
 };
