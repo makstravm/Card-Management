@@ -1,12 +1,14 @@
+import { v1 } from "uuid";
+
 export const loginFormFields = [
   {
-    id: `email-${new Date().getTime()}`,
+    id: v1(),
     name: "email",
     type: "text",
     label: "Email",
   },
   {
-    id: `password-${new Date().getTime()}`,
+    id: v1(),
     name: "password",
     type: "password",
     label: "Password",

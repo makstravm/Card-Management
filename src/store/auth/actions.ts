@@ -1,6 +1,16 @@
 import { ThunkAction } from "redux-thunk";
 import Cookies from "js-cookie";
-import { POST } from "../../Api/api";
+
+import { Endpoints } from "constants/endpoints";
+
+import { POST } from "api/api";
+
+import {
+  LoginInitialValueType,
+  RegistrationInitialValueType,
+} from "helpers/types";
+
+import { RootStateType } from "store/store";
 import {
   ActionTypes,
   AuthReducerActionsTypes,
@@ -13,11 +23,8 @@ import {
   RegisterStartedType,
   RegisterSuccessType,
 } from "./types";
-import {
-  LoginInitialValueType,
-  RegistrationInitialValueType,
-} from "../../constants/types";
-import { RootStateType } from "..";
+
+const { LOGIN, REGISTER } = Endpoints;
 
 export const loginStarted = (): LoginStartedType => ({
   type: ActionTypes.LOGIN_STARTED,
@@ -55,7 +62,7 @@ export const loginAction =
     try {
       const {
         data: { user, accessToken },
-      } = await POST<AuthResponseType>("login", values);
+      } = await POST<AuthResponseType>(LOGIN, values);
 
       Cookies.set("token", accessToken);
 
@@ -72,7 +79,7 @@ export const registrationAction =
   async (dispatch) => {
     dispatch(registerStarted());
     try {
-      await POST<AuthResponseType>("register", values);
+      await POST<AuthResponseType>(REGISTER, values);
       dispatch(registerSuccess());
       dispatch(loginAction(values));
     } catch (error) {

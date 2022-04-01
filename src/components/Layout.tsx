@@ -1,11 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { Header } from "./Header";
+
+import { links } from "constants/links/links";
+
+import { Header } from "./Header/Header";
 
 export const Layout = () => (
   <>
-    <Header />
+    <Header linksNavBar={links} />
     <Outlet />
-    <footer>asd</footer>
+    <footer>Footer</footer>
   </>
 );

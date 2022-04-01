@@ -1,22 +1,23 @@
 import { SchemaOf } from "yup";
-import {
-  FormFieldType,
-  LoginInitialValueType,
-  RegistrationInitialValueType,
-} from "../../constants/types";
+
 import {
   LoginValidationSchemaType,
   RegisterValidationSchemaType,
-} from "../../helpers/types";
+  FormFieldType,
+  LoginInitialValueType,
+  RegistrationInitialValueType,
+} from "helpers/types";
 
-export type FormicValues = Record<string, string>;
+export type FormicValuesType = Record<string, string>;
 
 export type InitialValuesFormType =
   | RegistrationInitialValueType
   | LoginInitialValueType;
+
 export type ValidationSchemaTypes =
   | RegisterValidationSchemaType
   | LoginValidationSchemaType;
+
 export type FormPropsType = {
   initialValues: InitialValuesFormType;
   formFields: FormFieldType[];
