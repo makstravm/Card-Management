@@ -11,11 +11,11 @@
     "lib": ["es5", "es6", "dom"],
     "baseUrl": "./",
     "paths": {
-      "components/*": ["./src/components/*"],
-      "api/*": ["./src/api/*"],
-      "constants*": ["./src/constants/*"],
-      "helpers/*": ["./src/helpers/*"],
-      "store/*": ["./src/store/*"]
+      "components/*": ["src/components/*"],
+      "api/*": ["src/api/*"],
+      "constants*": ["src/constants/*"],
+      "helpers/*": ["src/helpers/*"],
+      "store/*": ["src/store/*"]
     }
   }
 }

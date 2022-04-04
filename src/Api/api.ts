@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { errorBoundary } from "../services/errorBoundary";
 
 import { PostRequestValuesTypes } from "./types";
 
@@ -21,6 +22,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (res): AxiosResponse => res,
   (err): Promise<AxiosError> => {
+    errorBoundary(err.response);
     throw err;
   }
 );

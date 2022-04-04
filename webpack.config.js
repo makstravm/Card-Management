@@ -32,7 +32,7 @@ module.exports = {
       api: path.resolve(__dirname, "src/api/"),
       constants: path.resolve(__dirname, "src/constants/"),
       helpers: path.resolve(__dirname, "src/helpers/"),
-      Store: path.resolve(__dirname, "src/store/"),
+      store: path.resolve(__dirname, "src/store/"),
     },
   },
   devtool: "source-map",
