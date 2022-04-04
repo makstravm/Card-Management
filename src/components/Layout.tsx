@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import React from "react";
 import { Outlet } from "react-router-dom";
 

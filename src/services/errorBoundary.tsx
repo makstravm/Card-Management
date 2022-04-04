@@ -1,17 +1,13 @@
-import Cookies from "js-cookie";
-import { ErrorBoundaryPropsType } from "./types";
+import { AxiosError } from "axios";
 import { notify } from "../utils/toast";
 
-export const errorBoundary = ({ status, data }: ErrorBoundaryPropsType) => {
+export const errorBoundary = ({ response: { status, data } }: AxiosError) => {
   switch (status) {
     case 400:
       return notify(data);
 
     case 401:
-      Cookies.remove("token");
-      notify(data);
-
-      return window.location.reload();
+      return notify(data);
 
     default:
       return notify(`что-то не так ${data}`);
