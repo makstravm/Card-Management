@@ -13,6 +13,7 @@ import {
   registrationInitialValue,
 } from "constants/forms/registrationFormsFields";
 import { RoutesUrls } from "constants/routes";
+import { boardsNamesColumns } from "constants/board/boards";
 
 import store from "store/store";
 import { loginAction, registrationAction } from "store/auth/actions";
@@ -58,7 +59,10 @@ const App = () => (
               />
             }
           />
-          <Route path={BOARD} element={<Board />} />
+          <Route
+            path={BOARD}
+            element={<Board boardsColumns={boardsNamesColumns} />}
+          />
         </Route>
       </Routes>
     </Provider>

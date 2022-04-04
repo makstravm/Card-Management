@@ -33,6 +33,7 @@ module.exports = {
       constants: path.resolve(__dirname, "src/constants/"),
       helpers: path.resolve(__dirname, "src/helpers/"),
       store: path.resolve(__dirname, "src/store/"),
+      utils: path.resolve(__dirname, "src/utils/"),
     },
   },
   devtool: "source-map",
