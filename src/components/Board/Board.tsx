@@ -1,23 +1,15 @@
 import React from "react";
 
-import { Container, Grid, Paper, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 
-import { BoardType } from "./types";
+import { boardsNamesColumns } from "constants/board/boards";
+
 import { BoardHeader } from "./BoardHeader/BoardHeader";
+import { BoardColumns } from "./BoardColumns/BoardColumns";
 
-export const Board = ({ boardsColumns }: BoardType) => (
+export const Board = () => (
   <Container maxWidth="lg">
     <BoardHeader />
-    <Grid container spacing={2} justifyContent="space-between">
-      {boardsColumns.map(({ id, title }) => (
-        <Grid key={id} item xs={4}>
-          <Paper variant="elevation">
-            <Typography variant="subtitle1" align="center" color="primary">
-              {title}
-            </Typography>
-          </Paper>
-        </Grid>
-      ))}
-    </Grid>
+    <BoardColumns boardsColumns={boardsNamesColumns} />
   </Container>
 );

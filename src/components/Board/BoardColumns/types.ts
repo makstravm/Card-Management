@@ -1,5 +1,5 @@
 import { BoardsNamesColumnsType } from "constants/board/types";
 
-export type BoardType = {
+export type BoardColumnsPropsType = {
   boardsColumns: BoardsNamesColumnsType[];
 };
