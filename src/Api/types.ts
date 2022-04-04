@@ -1,7 +1,7 @@
 import {
   LoginInitialValueType,
   RegistrationInitialValueType,
-} from "../constants/types";
+} from "helpers/types";
 
 export type PostRequestValuesTypes =
   | RegistrationInitialValueType

@@ -1,8 +1,9 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+
 import { PostRequestValuesTypes } from "./types";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: process.env.BASE_URL,
 });
 
 axiosInstance.interceptors.request.use(
@@ -26,7 +27,7 @@ axiosInstance.interceptors.response.use(
 
 export const GET = (api: string) => {
   const result = axiosInstance.get(api);
-  
+
   return result;
 };
 
@@ -35,6 +36,6 @@ export const POST = <T>(
   values: PostRequestValuesTypes
 ): Promise<AxiosResponse<T>> => {
   const result = axiosInstance.post(api, values);
-  
+
   return result;
 };

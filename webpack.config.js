@@ -8,6 +8,8 @@ const OptimizeCssAssetWebpackPlugin = require("optimize-css-assets-webpack-plugi
 
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 
+const Dotenv = require("dotenv-webpack");
+
 module.exports = {
   context: path.join(__dirname, "src"),
   mode: "development",
@@ -25,6 +27,13 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
+    alias: {
+      components: path.resolve(__dirname, "src/components/"),
+      api: path.resolve(__dirname, "src/api/"),
+      constants: path.resolve(__dirname, "src/constants/"),
+      helpers: path.resolve(__dirname, "src/helpers/"),
+      Store: path.resolve(__dirname, "src/store/"),
+    },
   },
   devtool: "source-map",
   plugins: [
@@ -34,10 +43,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: `[name].[hash].css`,
     }),
+    new Dotenv(),
   ],
-  alias: {
-    "@": path.join(__dirname, "../"),
-  },
+
   optimization: {
     splitChunks: {
       chunks: "all",

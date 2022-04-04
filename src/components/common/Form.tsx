@@ -1,6 +1,7 @@
 import React from "react";
 import { FormikProps, useFormik } from "formik";
 import { useDispatch } from "react-redux";
+
 import {
   Box,
   Button,
@@ -9,7 +10,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { FormicValues, FormPropsType } from "./types";
+
+import { FormicValuesType, FormPropsType } from "./types";
 
 export const Form = ({
   initialValues,
@@ -20,7 +22,7 @@ export const Form = ({
   validationSchema,
 }: FormPropsType) => {
   const dispatch = useDispatch();
-  
+
   const {
     values,
     errors,
@@ -29,7 +31,7 @@ export const Form = ({
     isValid,
     handleSubmit,
     dirty,
-  }: FormikProps<FormicValues> = useFormik({
+  }: FormikProps<FormicValuesType> = useFormik({
     initialValues,
     onSubmit: (values) => dispatch(onSubmit(values)),
     validationSchema,

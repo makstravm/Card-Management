@@ -1,31 +1,39 @@
-import { Provider } from "react-redux";
 import React from "react";
-import { CssBaseline } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Board } from "./components/Board";
+import { Provider } from "react-redux";
+
+import { CssBaseline } from "@mui/material";
+
 import {
   loginFormFields,
   loginInitialValue,
-} from "./constants/loginFormsFields";
+} from "constants/forms/loginFormsFields";
 import {
   registrationFormFields,
   registrationInitialValue,
-} from "./constants/registrationFormsFields";
-import { Layout } from "./components/Layout";
-import store from "./store";
-import { Form } from "./components/common/Form";
-import { loginAction, registrationAction } from "./store/auth/actions";
-import { loginValidationSchema } from "./helpers/loginValidationSchema";
-import { registerValidationSchema } from "./helpers/registrationValidationSchema";
+} from "constants/forms/registrationFormsFields";
+import { RoutesUrls } from "constants/routes";
+
+import store from "store/store";
+import { loginAction, registrationAction } from "store/auth/actions";
+
+import { Layout } from "components/Layout";
+import { Board } from "components/Board/Board";
+import { Form } from "components/common/Form";
+
+import { loginValidationSchema } from "helpers/login/loginValidationSchema";
+import { registerValidationSchema } from "helpers/registration/registrationValidationSchema";
+
+const { MAIN, LOGIN, REGISTRATION, BOARD } = RoutesUrls;
 
 const App = () => (
   <BrowserRouter>
     <Provider store={store}>
       <CssBaseline />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path={MAIN} element={<Layout />}>
           <Route
-            path="/login"
+            path={LOGIN}
             element={
               <Form
                 title="Log In"
@@ -38,7 +46,7 @@ const App = () => (
             }
           />
           <Route
-            path="/registration"
+            path={REGISTRATION}
             element={
               <Form
                 title="Registration"
@@ -50,7 +58,7 @@ const App = () => (
               />
             }
           />
-          <Route path="/board" element={<Board />} />
+          <Route path={BOARD} element={<Board />} />
         </Route>
       </Routes>
     </Provider>

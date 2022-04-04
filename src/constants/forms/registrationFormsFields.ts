@@ -1,30 +1,32 @@
+import { v1 } from "uuid";
+
 export const registrationFormFields = [
   {
-    id: `name-${new Date().getTime()}`,
+    id: v1(),
     name: "name",
     type: "text",
     label: "Name",
   },
   {
-    id: `lastName-${new Date().getTime()}`,
+    id: v1(),
     name: "lastName",
     type: "text",
     label: "Last Name",
   },
   {
-    id: `email-${new Date().getTime()}`,
+    id: v1(),
     name: "email",
     type: "text",
     label: "Email",
   },
   {
-    id: `password-${new Date().getTime()}`,
+    id: v1(),
     name: "password",
     type: "password",
     label: "Password",
   },
   {
-    id: `confirmPassword-${new Date().getTime()}`,
+    id: v1(),
     name: "confirmPassword",
     type: "password",
     label: "Confirm password",
