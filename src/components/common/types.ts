@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { SchemaOf } from "yup";
 
 import {
@@ -25,4 +26,12 @@ export type FormPropsType = {
   buttonText: string;
   onSubmit: (values: InitialValuesFormType) => void;
   validationSchema: SchemaOf<ValidationSchemaTypes>;
+};
+
+export type ModalPropsType = {
+  title?: string;
+  show: boolean;
+  close: (show: boolean) => void;
+  onSubmit?: () => void;
+  children: ReactNode;
 };
