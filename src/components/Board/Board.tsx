@@ -1,10 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
-import { selectUserState } from "store/auth/selectors";
+import { Container } from "@mui/material";
 
-export const Board = () => {
-  const userName = useSelector(selectUserState);
+import { boardsNamesColumns } from "constants/board/boards";
 
-  return <h1>{`Your name: ${userName || "No name"}`}</h1>;
-};
+import { BoardHeader } from "./BoardHeader/BoardHeader";
+import { BoardColumns } from "./BoardColumns/BoardColumns";
+
+export const Board = () => (
+  <Container maxWidth="lg">
+    <BoardHeader />
+    <BoardColumns boardsColumns={boardsNamesColumns} />
+  </Container>
+);
