@@ -12,7 +12,7 @@ import {
 
 import { RootStateType } from "store/store";
 import {
-  ActionTypes,
+  AuthActionTypes,
   AuthReducerActionsTypes,
   AuthResponseType,
   AuthUserType,
@@ -27,29 +27,29 @@ import {
 const { LOGIN, REGISTER } = Endpoints;
 
 export const loginStarted = (): LoginStartedType => ({
-  type: ActionTypes.LOGIN_STARTED,
+  type: AuthActionTypes.LOGIN_STARTED,
 });
 
 export const loginSuccess = (payload: AuthUserType): LoginSuccessType => ({
-  type: ActionTypes.LOGIN_SUCCESS,
+  type: AuthActionTypes.LOGIN_SUCCESS,
   payload,
 });
 
 export const loginFailure = (payload: string): LoginFailureType => ({
-  type: ActionTypes.LOGIN_FAILURE,
+  type: AuthActionTypes.LOGIN_FAILURE,
   payload,
 });
 
 export const registerStarted = (): RegisterStartedType => ({
-  type: ActionTypes.REGISTER_STARTED,
+  type: AuthActionTypes.REGISTER_STARTED,
 });
 
 export const registerSuccess = (): RegisterSuccessType => ({
-  type: ActionTypes.REGISTER_SUCCESS,
+  type: AuthActionTypes.REGISTER_SUCCESS,
 });
 
 export const registerFailure = (payload: string): RegisterFailureType => ({
-  type: ActionTypes.REGISTER_FAILURE,
+  type: AuthActionTypes.REGISTER_FAILURE,
   payload,
 });
 

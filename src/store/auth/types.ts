@@ -1,4 +1,4 @@
-export enum ActionTypes {
+export enum AuthActionTypes {
   LOGIN_STARTED = "LOGIN_STARTED",
   LOGIN_SUCCESS = "LOGIN_SUCCESS",
   LOGIN_FAILURE = "LOGIN_FAILURE",
@@ -28,29 +28,29 @@ export type AuthResponseType = {
 };
 
 export type LoginStartedType = {
-  type: ActionTypes.LOGIN_STARTED;
+  type: AuthActionTypes.LOGIN_STARTED;
 };
 
 export type LoginSuccessType = {
-  type: ActionTypes.LOGIN_SUCCESS;
+  type: AuthActionTypes.LOGIN_SUCCESS;
   payload: AuthUserType;
 };
 
 export type LoginFailureType = {
-  type: ActionTypes.LOGIN_FAILURE;
+  type: AuthActionTypes.LOGIN_FAILURE;
   payload: string | null;
 };
 
 export type RegisterStartedType = {
-  type: ActionTypes.REGISTER_STARTED;
+  type: AuthActionTypes.REGISTER_STARTED;
 };
 
 export type RegisterSuccessType = {
-  type: ActionTypes.REGISTER_SUCCESS;
+  type: AuthActionTypes.REGISTER_SUCCESS;
 };
 
 export type RegisterFailureType = {
-  type: ActionTypes.REGISTER_FAILURE;
+  type: AuthActionTypes.REGISTER_FAILURE;
   payload: string | null;
 };
 
