@@ -4,6 +4,7 @@ import { Box, Button, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useDispatch } from "react-redux";
 import { showModal } from "store/modals/actions";
+import { CardsCreator } from "components/CardsCreator/CardsCreator";
 
 export const BoardControlPanel = () => {
   const dispatch = useDispatch();
@@ -13,10 +14,10 @@ export const BoardControlPanel = () => {
       <Button
         variant="outlined"
         color="primary"
-        onClick={() => dispatch(showModal("test", <div />))}
+        onClick={() => dispatch(showModal("test", <CardsCreator />))}
       >
         <AddCircleIcon fontSize="small" />
-        <Typography variant="button">Add Task</Typography>
+        <Typography variant="button">Add Card</Typography>
       </Button>
     </Box>
   );
