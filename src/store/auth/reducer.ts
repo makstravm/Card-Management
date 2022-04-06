@@ -1,5 +1,5 @@
 import {
-  ActionTypes,
+  AuthActionTypes,
   AuthReducerActionsTypes,
   InitialStateAuthType,
 } from "./types";
@@ -17,7 +17,7 @@ const {
   REGISTER_STARTED,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-} = ActionTypes;
+} = AuthActionTypes;
 
 export const authReducer = (
   state = initialState,

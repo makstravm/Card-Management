@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Grid, Paper, Typography } from "@mui/material";
+
 import { BoardColumnsPropsType } from "./types";
 
 export const BoardColumns = ({ boardsColumns }: BoardColumnsPropsType) => (

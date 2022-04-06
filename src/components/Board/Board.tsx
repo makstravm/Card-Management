@@ -4,12 +4,12 @@ import { Container } from "@mui/material";
 
 import { boardsNamesColumns } from "constants/board/boards";
 
-import { BoardHeader } from "./BoardHeader/BoardHeader";
 import { BoardColumns } from "./BoardColumns/BoardColumns";
+import { BoardControlPanel } from "./BoardControlPanel/BoardControlPanel";
 
 export const Board = () => (
   <Container maxWidth="lg">
-    <BoardHeader />
+    <BoardControlPanel />
     <BoardColumns boardsColumns={boardsNamesColumns} />
   </Container>
 );

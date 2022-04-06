@@ -34,7 +34,7 @@
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
     "default-param-last": "off",
-    "@typescript-eslint/default-param-last": ["error"],
+    "@typescript-eslint/default-param-last": ["off"],
     "no-use-before-define": "off",
     "import/prefer-default-export": "off",
     "no-console": 1,
