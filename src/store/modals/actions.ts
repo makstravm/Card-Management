@@ -6,8 +6,8 @@ import {
 } from "./types";
 
 export const showModal = (
-  title?: string,
-  component?: ReactNode
+  title: string,
+  component: ReactNode
 ): ShowModalActionType => ({
   type: ModalActionTypes.SHOW_MODAL,
   title,

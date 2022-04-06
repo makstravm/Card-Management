@@ -14,7 +14,7 @@ const { SHOW_MODAL, HIDE_MODAL } = ModalActionTypes;
 
 export const modalReducer = (
   state = initialState,
-  action?: ModalReducerActionsTypes
+  action: ModalReducerActionsTypes
 ) => {
   switch (action.type) {
     case SHOW_MODAL:
@@ -22,13 +22,14 @@ export const modalReducer = (
         ...state,
         showModal: true,
         title: action.title,
-        component: action?.component,
+        component: action.component,
       };
 
     case HIDE_MODAL:
       return {
         ...state,
         showModal: false,
+        title: "",
         component: null,
       };
 

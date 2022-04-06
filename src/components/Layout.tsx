@@ -11,7 +11,6 @@ export const Layout = () => (
     <Header linksNavBar={links} />
     <Outlet />
     <footer>Footer</footer>
-
     <Modal />
   </>
 );

@@ -13,7 +13,7 @@ export const BoardControlPanel = () => {
       <Button
         variant="outlined"
         color="primary"
-        onClick={() => dispatch(showModal())}
+        onClick={() => dispatch(showModal("test", <div />))}
       >
         <AddCircleIcon fontSize="small" />
         <Typography variant="button">Add Task</Typography>

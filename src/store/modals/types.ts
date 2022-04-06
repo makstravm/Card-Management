@@ -7,19 +7,17 @@ export enum ModalActionTypes {
 
 export type InitialStateModalType = {
   showModal: boolean;
-  title?: string;
-  component?: ReactNode | null;
+  title: string;
+  component: ReactNode | null;
 };
 
 export type ShowModalActionType = {
   type: ModalActionTypes.SHOW_MODAL;
-  title?: string;
-  component?: ReactNode;
+  title: string;
+  component: ReactNode;
 };
 export type HideModalActionType = {
   type: ModalActionTypes.HIDE_MODAL;
-  title?: string;
-  component?: ReactNode;
 };
 
 export type ModalReducerActionsTypes =
