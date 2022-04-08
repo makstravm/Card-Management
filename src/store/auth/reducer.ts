@@ -1,8 +1,7 @@
-import { InitialState } from "store/types";
 import {
   AuthActionTypes,
   AuthReducerActionsTypes,
-  AuthUserType,
+  InitialStateAuthType,
 } from "./types";
 
 const {
@@ -14,8 +13,8 @@ const {
   REGISTER_FAILURE,
 } = AuthActionTypes;
 
-const initailState: InitialState<AuthUserType> = {
-  data: null,
+const initailState: InitialStateAuthType = {
+  user: null,
   loading: false,
   error: null,
 };
@@ -35,7 +34,7 @@ export const authReducer = (
       return {
         ...state,
         loading: false,
-        data: { ...action.payload },
+        user: { ...action.payload },
         error: null,
       };
 
@@ -43,7 +42,7 @@ export const authReducer = (
       return {
         ...state,
         loading: false,
-        data: null,
+        user: null,
         error: action.payload,
       };
 
@@ -63,7 +62,7 @@ export const authReducer = (
       return {
         ...state,
         loading: false,
-        data: null,
+        user: null,
         error: action.payload,
       };
 

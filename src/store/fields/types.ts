@@ -6,19 +6,18 @@ export enum FieldsActionTypes {
 
 export type FieldTypes = "text" | "checkbox" | "select";
 
-export type FieldsStateType = {
+export type FieldStateType = {
+  id?: number;
   name: string;
   type: FieldTypes;
   required: boolean;
-  option?: string[];
+  options: string[] | [];
 };
 
-export type FieldsStateResponseType = {
-  id: number;
-  name: string;
-  type: FieldTypes;
-  required: boolean;
-  option?: string[];
+export type InitialStateFieldsListType = {
+  fieldsList: FieldStateType[];
+  error: string | null;
+  loading: boolean;
 };
 
 export type FieldsStartedType = {
@@ -27,7 +26,7 @@ export type FieldsStartedType = {
 
 export type FieldsSuccessType = {
   type: FieldsActionTypes.FIELDS_SUCCESS;
-  payload: FieldsStateType;
+  payload: FieldStateType;
 };
 
 export type FieldsFailureType = {

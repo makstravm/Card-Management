@@ -1,15 +1,13 @@
-import { InitialState } from "store/types";
-
 import {
   FieldsActionTypes,
   FieldsReducerActionsTypes,
-  FieldsStateType,
+  InitialStateFieldsListType,
 } from "./types";
 
 const { FIELDS_STARTED, FIELDS_SUCCESS, FIELDS_FAILURE } = FieldsActionTypes;
 
-const initailState: InitialState<FieldsStateType> = {
-  data: null,
+const initailState: InitialStateFieldsListType = {
+  fieldsList: [],
   loading: false,
   error: null,
 };
@@ -29,7 +27,7 @@ export const fieldsReducer = (
       return {
         ...state,
         loading: false,
-        data: action.payload,
+        fieldsList: [...state.fieldsList, action.payload],
         error: null,
       };
 
@@ -37,7 +35,7 @@ export const fieldsReducer = (
       return {
         ...state,
         loading: false,
-        data: null,
+        fieldsList: null,
         error: action.payload,
       };
 
