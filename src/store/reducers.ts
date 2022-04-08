@@ -7,5 +7,5 @@ import { authReducer } from "./auth/reducer";
 export const rootReducer = combineReducers({
   auth: authReducer,
   modal: modalReducer,
-  field: fieldsReducer,
+  fields: fieldsReducer,
 });

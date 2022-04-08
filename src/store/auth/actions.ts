@@ -61,12 +61,12 @@ export const loginAction =
     dispatch(loginStarted());
     try {
       const {
-        data: { user, accessToken },
-      } = await POST<AuthResponseType>(LOGIN, values);
+        data: { data, accessToken },
+      } = await POST<AuthResponseType, LoginInitialValueType>(LOGIN, values);
 
       Cookies.set("token", accessToken);
 
-      dispatch(loginSuccess(user));
+      dispatch(loginSuccess(data));
     } catch (error) {
       dispatch(loginFailure(error));
     }
@@ -79,7 +79,10 @@ export const registrationAction =
   async (dispatch) => {
     dispatch(registerStarted());
     try {
-      await POST<AuthResponseType>(REGISTER, values);
+      await POST<AuthResponseType, RegistrationInitialValueType>(
+        REGISTER,
+        values
+      );
       dispatch(registerSuccess());
       dispatch(loginAction(values));
     } catch (error) {

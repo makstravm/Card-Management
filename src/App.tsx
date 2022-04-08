@@ -65,4 +65,5 @@ const App = () => (
   </BrowserRouter>
 );
 
+store.subscribe(() => store.getState());
 export default App;

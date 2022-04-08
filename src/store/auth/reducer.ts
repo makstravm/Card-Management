@@ -1,14 +1,9 @@
+import { InitialState } from "store/types";
 import {
   AuthActionTypes,
   AuthReducerActionsTypes,
-  InitialStateAuthType,
+  AuthUserType,
 } from "./types";
-
-const initialState: InitialStateAuthType = {
-  user: null,
-  error: null,
-  loading: false,
-};
 
 const {
   LOGIN_STARTED,
@@ -19,8 +14,14 @@ const {
   REGISTER_FAILURE,
 } = AuthActionTypes;
 
+const initailState: InitialState<AuthUserType> = {
+  data: null,
+  loading: false,
+  error: null,
+};
+
 export const authReducer = (
-  state = initialState,
+  state = initailState,
   action: AuthReducerActionsTypes
 ) => {
   switch (action.type) {
@@ -34,7 +35,7 @@ export const authReducer = (
       return {
         ...state,
         loading: false,
-        user: { ...action.payload },
+        data: { ...action.payload },
         error: null,
       };
 
@@ -42,7 +43,7 @@ export const authReducer = (
       return {
         ...state,
         loading: false,
-        user: null,
+        data: null,
         error: action.payload,
       };
 
@@ -62,7 +63,7 @@ export const authReducer = (
       return {
         ...state,
         loading: false,
-        user: null,
+        data: null,
         error: action.payload,
       };
 

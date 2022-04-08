@@ -1,8 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { errorBoundary } from "../services/errorBoundary";
 
-import { PostRequestValuesTypes } from "./types";
-
 const axiosInstance = axios.create({
   baseURL: process.env.BASE_URL,
 });
@@ -33,9 +31,9 @@ export const GET = (api: string) => {
   return result;
 };
 
-export const POST = <T>(
+export const POST = <T, V>(
   api: string,
-  values: PostRequestValuesTypes
+  values: V
 ): Promise<AxiosResponse<T>> => {
   const result = axiosInstance.post(api, values);
 

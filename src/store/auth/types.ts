@@ -16,15 +16,9 @@ export type AuthUserType = {
   id: number;
 };
 
-export type InitialStateAuthType = {
-  user: AuthUserType | null;
-  error: string | null;
-  loading: boolean;
-};
-
 export type AuthResponseType = {
   accessToken: string | null;
-  user: AuthUserType | null;
+  data: AuthUserType | null;
 };
 
 export type LoginStartedType = {
