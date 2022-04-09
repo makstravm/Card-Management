@@ -21,8 +21,13 @@ export const FieldTypeCreator = () => {
 
   return (
     <Box pt={2}>
-      <Box pb={2}>
-        <FormControl>
+      <Box>
+        <FormControl
+          sx={{
+            maxWidth: "225px",
+            width: "100%",
+          }}
+        >
           <InputLabel id="select-label">Type</InputLabel>
           <Select
             value={typeField}
@@ -38,10 +43,10 @@ export const FieldTypeCreator = () => {
             ))}
           </Select>
         </FormControl>
-        {typeField === "text" && <FieldCreator type={typeField} />}
-        {typeField === "checkbox" && <FieldCreator type={typeField} />}
-        {typeField === "select" && <FieldCreator type={typeField} />}
       </Box>
+      {typeField === "text" && <FieldCreator type={typeField} />}
+      {typeField === "checkbox" && <FieldCreator type={typeField} />}
+      {typeField === "select" && <FieldCreator type={typeField} />}
     </Box>
   );
 };

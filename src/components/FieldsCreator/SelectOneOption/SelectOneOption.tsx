@@ -7,6 +7,7 @@ import { OptionPropsType } from "./types";
 
 export const SelectOneOption = ({
   value,
+  optionsCount,
   onChange,
   onDelete,
   onMoveDown,
@@ -16,7 +17,7 @@ export const SelectOneOption = ({
     onChange(e.currentTarget.value);
 
   return (
-    <Grid container spacing={2} alignItems="center" pb={2}>
+    <Grid container alignItems="center" pb={2}>
       <Grid item>
         <TextField
           size="small"
@@ -26,20 +27,22 @@ export const SelectOneOption = ({
         />
       </Grid>
       <Grid item>
-        <IconButton onClick={() => onMoveUp()}>
-          <ArrowCircleUpIcon fontSize="small" />
+        <IconButton onClick={() => onMoveUp()} size="small">
+          <ArrowCircleUpIcon />
         </IconButton>
       </Grid>
       <Grid item>
-        <IconButton onClick={() => onMoveDown()}>
-          <ArrowCircleDownIcon fontSize="small" />
+        <IconButton onClick={() => onMoveDown()} size="small">
+          <ArrowCircleDownIcon />
         </IconButton>
       </Grid>
-      <Grid item>
-        <IconButton onClick={() => onDelete()}>
-          <DeleteForeverIcon fontSize="small" />
-        </IconButton>
-      </Grid>
+      {optionsCount > 2 && (
+        <Grid item>
+          <IconButton onClick={() => onDelete()} size="small">
+            <DeleteForeverIcon />
+          </IconButton>
+        </Grid>
+      )}
     </Grid>
   );
 };

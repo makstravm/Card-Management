@@ -1,57 +1,50 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { v1 } from "uuid";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
+import { OptionsType } from "store/fields/types";
 import { SelectOptionsPropsType } from "./types";
 import { SelectOneOption } from "../SelectOneOption/SelectOneOption";
 
-export const SelectOptions = ({
-  onSave,
-  options,
-  changeOptions,
-}: SelectOptionsPropsType) => {
-  const [optionsId, setOptionsId] = useState<string[]>(options.map(() => v1()));
+const optionsItems: OptionsType[] = [
+  { id: v1(), value: "" },
+  { id: v1(), value: "" },
+];
 
-  useEffect(() => {}, [options]);
+export const SelectOptions = ({ onSave }: SelectOptionsPropsType) => {
+  const [options, setOptions] = useState<OptionsType[]>(optionsItems);
 
   const onChange = (value: string, id: string) =>
-    changeOptions(
-      options.map((option, i) => (optionsId[i] === id ? value : option))
+    setOptions(
+      options.map((option: OptionsType) =>
+        option.id === id ? { ...option, value } : option
+      )
     );
 
+  const addOption = () => {
+    setOptions([...options, { id: v1(), value: "" }]);
+  };
+
   const onDelete = (id: string) => {
-    changeOptions(
-      [...options].filter((option, i) => optionsId[i] !== id && option)
-    );
-    setOptionsId(
-      [...optionsId].filter((optionId, i) => optionsId[i] !== id && optionId)
-    );
+    setOptions([...options].filter((option) => option.id !== id && option));
   };
 
   const onMoveUp = (i: number) => {
     const newOptions = [...options];
 
-    const newOptionsId = [...optionsId];
-
     if (i !== 0) {
       newOptions.splice(i - 1, 2, options[i], options[i - 1]);
-      newOptionsId.splice(i - 1, 2, optionsId[i], optionsId[i - 1]);
-      changeOptions(newOptions);
-      setOptionsId(newOptionsId);
+      setOptions(newOptions);
     }
   };
 
   const onMoveDown = (i: number) => {
     const newOptions = [...options];
 
-    const newOptionsId = [...optionsId];
-
     if (i !== newOptions.length - 1) {
       newOptions.splice(i, 2, options[i + 1], options[i]);
-      newOptionsId.splice(i, 2, optionsId[i + 1], optionsId[i]);
-      changeOptions(newOptions);
-      setOptionsId(newOptionsId);
+      setOptions(newOptions);
     }
   };
 
@@ -63,25 +56,26 @@ export const SelectOptions = ({
         <Typography variant="subtitle2">Options</Typography>
       </Divider>
       <Box pt={2}>
-        {options?.map((option: string, i: number) => (
+        {options?.map(({ id, value }, i) => (
           <SelectOneOption
-            key={optionsId[i] || i}
-            value={option}
-            onChange={(value: string) => onChange(value, optionsId[i])}
+            key={id}
+            value={value}
+            optionsCount={options?.length}
+            onChange={(newValue: string) => onChange(newValue, id)}
             onMoveUp={() => onMoveUp(i)}
             onMoveDown={() => onMoveDown(i)}
-            onDelete={() => onDelete(optionsId[i])}
+            onDelete={() => onDelete(id)}
           />
         ))}
       </Box>
-      <Box>
-        <Button variant="text" onClick={onSaveField}>
+      <Box pb={2} textAlign="center">
+        <Button variant="text" onClick={addOption}>
           <AddIcon fontSize="small" />
           Add
         </Button>
       </Box>
       <Divider />
-      <Box>
+      <Box textAlign="center" pt={2}>
         <Button variant="outlined" onClick={onSaveField}>
           <SaveIcon fontSize="small" />
           Save

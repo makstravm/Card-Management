@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
   Box,
   Button,
@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { useDispatch } from "react-redux";
+import { OptionsType } from "store/fields/types";
 import { saveFieldAction } from "store/fields/actions";
 import { FieldCreatorPropsType } from "./types";
 import { SelectOptions } from "../SelectOptions/SelectOptions";
@@ -15,17 +16,15 @@ import { SelectOptions } from "../SelectOptions/SelectOptions";
 export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (type === "select") {
-      setOptions(["", ""]);
-    }
-  }, [type]);
+  // useEffect(() => {
+  //   if (type === "select") {
+  //     setOptions(["", ""]);
+  //   }
+  // }, [type]);
 
   const [nameField, setNameField] = useState<string>("");
 
   const [checked, setChecked] = useState<boolean>(false);
-
-  const [options, setOptions] = useState<string[] | []>([]);
 
   const [error, setError] = useState(false);
 
@@ -37,7 +36,9 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
   const changeChekedRequired = (e: ChangeEvent<HTMLInputElement>) =>
     setChecked(e.currentTarget.checked);
 
-  const onSaveField = () => {
+  // const defaultOptions:  = [];
+
+  const onSaveField = (options: OptionsType[] | []) => {
     const validateName = nameField.trim();
 
     if (validateName) {
@@ -76,16 +77,10 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
           />
         )}
       </Box>
-      {type === "select" && !!options.length && (
-        <SelectOptions
-          onSave={onSaveField}
-          options={options}
-          changeOptions={setOptions}
-        />
-      )}
+      {type === "select" && <SelectOptions onSave={onSaveField} />}
       {type !== "select" && (
-        <Box>
-          <Button variant="outlined" onClick={onSaveField}>
+        <Box textAlign="center">
+          <Button variant="outlined" onClick={() => onSaveField([])}>
             <SaveIcon fontSize="small" />
             Save
           </Button>
