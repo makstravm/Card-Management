@@ -8,19 +8,14 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { useDispatch } from "react-redux";
-import { OptionsType } from "store/fields/types";
+import { optionsValidationSchema } from "helpers/optionsValidSchema/optionsValidSchema";
 import { saveFieldAction } from "store/fields/actions";
 import { FieldCreatorPropsType } from "./types";
 import { SelectOptions } from "../SelectOptions/SelectOptions";
+import { OptionsStateType } from "../SelectOptions/types";
 
 export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (type === "select") {
-  //     setOptions(["", ""]);
-  //   }
-  // }, [type]);
 
   const [nameField, setNameField] = useState<string>("");
 
@@ -36,9 +31,7 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
   const changeChekedRequired = (e: ChangeEvent<HTMLInputElement>) =>
     setChecked(e.currentTarget.checked);
 
-  // const defaultOptions:  = [];
-
-  const onSaveField = (options: OptionsType[] | []) => {
+  const onSaveField = ({ options }: OptionsStateType) => {
     const validateName = nameField.trim();
 
     if (validateName) {
@@ -77,10 +70,18 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
           />
         )}
       </Box>
-      {type === "select" && <SelectOptions onSave={onSaveField} />}
+      {type === "select" && (
+        <SelectOptions
+          onSave={onSaveField}
+          validationSchema={optionsValidationSchema}
+        />
+      )}
       {type !== "select" && (
         <Box textAlign="center">
-          <Button variant="outlined" onClick={() => onSaveField([])}>
+          <Button
+            variant="outlined"
+            onClick={() => onSaveField({ options: [] })}
+          >
             <SaveIcon fontSize="small" />
             Save
           </Button>

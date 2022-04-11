@@ -1,3 +1,5 @@
+import { OptionsType } from "store/fields/types";
+
 export type RegisterValidationSchemaType = {
   name: string;
   lastName: string;
@@ -35,4 +37,8 @@ export type LinksNavBarType = {
   id: string;
   title: string;
   link: string;
+};
+
+export type OptionsValidationSchemaTypes = {
+  options: OptionsType[];
 };
