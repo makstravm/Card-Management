@@ -44,9 +44,7 @@ export const FieldTypeCreator = () => {
           </Select>
         </FormControl>
       </Box>
-      {typeField === "text" && <FieldCreator type={typeField} />}
-      {typeField === "checkbox" && <FieldCreator type={typeField} />}
-      {typeField === "select" && <FieldCreator type={typeField} />}
+      <FieldCreator type={typeField} />
     </Box>
   );
 };

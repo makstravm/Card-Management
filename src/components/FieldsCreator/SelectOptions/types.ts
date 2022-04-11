@@ -1,12 +1,10 @@
-import { OptionsValidationSchemaTypes } from "helpers/types";
-import { OptionsType } from "store/fields/types";
-import { SchemaOf } from "yup";
+import { ChangeEventHandler } from "react";
+import { FormikStateType } from "../FieldTextCreator/types";
 
 export type SelectOptionsPropsType = {
-  onSave: (data: OptionsStateType) => void;
-  validationSchema: SchemaOf<OptionsValidationSchemaTypes>;
-};
-
-export type OptionsStateType = {
-  options: OptionsType[] | [];
+  values: FormikStateType;
+  options: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  errors: any;
+  touched: any;
 };

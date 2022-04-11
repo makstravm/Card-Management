@@ -1,34 +1,29 @@
+import { OptionsType } from "store/fields/types";
 import * as Yup from "yup";
 
-Yup.addMethod(Yup.array, "unique", function (field, message) {
-  return this.test("unique", message, function (array) {
-    const uniqueData = Array.from(
-      new Set(array.map((row) => row[field]?.toLowerCase()))
-    );
+export const createFieldValidationSchema = Yup.object().shape({
+  name: Yup.string().required("Field required"),
+  options: Yup.array().of(
+    Yup.object()
+      .shape({
+        value: Yup.string().required("No empty field"),
+      })
+      .test("unique", function array(value) {
+        if (!value || !value.value) {
+          return true;
+        }
+        if (
+          this.parent
+            .filter((v: OptionsType) => v.id !== value.id)
+            .some((v: OptionsType) => v.value === value.value)
+        ) {
+          throw this.createError({
+            path: `${this.path}.value`,
+            message: "Duplicate option",
+          });
+        }
 
-    const isUnique = array.length === uniqueData.length;
-
-    if (isUnique) {
-      return true;
-    }
-    const index = array.findIndex(
-      (row, i) => row[field]?.toLowerCase() !== uniqueData[i]
-    );
-
-    if (array?.[index]?.[field] === "") {
-      return this.createError({
-        path: `${this.path}.${index}.${field}`,
-        message: "Field cann't contain spaces",
-      });
-    }
-
-    return this.createError({
-      path: `${this.path}.${index}.${field}`,
-      message,
-    });
-  });
-});
-
-export const optionsValidationSchema = Yup.object({
-  options: Yup.array().unique<any>("value", "Please provide a unique number."),
+        return true;
+      })
+  ),
 });

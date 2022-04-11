@@ -1,92 +1,119 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Form, Formik, FormikProps } from "formik";
+import { v1 } from "uuid";
+
 import {
   Box,
   Button,
   Checkbox,
+  Divider,
   FormControlLabel,
   TextField,
+  Typography,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
-import { useDispatch } from "react-redux";
-import { optionsValidationSchema } from "helpers/optionsValidSchema/optionsValidSchema";
+
+import { createFieldValidationSchema } from "helpers/optionsValidSchema/optionsValidSchema";
 import { saveFieldAction } from "store/fields/actions";
-import { FieldCreatorPropsType } from "./types";
 import { SelectOptions } from "../SelectOptions/SelectOptions";
-import { OptionsStateType } from "../SelectOptions/types";
+
+import { FieldCreatorPropsType, FormikStateType } from "./types";
 
 export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
   const dispatch = useDispatch();
 
-  const [nameField, setNameField] = useState<string>("");
+  const [requiredCheck, setRequiredCheck] = useState<boolean>(false);
 
-  const [checked, setChecked] = useState<boolean>(false);
-
-  const [error, setError] = useState(false);
-
-  const changeNameField = (e: ChangeEvent<HTMLInputElement>) => {
-    setNameField(e.currentTarget.value);
-    setError(false);
-  };
+  useEffect(() => {
+    setRequiredCheck(false);
+  }, [type]);
 
   const changeChekedRequired = (e: ChangeEvent<HTMLInputElement>) =>
-    setChecked(e.currentTarget.checked);
+    setRequiredCheck(e.currentTarget.checked);
 
-  const onSaveField = ({ options }: OptionsStateType) => {
-    const validateName = nameField.trim();
-
-    if (validateName) {
-      dispatch(
-        saveFieldAction({
-          name: nameField,
-          type,
-          required: checked,
-          options,
-        })
-      );
-    } else {
-      setError(true);
-    }
-  };
+  const onSaveField = ({ name, options }: FormikStateType) =>
+    dispatch(
+      saveFieldAction({
+        name,
+        type,
+        required: requiredCheck,
+        options: (type !== "select" && []) || options,
+      })
+    );
 
   return (
-    <Box pt={2}>
-      <Box pb={2}>
-        <TextField
-          value={nameField}
-          onChange={changeNameField}
-          size="small"
-          label="Name Field"
-          error={error}
-          helperText={error && "Please fill in the field"}
-        />
-        {type === "text" && (
-          <FormControlLabel
-            labelPlacement="start"
-            sx={{ paddingLeft: "10px" }}
-            label="Required"
-            control={
-              <Checkbox checked={checked} onChange={changeChekedRequired} />
-            }
-          />
-        )}
-      </Box>
-      {type === "select" && (
-        <SelectOptions
-          onSave={onSaveField}
-          validationSchema={optionsValidationSchema}
-        />
+    <Formik
+      initialValues={{
+        name: "",
+        options: [
+          { id: v1(), value: "" },
+          { id: v1(), value: "" },
+        ],
+      }}
+      onSubmit={async (values) => onSaveField(values)}
+      validationSchema={createFieldValidationSchema}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        isValid,
+        dirty,
+      }: FormikProps<FormikStateType>) => (
+        <Form>
+          <Box pt={2}>
+            <Box pb={2}>
+              <TextField
+                label="Name Field"
+                name="name"
+                onChange={handleChange}
+                size="small"
+                error={!!(touched.name && errors.name)}
+                helperText={touched.name && errors.name}
+              />
+              {type === "text" && (
+                <FormControlLabel
+                  labelPlacement="start"
+                  sx={{ paddingLeft: "10px" }}
+                  label="Required"
+                  control={
+                    <Checkbox
+                      checked={requiredCheck}
+                      onChange={changeChekedRequired}
+                    />
+                  }
+                />
+              )}
+            </Box>
+            {type === "select" && (
+              <>
+                <Divider textAlign="left" sx={{ paddingBottom: "15px" }}>
+                  <Typography variant="subtitle2">Options</Typography>
+                </Divider>
+                <SelectOptions
+                  options="options"
+                  values={values}
+                  onChange={handleChange}
+                  errors={errors}
+                  touched={touched}
+                />
+              </>
+            )}
+          </Box>
+          <Box display="flex" justifyContent="center">
+            <Button
+              variant="outlined"
+              type="submit"
+              disabled={!isValid && !dirty}
+            >
+              <SaveIcon fontSize="small" />
+              Save
+            </Button>
+          </Box>
+        </Form>
       )}
-      {type !== "select" && (
-        <Box textAlign="center">
-          <Button
-            variant="outlined"
-            onClick={() => onSaveField({ options: [] })}
-          >
-            <SaveIcon fontSize="small" />
-            Save
-          </Button>
-        </Box>
-      )}
-    </Box>
+    </Formik>
   );
 };
