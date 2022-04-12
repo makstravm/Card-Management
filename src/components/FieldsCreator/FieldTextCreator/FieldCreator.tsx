@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Form, Formik, FormikProps } from "formik";
-import { v1 } from "uuid";
 
 import {
   Box,
@@ -46,10 +45,7 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
     <Formik
       initialValues={{
         name: "",
-        options: [
-          { id: v1(), value: "" },
-          { id: v1(), value: "" },
-        ],
+        options: [],
       }}
       onSubmit={async (values) => onSaveField(values)}
       validationSchema={createFieldValidationSchema}

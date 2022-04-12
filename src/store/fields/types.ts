@@ -20,7 +20,7 @@ export type FieldStateType = {
 };
 
 export type InitialStateFieldsListType = {
-  fieldsList: FieldStateType[];
+  fieldsList: FieldStateType[] | [];
   error: string | null;
   loading: boolean;
 };

@@ -1,4 +1,4 @@
-import { POST } from "api/api";
+import { GET, POST } from "api/api";
 import { ThunkAction } from "redux-thunk";
 import { RootStateType } from "store/store";
 import {
@@ -35,6 +35,19 @@ export const saveFieldAction =
         "fields",
         values
       );
+
+      dispatch(fieldsSuccess(data));
+    } catch (error) {
+      dispatch(fieldsFailure(error));
+    }
+  };
+
+export const getAllFieldction =
+  (): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsStarted());
+    try {
+      const { data } = await GET("fields");
 
       dispatch(fieldsSuccess(data));
     } catch (error) {
