@@ -1,7 +1,11 @@
-import { OptionsType } from "store/fields/types";
 import * as Yup from "yup";
+import { FieldTypes, OptionsType } from "store/fields/types";
 
-export const createFieldValidationSchema = Yup.object().shape({
+export const switchedFieldCreateValidation = (type: FieldTypes) =>
+  (type === "select" && createFieldValidationSchema) ||
+  createFieldSelectValidationSchema;
+
+const createFieldValidationSchema = Yup.object().shape({
   name: Yup.string().required("Field required"),
   options: Yup.array()
     .min(2, "Minimum 2 options")
@@ -28,4 +32,8 @@ export const createFieldValidationSchema = Yup.object().shape({
           return true;
         })
     ),
+});
+
+const createFieldSelectValidationSchema = Yup.object().shape({
+  name: Yup.string().required("Field required"),
 });

@@ -1,31 +1,24 @@
-import {
-  Box,
-  Button,
-  CardContent,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllFieldction } from "store/fields/actions";
 import { selectFieldsList } from "store/fields/selectors";
-import { FieldsStartedType } from "store/fields/types";
+import { FieldStateType } from "store/fields/types";
 
 export const FieldsList = () => {
   const dispatch = useDispatch();
 
-  const fieldsList = useSelector(selectFieldsList);
+  const fieldsList: any = useSelector(selectFieldsList);
 
   useEffect(() => {
     dispatch(getAllFieldction());
   }, []);
-  console.log(fieldsList);
 
   return (
     <Box>
-      {fieldsList?.map(({ name, type, id }: FieldsStartedType) => (
+      {fieldsList?.map(({ name, type, id }: FieldStateType) => (
         <Grid
+          key={id}
           container
           spacing={2}
           alignItems="center"
