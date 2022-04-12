@@ -4,12 +4,6 @@ import {
   InitialStateAuthType,
 } from "./types";
 
-const initialState: InitialStateAuthType = {
-  user: null,
-  error: null,
-  loading: false,
-};
-
 const {
   LOGIN_STARTED,
   LOGIN_SUCCESS,
@@ -19,9 +13,15 @@ const {
   REGISTER_FAILURE,
 } = AuthActionTypes;
 
+const initailState: InitialStateAuthType = {
+  user: null,
+  loading: false,
+  error: null,
+};
+
 export const authReducer = (
-  state = initialState,
-  action?: AuthReducerActionsTypes
+  state = initailState,
+  action: AuthReducerActionsTypes
 ) => {
   switch (action.type) {
     case LOGIN_STARTED:

@@ -18,13 +18,13 @@ export type AuthUserType = {
 
 export type InitialStateAuthType = {
   user: AuthUserType | null;
-  error: string | null;
   loading: boolean;
+  error: string | null;
 };
 
 export type AuthResponseType = {
   accessToken: string | null;
-  user: AuthUserType | null;
+  data: AuthUserType | null;
 };
 
 export type LoginStartedType = {
