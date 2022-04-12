@@ -1,9 +1,11 @@
 export enum FieldsActionTypes {
-  FIELDS_STARTED = "FIELDS_STARTED",
-  FIELDS_SUCCESS = "FIELDS_SUCCESS",
-  FIELDS_FAILURE = "FIELDS_FAILURE",
+  SET_FIELD_STARTED = "SET_FIELD_STARTED",
+  SET_FIELD_SUCCESS = "SET_FIELD_SUCCESS",
+  SET_FIELD_FAILURE = "SET_FIELD_FAILURE",
+  GET_FIELDS_STARTED = "GET_FIELDS_STARTED",
+  GET_FIELDS_SUCCESS = "GET_FIELDS_SUCCESS",
+  GET_FIELDS_FAILURE = "GET_FIELDS_FAILURE",
 }
-
 export type FieldTypes = "text" | "checkbox" | "select";
 
 export type OptionsType = {
@@ -25,21 +27,37 @@ export type InitialStateFieldsListType = {
   loading: boolean;
 };
 
-export type FieldsStartedType = {
-  type: FieldsActionTypes.FIELDS_STARTED;
+export type SetFieldStartedType = {
+  type: FieldsActionTypes.SET_FIELD_STARTED;
 };
 
-export type FieldsSuccessType = {
-  type: FieldsActionTypes.FIELDS_SUCCESS;
+export type SetFieldSuccessType = {
+  type: FieldsActionTypes.SET_FIELD_SUCCESS;
   payload: FieldStateType;
 };
 
-export type FieldsFailureType = {
-  type: FieldsActionTypes.FIELDS_FAILURE;
+export type SetFieldFailureType = {
+  type: FieldsActionTypes.SET_FIELD_FAILURE;
+  payload: string | null;
+};
+export type GetFieldsStartedType = {
+  type: FieldsActionTypes.GET_FIELDS_STARTED;
+};
+
+export type GetFieldsSuccessType = {
+  type: FieldsActionTypes.GET_FIELDS_SUCCESS;
+  payload: FieldStateType[];
+};
+
+export type GetFieldsFailureType = {
+  type: FieldsActionTypes.GET_FIELDS_FAILURE;
   payload: string | null;
 };
 
 export type FieldsReducerActionsTypes =
-  | FieldsFailureType
-  | FieldsSuccessType
-  | FieldsStartedType;
+  | SetFieldFailureType
+  | SetFieldSuccessType
+  | SetFieldStartedType
+  | GetFieldsFailureType
+  | GetFieldsSuccessType
+  | GetFieldsStartedType;

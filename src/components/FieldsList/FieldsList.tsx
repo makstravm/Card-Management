@@ -3,12 +3,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllFieldction } from "store/fields/actions";
 import { selectFieldsList } from "store/fields/selectors";
-import { FieldStateType } from "store/fields/types";
 
 export const FieldsList = () => {
   const dispatch = useDispatch();
 
-  const fieldsList: any = useSelector(selectFieldsList);
+  const fieldsList = useSelector(selectFieldsList);
 
   useEffect(() => {
     dispatch(getAllFieldction());
@@ -16,7 +15,7 @@ export const FieldsList = () => {
 
   return (
     <Box>
-      {fieldsList?.map(({ name, type, id }: FieldStateType) => (
+      {fieldsList.map(({ name, type, id }) => (
         <Grid
           key={id}
           container
