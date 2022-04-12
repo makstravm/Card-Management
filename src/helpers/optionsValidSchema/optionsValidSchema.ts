@@ -14,8 +14,8 @@ export const createFieldValidationSchema = Yup.object().shape({
         }
         if (
           this.parent
-            .filter((v: OptionsType) => v.id !== value.id)
-            .some((v: OptionsType) => v.value === value.value)
+            .filter((val: OptionsType) => val.id !== value.id)
+            .some((val: OptionsType) => val.value === value.value)
         ) {
           throw this.createError({
             path: `${this.path}.value`,

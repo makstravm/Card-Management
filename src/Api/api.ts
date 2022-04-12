@@ -31,9 +31,9 @@ export const GET = (api: string) => {
   return result;
 };
 
-export const POST = <T, V>(
+export const POST = <T, Y>(
   api: string,
-  values: V
+  values: Y
 ): Promise<AxiosResponse<T>> => {
   const result = axiosInstance.post(api, values);
 
