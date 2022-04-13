@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 import { TextField } from "@mui/material";
 import { CardCreatorTextPropsType } from "./types";
@@ -12,6 +12,10 @@ export const CardCreatorText = ({
   const [valueField, setValue] = useState("");
 
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    handleChangeCard({ ...card, [name]: valueField });
+  }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.currentTarget.value);

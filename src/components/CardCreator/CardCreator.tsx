@@ -22,7 +22,11 @@ export const CardCreator = () => {
     dispatch(getAllFieldction());
   }, []);
 
-  const onSave = () => {};
+  const onSave = () => {
+    console.log(card);
+
+    // dispatch(saveCardAction(card));
+  };
 
   return (
     <Box className="FieldsList">
