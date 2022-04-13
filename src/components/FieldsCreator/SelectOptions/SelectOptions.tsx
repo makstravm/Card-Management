@@ -3,7 +3,14 @@ import React from "react";
 import { v1 } from "uuid";
 import { FieldArray } from "formik";
 
-import { Box, Button, Grid, IconButton, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -52,6 +59,16 @@ export const SelectOptions = ({
             )}
           </Grid>
         ))}
+        {values.options.length < 2 && (
+          <Box textAlign="center">
+            <Typography
+              variant="caption"
+              color={typeof errors?.options === "string" && "red"}
+            >
+              Minimum 2 options
+            </Typography>{" "}
+          </Box>
+        )}
         <Box pb={2} textAlign="center">
           <Button variant="text" onClick={() => push({ id: v1(), value: "" })}>
             <AddIcon fontSize="small" />

@@ -1,0 +1,9 @@
+.FieldsItem {
+  &__name {
+    display: flex;
+    align-items: center;
+  }
+  .FieldsItem__name.MuiGrid-item {
+    padding: 0;
+  }
+}

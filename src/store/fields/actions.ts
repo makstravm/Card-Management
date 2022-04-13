@@ -1,26 +1,38 @@
-import { POST } from "api/api";
+import { GET, POST } from "api/api";
 import { ThunkAction } from "redux-thunk";
 import { RootStateType } from "store/store";
 import {
+  FieldsActionFailureType,
+  FieldsActionStartedType,
   FieldsActionTypes,
-  FieldsFailureType,
   FieldsReducerActionsTypes,
-  FieldsStartedType,
-  FieldsSuccessType,
   FieldStateType,
+  GetFieldsSuccessType,
+  SetFieldSuccessType,
 } from "./types";
 
-export const fieldsStarted = (): FieldsStartedType => ({
-  type: FieldsActionTypes.FIELDS_STARTED,
+export const fieldsActionStarted = (): FieldsActionStartedType => ({
+  type: FieldsActionTypes.FIELDS_ACTION_STARTED,
 });
 
-export const fieldsSuccess = (payload: FieldStateType): FieldsSuccessType => ({
-  type: FieldsActionTypes.FIELDS_SUCCESS,
+export const fieldsActionFailure = (
+  payload: string
+): FieldsActionFailureType => ({
+  type: FieldsActionTypes.FIELDS_ACTION_FAILURE,
   payload,
 });
 
-export const fieldsFailure = (payload: string): FieldsFailureType => ({
-  type: FieldsActionTypes.FIELDS_FAILURE,
+export const setFieldSuccess = (
+  payload: FieldStateType
+): SetFieldSuccessType => ({
+  type: FieldsActionTypes.SET_FIELD_SUCCESS,
+  payload,
+});
+
+export const getFieldsSuccess = (
+  payload: FieldStateType[]
+): GetFieldsSuccessType => ({
+  type: FieldsActionTypes.GET_FIELDS_SUCCESS,
   payload,
 });
 
@@ -29,15 +41,28 @@ export const saveFieldAction =
     values: FieldStateType
   ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
   async (dispatch) => {
-    dispatch(fieldsStarted());
+    dispatch(fieldsActionStarted());
     try {
       const { data } = await POST<FieldStateType, FieldStateType>(
         "fields",
         values
       );
 
-      dispatch(fieldsSuccess(data));
+      dispatch(setFieldSuccess(data));
     } catch (error) {
-      dispatch(fieldsFailure(error));
+      dispatch(fieldsActionFailure(error));
+    }
+  };
+
+export const getAllFieldction =
+  (): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      const { data } = await GET("fields");
+
+      dispatch(getFieldsSuccess(data));
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
     }
   };

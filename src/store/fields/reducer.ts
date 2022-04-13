@@ -4,7 +4,12 @@ import {
   InitialStateFieldsListType,
 } from "./types";
 
-const { FIELDS_STARTED, FIELDS_SUCCESS, FIELDS_FAILURE } = FieldsActionTypes;
+const {
+  FIELDS_ACTION_STARTED,
+  FIELDS_ACTION_FAILURE,
+  SET_FIELD_SUCCESS,
+  GET_FIELDS_SUCCESS,
+} = FieldsActionTypes;
 
 const initailState: InitialStateFieldsListType = {
   fieldsList: [],
@@ -17,26 +22,34 @@ export const fieldsReducer = (
   action: FieldsReducerActionsTypes
 ) => {
   switch (action.type) {
-    case FIELDS_STARTED:
+    case FIELDS_ACTION_STARTED:
       return {
         ...state,
         loading: true,
       };
 
-    case FIELDS_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        fieldsList: [...state.fieldsList, action.payload],
-        error: null,
-      };
-
-    case FIELDS_FAILURE:
+    case FIELDS_ACTION_FAILURE:
       return {
         ...state,
         loading: false,
         fieldsList: null,
         error: action.payload,
+      };
+
+    case SET_FIELD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        fieldsList: [action.payload],
+        error: null,
+      };
+
+    case GET_FIELDS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        fieldsList: [...action.payload],
+        error: null,
       };
 
     default:

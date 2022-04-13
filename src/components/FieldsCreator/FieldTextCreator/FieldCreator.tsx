@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
-import { createFieldValidationSchema } from "helpers/optionsValidSchema/optionsValidSchema";
+import { switchedFieldCreateValidation } from "helpers/optionsValidSchema/optionsValidSchema";
 import { saveFieldAction } from "store/fields/actions";
 import { SelectOptions } from "../SelectOptions/SelectOptions";
 
@@ -52,7 +52,7 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
         ],
       }}
       onSubmit={async (values) => onSaveField(values)}
-      validationSchema={createFieldValidationSchema}
+      validationSchema={switchedFieldCreateValidation(type)}
     >
       {({
         values,

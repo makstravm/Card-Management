@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Box,
+  Divider,
   FormControl,
   InputLabel,
   MenuItem,
@@ -9,6 +10,7 @@ import {
 } from "@mui/material";
 
 import { FieldTypes } from "store/fields/types";
+import { ButtonShowFields } from "components/Board/ButtonShowFields";
 import { FieldCreator } from "./FieldTextCreator/FieldCreator";
 
 export const fieldTypes = ["text", "checkbox", "select"];
@@ -45,6 +47,10 @@ export const FieldTypeCreator = () => {
         </FormControl>
       </Box>
       <FieldCreator type={typeField} />
+      <Divider />
+      <Box textAlign="center" pt={2}>
+        <ButtonShowFields />
+      </Box>
     </Box>
   );
 };
