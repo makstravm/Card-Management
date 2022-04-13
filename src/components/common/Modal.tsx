@@ -19,7 +19,7 @@ export const Modal = () => {
   const closeModal = () => dispatch(hideModal());
 
   return createPortal(
-    <CSSTransition in={showModal} unmountOnExit timeout={300}>
+    <CSSTransition in={showModal} mountOnEnter unmountOnExit timeout={300}>
       <Box className={`Modal ${showModal && "show"}`} onClick={closeModal}>
         <Paper
           className="Modal__content"
