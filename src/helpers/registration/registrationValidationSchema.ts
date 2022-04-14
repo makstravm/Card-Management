@@ -1,7 +1,5 @@
 import * as Yup from "yup";
 
-// const tests = string.tests
-
 export const registerValidationSchema = Yup.object().shape({
   name: Yup.string().required("Field required"),
   lastName: Yup.string().required("Field required"),
