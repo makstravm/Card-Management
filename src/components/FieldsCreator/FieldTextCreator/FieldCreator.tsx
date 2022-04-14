@@ -102,7 +102,7 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
               </>
             )}
           </Box>
-          <Box display="flex" justifyContent="center">
+          <Box display="flex" justifyContent="center" pb={1}>
             <Button
               variant="outlined"
               type="submit"

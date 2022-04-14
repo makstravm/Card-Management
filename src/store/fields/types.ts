@@ -36,7 +36,6 @@ export type FieldsActionFailureType = {
 
 export type SetFieldSuccessType = {
   type: FieldsActionTypes.SET_FIELD_SUCCESS;
-  payload: FieldStateType;
 };
 
 export type GetFieldsSuccessType = {

@@ -55,7 +55,7 @@ export const CardCreator = () => {
                       <TextField
                         fullWidth
                         size="small"
-                        label={`${name}${required && "*"}`}
+                        label={`${name}${required ? "*" : ""}`}
                         name={name}
                         error={!!(touched[name] && errors[name])}
                         helperText={touched[name] && errors[name]}

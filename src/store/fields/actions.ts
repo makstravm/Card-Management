@@ -25,11 +25,8 @@ export const fieldsActionFailure = (
   payload,
 });
 
-export const setFieldSuccess = (
-  payload: FieldStateType
-): SetFieldSuccessType => ({
+export const setFieldSuccess = (): SetFieldSuccessType => ({
   type: FieldsActionTypes.SET_FIELD_SUCCESS,
-  payload,
 });
 
 export const getFieldsSuccess = (
@@ -46,12 +43,8 @@ export const saveFieldAction =
   async (dispatch) => {
     dispatch(fieldsActionStarted());
     try {
-      const { data } = await POST<FieldStateType, FieldStateType>(
-        FIELDS,
-        values
-      );
-
-      dispatch(setFieldSuccess(data));
+      await POST<FieldStateType, FieldStateType>(FIELDS, values);
+      dispatch(setFieldSuccess());
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }

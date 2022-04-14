@@ -40,7 +40,6 @@ export const fieldsReducer = (
       return {
         ...state,
         loading: false,
-        fieldsList: [action.payload],
         error: null,
       };
 
