@@ -17,7 +17,7 @@ const initailState: InitialStateCardsListType = {
   error: null,
 };
 
-export const fieldsReducer = (
+export const cardsReducer = (
   state = initailState,
   action: CarddsReducerActionsTypes
 ) => {
@@ -40,7 +40,6 @@ export const fieldsReducer = (
       return {
         ...state,
         loading: false,
-        cardsList: [action.payload],
         error: null,
       };
 

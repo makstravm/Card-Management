@@ -7,6 +7,7 @@ import {
   CardsActionFailureType,
   CardsActionStartedType,
   CardsActionTypes,
+  CardType,
   GetCardsSuccessType,
   SetCardSuccessType,
 } from "./types";
@@ -24,26 +25,25 @@ export const cardsActionFailure = (
   payload,
 });
 
-export const setCardSuccess = (payload: any): SetCardSuccessType => ({
+export const setCardSuccess = (): SetCardSuccessType => ({
   type: CardsActionTypes.SET_CARD_SUCCESS,
-  payload,
 });
 
-export const getCardsSuccess = (payload: any): GetCardsSuccessType => ({
+export const getCardsSuccess = (payload: CardType[]): GetCardsSuccessType => ({
   type: CardsActionTypes.GET_CARDS_SUCCESS,
   payload,
 });
 
 export const saveCardAction =
   (
-    values: any
+    values: CardType
   ): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
-      const { data } = await POST<any, any>(CARDS, values);
-
-      dispatch(setCardSuccess(data));
+      await POST<CardType, CardType>(CARDS, values);
+      dispatch(setCardSuccess());
+      dispatch(getAllCardsAction());
     } catch (error) {
       dispatch(cardsActionFailure(error));
     }

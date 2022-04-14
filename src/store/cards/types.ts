@@ -5,23 +5,10 @@ export enum CardsActionTypes {
   GET_CARDS_SUCCESS = "GET_CARDS_SUCCESS",
 }
 
-export type CardType = Record<string, string | boolean>;
-
-// export type OptionsType = {
-//   id: string;
-//   value: string;
-// };
-
-// export type FieldStateType = {
-//   id?: number;
-//   name: string;
-//   type: FieldTypes;
-//   required: boolean;
-//   options: OptionsType[] | [];
-// };
+export type CardType = Record<string, string | boolean | number>;
 
 export type InitialStateCardsListType = {
-  cardsList: any;
+  cardsList: CardType[];
   error: string | null;
   loading: boolean;
 };
@@ -37,12 +24,11 @@ export type CardsActionFailureType = {
 
 export type SetCardSuccessType = {
   type: CardsActionTypes.SET_CARD_SUCCESS;
-  payload: any;
 };
 
 export type GetCardsSuccessType = {
   type: CardsActionTypes.GET_CARDS_SUCCESS;
-  payload: any[];
+  payload: CardType[];
 };
 
 export type CarddsReducerActionsTypes =

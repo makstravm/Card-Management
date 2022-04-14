@@ -57,7 +57,7 @@ export const saveFieldAction =
     }
   };
 
-export const getAllFieldction =
+export const getAllFieldAction =
   (): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(fieldsActionStarted());

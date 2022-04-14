@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
-import { getAllFieldction } from "store/fields/actions";
+import { getAllFieldAction } from "store/fields/actions";
 import { selectFieldsList } from "store/fields/selectors";
 
 import { Form, Formik } from "formik";
@@ -31,7 +31,7 @@ export const CardCreator = () => {
   const fieldsList = useSelector(selectFieldsList);
 
   useEffect(() => {
-    dispatch(getAllFieldction());
+    dispatch(getAllFieldAction());
   }, []);
 
   fieldsList?.forEach(({ type, name }) => {
@@ -67,7 +67,9 @@ export const CardCreator = () => {
                         labelPlacement="start"
                         sx={{ padding: "0", margin: "0" }}
                         label={name}
-                        control={<Checkbox name={name} />}
+                        control={
+                          <Checkbox name={name} onChange={handleChange} />
+                        }
                       />
                     )}
                     {type === "select" && (
