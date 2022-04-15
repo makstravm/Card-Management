@@ -15,28 +15,23 @@ import {
 import SaveIcon from "@mui/icons-material/Save";
 
 import { getAllFieldAction } from "store/fields/actions";
-import { selectFieldsList } from "store/fields/selectors";
+import { selectFieldsListAndInitValFormik } from "store/fields/selectors";
 
 import { Form, Formik } from "formik";
-import { CardType } from "store/cards/types";
 import { FieldStateType } from "store/fields/types";
 import { validateSchemaCard } from "helpers/createCardValidSchema/createCardValidSchema";
 import { saveCardAction } from "store/cards/actions";
 
 export const CardCreator = () => {
-  const initialValues: CardType = {};
-
   const dispatch = useDispatch();
 
-  const fieldsList = useSelector(selectFieldsList);
+  const { fieldsList, initialValues } = useSelector(
+    selectFieldsListAndInitValFormik
+  );
 
   useEffect(() => {
     dispatch(getAllFieldAction());
   }, []);
-
-  fieldsList?.forEach(({ type, name }) => {
-    initialValues[name] = type !== "checkbox" ? "" : false;
-  });
 
   return (
     <Box>
