@@ -2,12 +2,12 @@ import React from "react";
 
 import { Container } from "@mui/material";
 
+import { CardsList } from "components/CardsList/CardsList";
 import { BoardControlPanel } from "./BoardControlPanel/BoardControlPanel";
-import { BoardAllCards } from "./BoardAllCards/BoardAllCards";
 
 export const Board = () => (
   <Container maxWidth="lg">
     <BoardControlPanel />
-    <BoardAllCards />
+    <CardsList />
   </Container>
 );

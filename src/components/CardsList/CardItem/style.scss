@@ -1,4 +1,4 @@
-.CardItem {
+.card-item {
   position: relative;
   &__key {
     font-weight: 700;
@@ -8,7 +8,7 @@
   &__value {
     padding-left: 15px;
   }
-  .CardItem__number {
+  .card-item__number {
     justify-content: center;
     align-content: center;
     position: absolute;
@@ -19,7 +19,7 @@
     height: 22px;
     border-radius: 50px;
     box-shadow: 0 1px 2px #000000;
-    .CardItem__value {
+    .card-item__value {
       align-items: center;
       padding: 0;
     }

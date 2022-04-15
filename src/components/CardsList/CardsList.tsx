@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Paper, Typography } from "@mui/material";
 import { getAllCardsAction } from "store/cards/actions";
 import { selectCardList } from "store/cards/selectors";
-import { BoardCardItem } from "./BoardCardItem/BoardCardItem";
+import { CardItem } from "./CardItem/CardItem";
 
-export const BoardAllCards = () => {
+export const CardsList = () => {
   const dispatch = useDispatch();
 
   const cardsList = useSelector(selectCardList);
@@ -27,7 +27,7 @@ export const BoardAllCards = () => {
       {cardsList?.map((card) => (
         <Box key={`${card.id}`} sx={{ maxWidth: 275 }} pb={2}>
           <Paper elevation={3}>
-            <BoardCardItem card={card} />
+            <CardItem card={card} />
           </Paper>
         </Box>
       ))}

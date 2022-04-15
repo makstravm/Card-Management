@@ -1,5 +1,5 @@
 import { CardType } from "store/cards/types";
 
-export type BoardCardItemPropsType = {
+export type CardItemPropsType = {
   card: CardType;
 };
