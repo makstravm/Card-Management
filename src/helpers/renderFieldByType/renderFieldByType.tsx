@@ -13,22 +13,23 @@ const { SELECT, CHECKBOX } = TypesFields;
 
 export const renderFieldByType = (
   { name, type, options, required }: FieldStateType,
-  formik: FormikProps<CardType>
+  { values, handleChange, errors, touched }: FormikProps<CardType>
 ) => {
-  const { handleChange, errors, touched } = formik;
-
   switch (type) {
     case CHECKBOX:
-      return (
-        <CheckBox
-          name={name}
-          handleChange={handleChange}
-          disableRipple={false}
-        />
-      );
+      return <CheckBox name={name} handleChange={handleChange} />;
 
     case SELECT:
-      return <SelectInput name={name} options={options} formik={formik} />;
+      return (
+        <SelectInput
+          name={name}
+          options={options}
+          value={values}
+          handleChange={handleChange}
+          errors={errors}
+          touched={touched}
+        />
+      );
 
     default:
       return (

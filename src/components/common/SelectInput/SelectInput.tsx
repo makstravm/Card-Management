@@ -1,19 +1,26 @@
 import React from "react";
 
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+
+import { OptionsType } from "store/fields/types";
+import { CardType } from "store/cards/types";
+
 import { SelectInputPropsType } from "./types";
 
 export const SelectInput = ({
   name,
   options,
-  formik: { values, errors, touched, handleChange },
-}: SelectInputPropsType) => (
+  value,
+  errors,
+  touched,
+  handleChange,
+}: SelectInputPropsType<CardType, OptionsType[]>) => (
   <FormControl fullWidth size="small">
     <InputLabel id={`select-label-${name}`}>{name}</InputLabel>
     <Select
       fullWidth
       size="small"
-      value={values[name]}
+      value={value[name]}
       label={`${name}`}
       name={name}
       error={!!(touched[name] && errors[name])}

@@ -20,10 +20,8 @@ import { OptionsType } from "store/fields/types";
 import { SelectOptionsPropsType } from "./types";
 
 export const SelectOptions = ({
-  values,
   options,
-  onChange,
-  errors,
+  formik: { values, errors, handleChange },
 }: SelectOptionsPropsType) => (
   <FieldArray name={`${options}`}>
     {({ push, move, remove }) => (
@@ -35,9 +33,9 @@ export const SelectOptions = ({
                 size="small"
                 label="Name Option"
                 name={`options.${[i]}.value`}
-                onChange={onChange}
-                error={!!errors?.options?.[i]?.value}
-                helperText={errors?.options?.[i]?.value}
+                onChange={handleChange}
+                error={!!errors?.options?.[i].value}
+                helperText={errors?.options?.[i].value}
               />
             </Grid>
             <Grid item>
@@ -66,7 +64,7 @@ export const SelectOptions = ({
               color={typeof errors?.options === "string" && "red"}
             >
               Minimum 2 options
-            </Typography>{" "}
+            </Typography>
           </Box>
         )}
         <Box pb={2} textAlign="center">

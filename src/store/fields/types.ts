@@ -14,7 +14,7 @@ export type OptionsType = {
 export type FieldStateType = {
   id?: number;
   name: string;
-  type: FieldTypes;
+  type: string;
   required: boolean;
   options: OptionsType[] | [];
 };

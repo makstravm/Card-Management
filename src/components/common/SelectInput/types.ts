@@ -1,9 +1,11 @@
-import { FormikProps } from "formik";
-import { CardType } from "store/cards/types";
-import { OptionsType } from "store/fields/types";
+import { ChangeEventHandler } from "react";
+import { FormikErrors, FormikTouched } from "formik";
 
-export type SelectInputPropsType = {
-  name: string;
-  options: OptionsType[] | [];
-  formik: FormikProps<CardType>;
+export type SelectInputPropsType<V, O> = {
+  value: V;
+  handleChange: ChangeEventHandler<HTMLInputElement>;
+  options: O;
+  name?: string;
+  errors?: FormikErrors<V>;
+  touched?: FormikTouched<V>;
 };
