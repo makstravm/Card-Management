@@ -24,7 +24,6 @@ export const Form = ({
   const dispatch = useDispatch();
 
   const {
-    values,
     errors,
     touched,
     handleChange,
@@ -50,7 +49,6 @@ export const Form = ({
                 <TextField
                   name={name}
                   label={label}
-                  value={values[name]}
                   type={type}
                   autoComplete="given-name"
                   fullWidth

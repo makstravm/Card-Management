@@ -1,26 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Form, Formik } from "formik";
 
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
 import { getAllFieldAction } from "store/fields/actions";
 import { selectFieldsListAndInitValFormik } from "store/fields/selectors";
 
-import { Form, Formik } from "formik";
 import { FieldStateType } from "store/fields/types";
 import { validateSchemaCard } from "helpers/createCardValidSchema/createCardValidSchema";
 import { saveCardAction } from "store/cards/actions";
+import { renderFieldByType } from "helpers/renderFieldByType/renderFieldByType";
 
 export const CardCreator = () => {
   const dispatch = useDispatch();
@@ -41,59 +32,19 @@ export const CardCreator = () => {
           onSubmit={async (values) => dispatch(saveCardAction(values))}
           validationSchema={validateSchemaCard<FieldStateType>(fieldsList)}
         >
-          {({ values, errors, touched, handleChange, isValid, dirty }) => (
+          {(formik) => (
             <Form>
               <Box className="FieldsList">
-                {fieldsList.map(({ id, name, type, options, required }) => (
-                  <Box key={id} pt={1}>
-                    {type === "text" && (
-                      <TextField
-                        fullWidth
-                        size="small"
-                        label={`${name}${required ? "*" : ""}`}
-                        name={name}
-                        error={!!(touched[name] && errors[name])}
-                        helperText={touched[name] && errors[name]}
-                        onChange={handleChange}
-                      />
-                    )}
-                    {type === "checkbox" && (
-                      <FormControlLabel
-                        labelPlacement="start"
-                        sx={{ padding: "0", margin: "0" }}
-                        label={name}
-                        control={
-                          <Checkbox name={name} onChange={handleChange} />
-                        }
-                      />
-                    )}
-                    {type === "select" && (
-                      <FormControl fullWidth size="small">
-                        <InputLabel id="select-label-card">{name}</InputLabel>
-                        <Select
-                          fullWidth
-                          size="small"
-                          value={values[name]}
-                          label={`${name}`}
-                          name={name}
-                          error={!!(touched[name] && errors[name])}
-                          onChange={handleChange}
-                        >
-                          {options.map(({ id, value }) => (
-                            <MenuItem key={id} value={value}>
-                              {value}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    )}
+                {fieldsList.map((field) => (
+                  <Box key={field.id} pt={1}>
+                    {renderFieldByType(field, formik)}
                   </Box>
                 ))}
                 <Box textAlign="center" pt={2}>
                   <Button
                     variant="outlined"
                     type="submit"
-                    disabled={!isValid && !dirty}
+                    disabled={!formik.isValid && !formik.dirty}
                   >
                     <SaveIcon fontSize="small" />
                     Save

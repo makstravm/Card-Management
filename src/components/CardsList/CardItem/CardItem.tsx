@@ -5,12 +5,12 @@ import { CardItemPropsType } from "./types";
 
 import "./style.scss";
 
-export const CardItem = ({ card }:CardItemPropsType) => (
+export const CardItem = ({ card }: CardItemPropsType) => (
   <Box p={2} className="card-item">
     {Object.entries(card).map(([key, value]) => (
       <Grid
         key={`${card.id}-${key}`}
-        className={key === "id" ? "cardItem__number" : ""}
+        className={key === "id" ? "card-item__number" : ""}
         container
         alignItems="center"
       >

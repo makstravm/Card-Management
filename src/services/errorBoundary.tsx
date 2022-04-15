@@ -1,7 +1,7 @@
-import { AxiosError } from "axios";
 import { notify } from "../utils/toast";
+import { ErrorBoundaryPropsType } from "./types";
 
-export const errorBoundary = ({ response: { status, data } }: AxiosError) => {
+export const errorBoundary = ({ status, data }: ErrorBoundaryPropsType) => {
   switch (status) {
     case 400:
       return notify(data);

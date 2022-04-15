@@ -35,10 +35,10 @@
   }
   &.enter-active {
     opacity: 1;
-    transition: all 0.8s ease-in-out;
+    transition: all 0.8s;
     .modal__content {
       transform: rotate3d(0, 0, 0, 0deg) skewY(0deg) scale(1, 1) translateX(0);
-      transition: all 0.8s;
+      transition: all 1.2s;
     }
   }
   &.exit {
