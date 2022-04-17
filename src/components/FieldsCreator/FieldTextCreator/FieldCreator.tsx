@@ -3,13 +3,14 @@ import { useDispatch } from "react-redux";
 import { Form, Formik, FormikProps } from "formik";
 import { v1 } from "uuid";
 
-import { Box, Button, Divider, TextField, Typography } from "@mui/material";
+import { Box, Divider, TextField, Typography } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
 import { CheckBox } from "components/common/CheckBox/CheckBox";
 import { switchedFieldCreateValidation } from "helpers/optionsValidSchema/optionsValidSchema";
 import { saveFieldAction } from "store/fields/actions";
 import { TypesFields } from "constants/typesFields";
+import { Btn } from "components/common/Btn/Btn";
 import { SelectOptions } from "../SelectOptions/SelectOptions";
 
 import { FieldCreatorPropsType, FormikStateType } from "./types";
@@ -58,10 +59,7 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
                   helperText={touched.name && errors.name}
                 />
                 {type === TEXT && (
-                  <CheckBox
-                    name="required"
-                    handleChange={handleChange}
-                  />
+                  <CheckBox name="required" handleChange={handleChange} />
                 )}
               </Box>
               {type === SELECT && (
@@ -74,14 +72,13 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
               )}
             </Box>
             <Box display="flex" justifyContent="center" pb={1}>
-              <Button
-                variant="outlined"
+              <Btn
+                title="Save"
+                variantBtn="outlined"
                 type="submit"
                 disabled={!isValid && !dirty}
-              >
-                <SaveIcon fontSize="small" />
-                Save
-              </Button>
+                icon={<SaveIcon fontSize="small" />}
+              />
             </Box>
           </Form>
         );

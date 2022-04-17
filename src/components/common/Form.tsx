@@ -2,14 +2,9 @@ import React from "react";
 import { FormikProps, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, TextField, Typography } from "@mui/material";
+
+import { Btn } from "./Btn/Btn";
 
 import { FormicValuesType, FormPropsType } from "./types";
 
@@ -59,15 +54,13 @@ export const Form = ({
               </Grid>
             ))}
           </Grid>
-          <Box display="flex" justifyContent="center">
-            <Button
+          <Box display="flex" sx={{ mt: 3, mb: 2 }} justifyContent="center">
+            <Btn
+              title={buttonText}
+              variantBtn="contained"
               type="submit"
               disabled={!isValid && !dirty}
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              {buttonText}
-            </Button>
+            />
           </Box>
         </form>
       </Box>

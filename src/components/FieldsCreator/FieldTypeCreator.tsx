@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Box, Divider, SelectChangeEvent } from "@mui/material";
 
 import { SelectInput } from "components/common/SelectInput/SelectInput";
-import { ButtonShowFields } from "components/Board/ButtonShowFields";
 import { v1 } from "uuid";
 import { FieldCreator } from "./FieldTextCreator/FieldCreator";
 
@@ -14,7 +13,7 @@ export const fieldTypesOptions = [
 
 export const FieldTypeCreator = () => {
   const [typeField, setTypeField] = useState<{ type: string }>({
-    type: "",
+    type: "text",
   });
 
   const changeTypeField = (event: SelectChangeEvent) =>
@@ -32,9 +31,6 @@ export const FieldTypeCreator = () => {
       </Box>
       <FieldCreator type={typeField.type} />
       <Divider />
-      <Box textAlign="center" pt={2}>
-        <ButtonShowFields />
-      </Box>
     </Box>
   );
 };

@@ -23,7 +23,7 @@ export const SelectInput = ({
       value={value[name]}
       label={`${name}`}
       name={name}
-      error={!!(touched[name] && errors[name])}
+      error={!!(touched?.[name] && errors?.[name])}
       onChange={handleChange}
     >
       {options.map(({ id, value }) => (

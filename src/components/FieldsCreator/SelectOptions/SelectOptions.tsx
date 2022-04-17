@@ -5,7 +5,6 @@ import { FieldArray } from "formik";
 
 import {
   Box,
-  Button,
   Grid,
   IconButton,
   TextField,
@@ -17,6 +16,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 
 import { OptionsType } from "store/fields/types";
+import { Btn } from "components/common/Btn/Btn";
 import { SelectOptionsPropsType } from "./types";
 
 export const SelectOptions = ({
@@ -68,10 +68,12 @@ export const SelectOptions = ({
           </Box>
         )}
         <Box pb={2} textAlign="center">
-          <Button variant="text" onClick={() => push({ id: v1(), value: "" })}>
-            <AddIcon fontSize="small" />
-            Add
-          </Button>
+          <Btn
+            title="Add"
+            variantBtn="text"
+            handleClick={() => push({ id: v1(), value: "" })}
+            icon={<AddIcon fontSize="small" />}
+          />
         </Box>
       </>
     )}
