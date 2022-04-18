@@ -37,7 +37,7 @@ export const Form = ({
         <Typography variant="h4" align="center" sx={{ pb: 2 }}>
           {title}
         </Typography>
-        <form onSubmit={handleSubmit}>
+        <form>
           <Grid container justifyContent="center" spacing={2}>
             {formFields.map(({ id, name, type, label }) => (
               <Grid key={id} item xs={10}>
@@ -56,9 +56,9 @@ export const Form = ({
           </Grid>
           <Box display="flex" sx={{ mt: 3, mb: 2 }} justifyContent="center">
             <Btn
+              handleClick={() => handleSubmit()}
               title={buttonText}
               variantBtn="contained"
-              type="submit"
               disabled={!isValid && !dirty}
             />
           </Box>

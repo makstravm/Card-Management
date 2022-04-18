@@ -75,7 +75,7 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
               <Btn
                 title="Save"
                 variantBtn="outlined"
-                type="submit"
+                handleClick={() => formik.handleSubmit()}
                 disabled={!isValid && !dirty}
                 icon={<SaveIcon fontSize="small" />}
               />

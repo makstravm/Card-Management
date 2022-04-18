@@ -5,6 +5,5 @@ export type BtnPropsType = {
   handleClick?: () => void;
   icon?: ReactNode;
   variantBtn: "text" | "outlined" | "contained";
-  type?: "submit" | "button";
   disabled?: boolean;
 };

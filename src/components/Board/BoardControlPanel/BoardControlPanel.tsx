@@ -36,7 +36,7 @@ export const BoardControlPanel = () => {
               dispatch(showModal("All Fields", <FieldsList />))
             }
             icon={<ListIcon fontSize="small" />}
-        />
+          />
         </Box>
       </Grid>
       <Box pb={1} pt={3}>
@@ -44,7 +44,7 @@ export const BoardControlPanel = () => {
           variantBtn="outlined"
           title="Create Card"
           handleClick={() =>
-            dispatch(showModal("Create Field", <CardCreator />))
+            dispatch(showModal("Create Card", <CardCreator />))
           }
           icon={<AddCircleIcon fontSize="small" />}
         />

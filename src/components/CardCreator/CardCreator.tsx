@@ -45,7 +45,7 @@ export const CardCreator = () => {
                   <Btn
                     title="Save"
                     variantBtn="outlined"
-                    type="submit"
+                    handleClick={() => formik.handleSubmit()}
                     disabled={!formik.isValid && !formik.dirty}
                     icon={<SaveIcon fontSize="small" />}
                   />
