@@ -8,6 +8,7 @@ import {
   LoginInitialValueType,
   RegistrationInitialValueType,
 } from "helpers/types";
+import { NavigateFunction } from "react-router-dom";
 
 export type FormicValuesType = Record<string, string>;
 
@@ -26,7 +27,7 @@ export type FormPropsType = {
   titleLink: string;
   link: string;
   buttonText: string;
-  onSubmit: (values: InitialValuesFormType, navigate: () => void) => void;
+  onSubmit: (values: InitialValuesFormType, navigate: NavigateFunction) => void;
   validationSchema: SchemaOf<ValidationSchemaTypes>;
 };
 

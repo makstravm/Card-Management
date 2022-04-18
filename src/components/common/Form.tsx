@@ -40,7 +40,7 @@ export const Form = ({
   }: FormikProps<FormicValuesType> = useFormik({
     initialValues,
     onSubmit: (values) => {
-      dispatch(onSubmit(values, () => navigate("/")));
+      dispatch(onSubmit(values, navigate));
     },
     validationSchema,
   });

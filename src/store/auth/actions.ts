@@ -11,6 +11,8 @@ import {
 } from "helpers/types";
 
 import { RootStateType } from "store/store";
+import { RoutesUrls } from "constants/routes";
+import { NavigateOptions, To } from "react-router-dom";
 import {
   AuthActionTypes,
   AuthReducerActionsTypes,
@@ -25,6 +27,8 @@ import {
 } from "./types";
 
 const { LOGIN, REGISTER, USERS } = Endpoints;
+
+const { MAIN } = RoutesUrls;
 
 export const loginStarted = (): LoginStartedType => ({
   type: AuthActionTypes.LOGIN_STARTED,
@@ -56,7 +60,7 @@ export const registerFailure = (payload: string): RegisterFailureType => ({
 export const loginAction =
   (
     values: LoginInitialValueType,
-    navigate: () => void
+    navigate: (to: To, options?: NavigateOptions) => void
   ): ThunkAction<void, RootStateType, unknown, AuthReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(loginStarted());
@@ -69,7 +73,7 @@ export const loginAction =
       Cookies.set("token", accessToken);
 
       dispatch(loginSuccess(user));
-      navigate();
+      navigate(MAIN, { replace: true });
     } catch (error) {
       dispatch(loginFailure(error));
     }
@@ -88,7 +92,7 @@ export const registrationAction =
         values
       );
       dispatch(registerSuccess());
-      dispatch(loginAction(values, () => navigate()));
+      dispatch(loginAction(values, navigate));
     } catch (error) {
       dispatch(registerFailure(error));
     }
