@@ -1,4 +1,4 @@
-.Modal {
+.modal {
   width: 100vw;
   height: 100vh;
   background-color: rgba(#000, 0.4);
@@ -8,31 +8,50 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0;
   transition: all 0.3s ease-in-out;
-  pointer-events: none;
-  &.show {
-    opacity: 1;
-    pointer-events: visible;
-    .Modal__content {
-      transform: scale(1, 1);
-    }
-  }
-  .Modal__content {
+
+  .modal__content {
     background-color: #fff;
     max-width: 80vw;
     min-width: 50vw;
     padding: 25px 20px;
     position: relative;
-    transform: scale(0, 0);
     transition: all 0.3s ease-in-out;
   }
-  .Modal__close-btn {
+  .modal__close-btn {
     position: absolute;
     top: 0;
     right: 0;
   }
   &__header {
     padding-bottom: 10px;
+  }
+  &.enter {
+    opacity: 0;
+    .modal__content {
+      transform: translateX(-25vw) rotate3d(1, -1, -1, 90deg) skewY(-82deg)
+        scale(0, 0);
+    }
+  }
+  &.enter-active {
+    opacity: 1;
+    transition: all 0.8s;
+    .modal__content {
+      transform: rotate3d(0, 0, 0, 0deg) skewY(0deg) scale(1, 1) translateX(0);
+      transition: all 1.2s;
+    }
+  }
+  &.exit {
+    opacity: 1;
+    transform: rotate3d(0, 0, 0, 0deg) skewY(0deg) scale(1, 1) translateX(0);
+  }
+  &.exit-active {
+    opacity: 0;
+    transition: all 0.4s ease-in-out;
+    .modal__content {
+      transform: translateX(25vw) rotate3d(-1, 1, 1, 90deg) skewY(82deg)
+        scale(0, 0);
+      transition: all 0.4s ease-in-out;
+    }
   }
 }

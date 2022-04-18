@@ -1,7 +1,7 @@
 import * as Yup from "yup";
-import { FieldTypes, OptionsType } from "store/fields/types";
+import { OptionsType } from "store/fields/types";
 
-export const switchedFieldCreateValidation = (type: FieldTypes) =>
+export const switchedFieldCreateValidation = (type: string) =>
   (type === "select" && createFieldValidationSchema) ||
   createFieldSelectValidationSchema;
 

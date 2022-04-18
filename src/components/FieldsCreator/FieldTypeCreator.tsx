@@ -1,56 +1,36 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Divider,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
+import { Box, Divider, SelectChangeEvent } from "@mui/material";
 
-import { FieldTypes } from "store/fields/types";
-import { ButtonShowFields } from "components/Board/ButtonShowFields";
+import { SelectInput } from "components/common/SelectInput/SelectInput";
+import { v1 } from "uuid";
 import { FieldCreator } from "./FieldTextCreator/FieldCreator";
 
-export const fieldTypes = ["text", "checkbox", "select"];
+export const fieldTypesOptions = [
+  { id: v1(), value: "text" },
+  { id: v1(), value: "checkbox" },
+  { id: v1(), value: "select" },
+];
 
 export const FieldTypeCreator = () => {
-  const [typeField, setTypeField] = useState<FieldTypes>("text");
+  const [typeField, setTypeField] = useState<{ type: string }>({
+    type: "text",
+  });
 
   const changeTypeField = (event: SelectChangeEvent) =>
-    setTypeField(event.target.value as FieldTypes);
+    setTypeField({ type: event.target.value });
 
   return (
     <Box pt={2}>
       <Box>
-        <FormControl
-          sx={{
-            maxWidth: "225px",
-            width: "100%",
-          }}
-        >
-          <InputLabel id="select-label">Type</InputLabel>
-          <Select
-            value={typeField}
-            onChange={changeTypeField}
-            size="small"
-            label="Type"
-            labelId="select-label"
-          >
-            {fieldTypes.map((fieldType: FieldTypes) => (
-              <MenuItem key={fieldType} value={fieldType}>
-                {fieldType}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <SelectInput
+          value={typeField}
+          options={fieldTypesOptions}
+          handleChange={changeTypeField}
+          name="type"
+        />
       </Box>
-      <FieldCreator type={typeField} />
+      <FieldCreator type={typeField.type} />
       <Divider />
-      <Box textAlign="center" pt={2}>
-        <ButtonShowFields />
-      </Box>
     </Box>
   );
 };

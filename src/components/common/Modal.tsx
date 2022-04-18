@@ -20,20 +20,20 @@ export const Modal = () => {
 
   return createPortal(
     <CSSTransition in={showModal} mountOnEnter unmountOnExit timeout={300}>
-      <Box className={`Modal ${showModal && "show"}`} onClick={closeModal}>
+      <Box className={`modal ${showModal && "show"}`} onClick={closeModal}>
         <Paper
-          className="Modal__content"
+          className="modal__content"
           onClick={(e) => e.stopPropagation()}
           elevation={3}
         >
-          <Box className="Modal__header">
+          <Box className="modal__header">
             <Typography variant="h5">{title}</Typography>
-            <IconButton className="Modal__close-btn" onClick={closeModal}>
+            <IconButton className="modal__close-btn" onClick={closeModal}>
               <CloseIcon />
             </IconButton>
           </Box>
           <Divider />
-          <Box className="Modal__body">{component}</Box>
+          <Box className="modal__body">{component}</Box>
         </Paper>
       </Box>
     </CSSTransition>,

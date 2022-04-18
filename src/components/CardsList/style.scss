@@ -1,0 +1,27 @@
+.card-item {
+  position: relative;
+  &__key {
+    font-weight: 700;
+    color: rgb(108, 108, 108);
+    font-size: 1.3em;
+  }
+  &__value {
+    padding-left: 15px;
+  }
+  .card-item__number {
+    justify-content: center;
+    align-content: center;
+    position: absolute;
+    padding: 0;
+    top: 10px;
+    right: 10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50px;
+    box-shadow: 0 1px 2px #000000;
+    .card-item__value {
+      align-items: center;
+      padding: 0;
+    }
+  }
+}

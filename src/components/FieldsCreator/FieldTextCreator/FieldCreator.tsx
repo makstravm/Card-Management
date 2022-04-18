@@ -1,43 +1,31 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { Form, Formik, FormikProps } from "formik";
 import { v1 } from "uuid";
 
-import {
-  Box,
-  Button,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, TextField, Typography } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
+import { CheckBox } from "components/common/CheckBox/CheckBox";
 import { switchedFieldCreateValidation } from "helpers/optionsValidSchema/optionsValidSchema";
 import { saveFieldAction } from "store/fields/actions";
+import { TypesFields } from "constants/typesFields";
+import { Btn } from "components/common/Btn/Btn";
 import { SelectOptions } from "../SelectOptions/SelectOptions";
 
 import { FieldCreatorPropsType, FormikStateType } from "./types";
 
+const { TEXT, SELECT } = TypesFields;
+
 export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
   const dispatch = useDispatch();
 
-  const [requiredCheck, setRequiredCheck] = useState<boolean>(false);
-
-  useEffect(() => {
-    setRequiredCheck(false);
-  }, [type]);
-
-  const changeChekedRequired = (e: ChangeEvent<HTMLInputElement>) =>
-    setRequiredCheck(e.currentTarget.checked);
-
-  const onSaveField = ({ name, options }: FormikStateType) =>
+  const onSaveField = ({ name, required, options }: FormikStateType) =>
     dispatch(
       saveFieldAction({
         name,
         type,
-        required: requiredCheck,
+        required,
         options: (type !== "select" && []) || options,
       })
     );
@@ -46,6 +34,7 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
     <Formik
       initialValues={{
         name: "",
+        required: false,
         options: [
           { id: v1(), value: "" },
           { id: v1(), value: "" },
@@ -54,66 +43,46 @@ export const FieldCreator = ({ type }: FieldCreatorPropsType) => {
       onSubmit={async (values) => onSaveField(values)}
       validationSchema={switchedFieldCreateValidation(type)}
     >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        isValid,
-        dirty,
-      }: FormikProps<FormikStateType>) => (
-        <Form>
-          <Box pt={2}>
-            <Box pb={2}>
-              <TextField
-                label="Name Field"
-                name="name"
-                onChange={handleChange}
-                size="small"
-                error={!!(touched.name && errors.name)}
-                helperText={touched.name && errors.name}
-              />
-              {type === "text" && (
-                <FormControlLabel
-                  labelPlacement="start"
-                  sx={{ paddingLeft: "10px" }}
-                  label="Required"
-                  control={
-                    <Checkbox
-                      checked={requiredCheck}
-                      onChange={changeChekedRequired}
-                    />
-                  }
+      {(formik: FormikProps<FormikStateType>) => {
+        const { errors, touched, handleChange, isValid, dirty } = formik;
+
+        return (
+          <Form>
+            <Box pt={2}>
+              <Box pb={2}>
+                <TextField
+                  label="Name Field"
+                  name="name"
+                  onChange={handleChange}
+                  size="small"
+                  error={!!(touched.name && errors.name)}
+                  helperText={touched.name && errors.name}
                 />
+                {type === TEXT && (
+                  <CheckBox name="required" handleChange={handleChange} />
+                )}
+              </Box>
+              {type === SELECT && (
+                <>
+                  <Divider textAlign="left" sx={{ paddingBottom: "15px" }}>
+                    <Typography variant="subtitle2">Options</Typography>
+                  </Divider>
+                  <SelectOptions options="options" formik={formik} />
+                </>
               )}
             </Box>
-            {type === "select" && (
-              <>
-                <Divider textAlign="left" sx={{ paddingBottom: "15px" }}>
-                  <Typography variant="subtitle2">Options</Typography>
-                </Divider>
-                <SelectOptions
-                  options="options"
-                  values={values}
-                  onChange={handleChange}
-                  errors={errors}
-                  touched={touched}
-                />
-              </>
-            )}
-          </Box>
-          <Box display="flex" justifyContent="center">
-            <Button
-              variant="outlined"
-              type="submit"
-              disabled={!isValid && !dirty}
-            >
-              <SaveIcon fontSize="small" />
-              Save
-            </Button>
-          </Box>
-        </Form>
-      )}
+            <Box display="flex" justifyContent="center" pb={1}>
+              <Btn
+                title="Save"
+                variantBtn="outlined"
+                handleClick={() => formik.handleSubmit()}
+                disabled={!isValid && !dirty}
+                icon={<SaveIcon fontSize="small" />}
+              />
+            </Box>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

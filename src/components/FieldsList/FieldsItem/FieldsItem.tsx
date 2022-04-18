@@ -8,10 +8,14 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { FieldItemPropsType } from "./types";
+
+import { TypesFields } from "constants/typesFields";
+import { FieldItemPropsType } from "../types";
+
 import "./style.scss";
+
+const { SELECT } = TypesFields;
 
 export const FieldsItem = ({
   field: { name, type, required, options },
@@ -21,7 +25,7 @@ export const FieldsItem = ({
   return (
     <Paper>
       <Grid
-        className="FieldsItem"
+        className="fieldsItem"
         sx={{
           margin: "0 5px 10px 5px",
           padding: " 0 15px 0 15px",
@@ -32,10 +36,10 @@ export const FieldsItem = ({
         alignItems="center"
         justifyContent="space-between"
       >
-        <Grid className="FieldsItem__name" item xs={4}>
+        <Grid className="fieldsItem__name" item xs={4}>
           <Typography>{name}</Typography>
           {required && <Typography color="red">*</Typography>}
-          {type === "select" && (
+          {type === SELECT && (
             <IconButton onClick={() => setShowOPtions(!showOptions)}>
               <KeyboardArrowDownIcon />
             </IconButton>

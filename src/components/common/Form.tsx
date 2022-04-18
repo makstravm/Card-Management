@@ -2,14 +2,9 @@ import React from "react";
 import { FormikProps, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, TextField, Typography } from "@mui/material";
+
+import { Btn } from "./Btn/Btn";
 
 import { FormicValuesType, FormPropsType } from "./types";
 
@@ -24,7 +19,6 @@ export const Form = ({
   const dispatch = useDispatch();
 
   const {
-    values,
     errors,
     touched,
     handleChange,
@@ -43,14 +37,13 @@ export const Form = ({
         <Typography variant="h4" align="center" sx={{ pb: 2 }}>
           {title}
         </Typography>
-        <form onSubmit={handleSubmit}>
+        <form>
           <Grid container justifyContent="center" spacing={2}>
             {formFields.map(({ id, name, type, label }) => (
               <Grid key={id} item xs={10}>
                 <TextField
                   name={name}
                   label={label}
-                  value={values[name]}
                   type={type}
                   autoComplete="given-name"
                   fullWidth
@@ -61,15 +54,13 @@ export const Form = ({
               </Grid>
             ))}
           </Grid>
-          <Box display="flex" justifyContent="center">
-            <Button
-              type="submit"
+          <Box display="flex" sx={{ mt: 3, mb: 2 }} justifyContent="center">
+            <Btn
+              handleClick={() => handleSubmit()}
+              title={buttonText}
+              variantBtn="contained"
               disabled={!isValid && !dirty}
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              {buttonText}
-            </Button>
+            />
           </Box>
         </form>
       </Box>

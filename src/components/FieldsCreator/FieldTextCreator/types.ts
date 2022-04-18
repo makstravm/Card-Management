@@ -1,12 +1,13 @@
-import { FieldTypes, OptionsType } from "store/fields/types";
+import { OptionsType } from "store/fields/types";
 
 export type FieldCreatorPropsType = {
-  type: FieldTypes;
+  type: string;
 };
 
 export type FormikStateType = {
   name: string;
-  options: OptionsArrayType;
+  required: boolean;
+  options?: OptionsArrayType;
 };
 
-export type OptionsArrayType = OptionsType[] | [];
+export type OptionsArrayType = OptionsType[];

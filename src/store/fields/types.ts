@@ -14,7 +14,7 @@ export type OptionsType = {
 export type FieldStateType = {
   id?: number;
   name: string;
-  type: FieldTypes;
+  type: string;
   required: boolean;
   options: OptionsType[] | [];
 };
@@ -36,7 +36,6 @@ export type FieldsActionFailureType = {
 
 export type SetFieldSuccessType = {
   type: FieldsActionTypes.SET_FIELD_SUCCESS;
-  payload: FieldStateType;
 };
 
 export type GetFieldsSuccessType = {
