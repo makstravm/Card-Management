@@ -55,10 +55,12 @@ export const registerFailure = (payload: string): RegisterFailureType => ({
 
 export const loginAction =
   (
-    values: LoginInitialValueType
+    values: LoginInitialValueType,
+    navigate: () => void
   ): ThunkAction<void, RootStateType, unknown, AuthReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(loginStarted());
+
     try {
       const {
         data: { user, accessToken },
@@ -67,6 +69,7 @@ export const loginAction =
       Cookies.set("token", accessToken);
 
       dispatch(loginSuccess(user));
+      navigate();
     } catch (error) {
       dispatch(loginFailure(error));
     }
@@ -74,7 +77,8 @@ export const loginAction =
 
 export const registrationAction =
   (
-    values: RegistrationInitialValueType
+    values: RegistrationInitialValueType,
+    navigate: () => void
   ): ThunkAction<void, RootStateType, unknown, AuthReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(registerStarted());
@@ -84,7 +88,7 @@ export const registrationAction =
         values
       );
       dispatch(registerSuccess());
-      dispatch(loginAction(values));
+      dispatch(loginAction(values, () => navigate()));
     } catch (error) {
       dispatch(registerFailure(error));
     }

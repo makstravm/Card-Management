@@ -23,8 +23,10 @@ export type FormPropsType = {
   initialValues: InitialValuesFormType;
   formFields: FormFieldType[];
   title: string;
+  titleLink: string;
+  link: string;
   buttonText: string;
-  onSubmit: (values: InitialValuesFormType) => void;
+  onSubmit: (values: InitialValuesFormType, navigate: () => void) => void;
   validationSchema: SchemaOf<ValidationSchemaTypes>;
 };
 

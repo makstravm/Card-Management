@@ -20,6 +20,7 @@ import { loginAction, registrationAction } from "store/auth/actions";
 import { Layout } from "components/Layout";
 import { Board } from "components/Board/Board";
 import { Form } from "components/common/Form";
+import { AuthenticationLayout } from "components/AuthenticationLayout";
 
 import { loginValidationSchema } from "helpers/login/loginValidationSchema";
 import { registerValidationSchema } from "helpers/registration/registrationValidationSchema";
@@ -32,12 +33,14 @@ const App = () => (
     <Provider store={store}>
       <CssBaseline />
       <Routes>
-        <Route path={MAIN} element={<Layout />}>
+        <Route element={<AuthenticationLayout />}>
           <Route
             path={LOGIN}
             element={
               <Form
                 title="Log In"
+                titleLink="Don't have an account? Sign Up"
+                link={REGISTRATION}
                 buttonText="Sign In"
                 initialValues={loginInitialValue}
                 formFields={loginFormFields}
@@ -51,6 +54,8 @@ const App = () => (
             element={
               <Form
                 title="Registration"
+                titleLink="Do have an account? Sign In"
+                link={LOGIN}
                 buttonText="Sign Up"
                 initialValues={registrationInitialValue}
                 formFields={registrationFormFields}
@@ -59,7 +64,9 @@ const App = () => (
               />
             }
           />
-          <Route element={<PrivateRoute />}>
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path={MAIN} element={<Layout />}>
             <Route path={BOARD} element={<Board />} />
           </Route>
         </Route>
