@@ -24,7 +24,7 @@ export type InitialStateAuthType = {
 
 export type AuthResponseType = {
   accessToken: string | null;
-  data: AuthUserType | null;
+  user: AuthUserType | null;
 };
 
 export type LoginStartedType = {

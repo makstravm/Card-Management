@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 import { Endpoints } from "constants/endpoints";
 
-import { POST } from "api/api";
+import { GET, POST } from "api/api";
 
 import {
   LoginInitialValueType,
@@ -11,6 +11,8 @@ import {
 } from "helpers/types";
 
 import { RootStateType } from "store/store";
+import { RoutesUrls } from "constants/routes";
+import { NavigateOptions, To } from "react-router-dom";
 import {
   AuthActionTypes,
   AuthReducerActionsTypes,
@@ -24,7 +26,9 @@ import {
   RegisterSuccessType,
 } from "./types";
 
-const { LOGIN, REGISTER } = Endpoints;
+const { LOGIN, REGISTER, USERS } = Endpoints;
+
+const { MAIN } = RoutesUrls;
 
 export const loginStarted = (): LoginStartedType => ({
   type: AuthActionTypes.LOGIN_STARTED,
@@ -55,18 +59,21 @@ export const registerFailure = (payload: string): RegisterFailureType => ({
 
 export const loginAction =
   (
-    values: LoginInitialValueType
+    values: LoginInitialValueType,
+    navigate: (to: To, options?: NavigateOptions) => void
   ): ThunkAction<void, RootStateType, unknown, AuthReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(loginStarted());
+
     try {
       const {
-        data: { data, accessToken },
+        data: { user, accessToken },
       } = await POST<AuthResponseType, LoginInitialValueType>(LOGIN, values);
 
       Cookies.set("token", accessToken);
 
-      dispatch(loginSuccess(data));
+      dispatch(loginSuccess(user));
+      navigate(MAIN, { replace: true });
     } catch (error) {
       dispatch(loginFailure(error));
     }
@@ -74,7 +81,8 @@ export const loginAction =
 
 export const registrationAction =
   (
-    values: RegistrationInitialValueType
+    values: RegistrationInitialValueType,
+    navigate: () => void
   ): ThunkAction<void, RootStateType, unknown, AuthReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(registerStarted());
@@ -84,8 +92,23 @@ export const registrationAction =
         values
       );
       dispatch(registerSuccess());
-      dispatch(loginAction(values));
+      dispatch(loginAction(values, navigate));
     } catch (error) {
       dispatch(registerFailure(error));
+    }
+  };
+
+export const getDataUserAction =
+  (
+    id: string
+  ): ThunkAction<void, RootStateType, unknown, AuthReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(loginStarted());
+    try {
+      const { data } = await GET(`${USERS}/${id}`);
+
+      dispatch(loginSuccess(data));
+    } catch (error) {
+      dispatch(loginFailure(error));
     }
   };

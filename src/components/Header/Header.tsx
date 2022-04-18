@@ -8,15 +8,18 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
   Toolbar,
   Typography,
 } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import { selectUserState } from "store/auth/selectors";
+import { RoutesUrls } from "constants/routes";
 
-import { HeaderPropsType } from "./types";
+const { BOARD } = RoutesUrls;
 
-export const Header = ({ linksNavBar }: HeaderPropsType) => {
+export const Header = () => {
   const userName = useSelector(selectUserState);
 
   return (
@@ -25,18 +28,23 @@ export const Header = ({ linksNavBar }: HeaderPropsType) => {
         <Grid container justifyContent="space-between" alignItems="center" item>
           <Grid item>
             <Toolbar>
-              {linksNavBar.map(({ id, title, link }) => (
-                <NavLink className="nav-link" key={id} to={link}>
-                  <Button color="primary">{title}</Button>
-                </NavLink>
-              ))}
+              <NavLink className="nav-link" to={BOARD}>
+                <Button color="primary">Board</Button>
+              </NavLink>
             </Toolbar>
           </Grid>
-          <Grid item>
-            <Typography variant="h6" color="textSecondary">
-              {userName && `Hi, ${userName}`}
-            </Typography>
-          </Grid>
+          {userName && (
+            <Grid item>
+              <Grid container alignItems="center">
+                <Typography variant="h6" pr={1} color="textSecondary">
+                  {`Hi, ${userName}`}
+                </Typography>
+                <IconButton>
+                  <LogoutIcon fontSize="small" />
+                </IconButton>
+              </Grid>
+            </Grid>
+          )}
         </Grid>
       </Container>
     </AppBar>

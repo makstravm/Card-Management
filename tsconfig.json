@@ -16,7 +16,8 @@
       "constants/*": ["./src/constants/*"],
       "helpers/*": ["./src/helpers/*"],
       "store/*": ["./src/store/*"],
-      "utils/*": ["./src/utils/*"]
+      "utils/*": ["./src/utils/*"],
+      "route/*": ["./src/route/*"]
     }
   }
 }
