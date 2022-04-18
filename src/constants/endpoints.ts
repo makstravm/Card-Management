@@ -3,4 +3,5 @@ export enum Endpoints {
   REGISTER = "/register",
   FIELDS = "/fields",
   CARDS = "/cards",
+  USERS = "/users",
 }

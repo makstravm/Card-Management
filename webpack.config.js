@@ -34,6 +34,7 @@ module.exports = {
       helpers: path.resolve(__dirname, "src/helpers/"),
       store: path.resolve(__dirname, "src/store/"),
       utils: path.resolve(__dirname, "src/utils/"),
+      route: path.resolve(__dirname, "src/route/"),
     },
   },
   devtool: "source-map",

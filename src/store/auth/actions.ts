@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 import { Endpoints } from "constants/endpoints";
 
-import { POST } from "api/api";
+import { GET, POST } from "api/api";
 
 import {
   LoginInitialValueType,
@@ -24,7 +24,7 @@ import {
   RegisterSuccessType,
 } from "./types";
 
-const { LOGIN, REGISTER } = Endpoints;
+const { LOGIN, REGISTER, USERS } = Endpoints;
 
 export const loginStarted = (): LoginStartedType => ({
   type: AuthActionTypes.LOGIN_STARTED,
@@ -61,12 +61,12 @@ export const loginAction =
     dispatch(loginStarted());
     try {
       const {
-        data: { data, accessToken },
+        data: { user, accessToken },
       } = await POST<AuthResponseType, LoginInitialValueType>(LOGIN, values);
 
       Cookies.set("token", accessToken);
 
-      dispatch(loginSuccess(data));
+      dispatch(loginSuccess(user));
     } catch (error) {
       dispatch(loginFailure(error));
     }
@@ -87,5 +87,20 @@ export const registrationAction =
       dispatch(loginAction(values));
     } catch (error) {
       dispatch(registerFailure(error));
+    }
+  };
+
+export const getDataUserAction =
+  (
+    id: string
+  ): ThunkAction<void, RootStateType, unknown, AuthReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(loginStarted());
+    try {
+      const { data } = await GET(`${USERS}/${id}`);
+
+      dispatch(loginSuccess(data));
+    } catch (error) {
+      dispatch(loginFailure(error));
     }
   };

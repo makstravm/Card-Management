@@ -23,6 +23,7 @@ import { Form } from "components/common/Form";
 
 import { loginValidationSchema } from "helpers/login/loginValidationSchema";
 import { registerValidationSchema } from "helpers/registration/registrationValidationSchema";
+import { PrivateRoute } from "route/PrivateRoute";
 
 const { MAIN, LOGIN, REGISTRATION, BOARD } = RoutesUrls;
 
@@ -58,7 +59,9 @@ const App = () => (
               />
             }
           />
-          <Route path={BOARD} element={<Board />} />
+          <Route element={<PrivateRoute />}>
+            <Route path={BOARD} element={<Board />} />
+          </Route>
         </Route>
       </Routes>
     </Provider>
