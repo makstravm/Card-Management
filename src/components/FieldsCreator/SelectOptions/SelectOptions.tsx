@@ -3,13 +3,7 @@ import React from "react";
 import { v1 } from "uuid";
 import { FieldArray } from "formik";
 
-import {
-  Box,
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -34,8 +28,8 @@ export const SelectOptions = ({
                 label="Name Option"
                 name={`options.${[i]}.value`}
                 onChange={handleChange}
-                error={!!errors?.options?.[i].value}
-                helperText={errors?.options?.[i].value}
+                error={!!errors?.options?.[i]?.value}
+                helperText={errors?.options?.[i]?.value}
               />
             </Grid>
             <Grid item>

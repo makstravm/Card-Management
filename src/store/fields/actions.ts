@@ -1,6 +1,9 @@
-import { GET, POST } from "api/api";
+import { GET, POST, PUT } from "api/api";
 import { Endpoints } from "constants/endpoints";
+import { TypesFields } from "constants/typesFields";
 import { ThunkAction } from "redux-thunk";
+import { getAllCardsAction } from "store/cards/actions";
+import { CardType } from "store/cards/types";
 import { RootStateType } from "store/store";
 import {
   FieldsActionFailureType,
@@ -12,7 +15,9 @@ import {
   SetFieldSuccessType,
 } from "./types";
 
-const { FIELDS } = Endpoints;
+const { FIELDS, CARDS } = Endpoints;
+
+const { CHECKBOX } = TypesFields;
 
 export const fieldsActionStarted = (): FieldsActionStartedType => ({
   type: FieldsActionTypes.FIELDS_ACTION_STARTED,
@@ -45,6 +50,7 @@ export const saveFieldAction =
     try {
       await POST<FieldStateType, FieldStateType>(FIELDS, values);
       dispatch(setFieldSuccess());
+      dispatch(saveFieldToCardAction(values.name, values.type));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
@@ -58,6 +64,29 @@ export const getAllFieldAction =
       const { data } = await GET(FIELDS);
 
       dispatch(getFieldsSuccess(data));
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
+    }
+  };
+
+export const saveFieldToCardAction =
+  (
+    field: string,
+    type: string
+  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      const { data: cards } = await GET(CARDS);
+
+      cards.forEach(async (card: CardType) => {
+        await PUT(`${CARDS}/${card.id}`, {
+          ...card,
+          [field]: type !== CHECKBOX ? "" : false,
+        });
+      });
+      dispatch(setFieldSuccess());
+      dispatch(getAllCardsAction());
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }

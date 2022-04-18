@@ -39,3 +39,12 @@ export const POST = <T, Y>(
 
   return result;
 };
+
+export const PUT = <T, Y>(
+  api: string,
+  values: Y
+): Promise<AxiosResponse<T>> => {
+  const result = axiosInstance.put(api, values);
+
+  return result;
+};
