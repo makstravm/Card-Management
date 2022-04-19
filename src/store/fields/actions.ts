@@ -1,6 +1,7 @@
 import { DELETE, GET, POST, PUT } from "api/api";
 import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
+import { renameKeyObj } from "helpers/renameKeyObj";
 import { ThunkAction } from "redux-thunk";
 import { getAllCardsAction } from "store/cards/actions";
 import { CardType } from "store/cards/types";
@@ -65,6 +66,25 @@ export const saveFieldAction =
     }
   };
 
+export const editFieldAction =
+  (
+    oldName: string,
+    values: FieldStateType
+  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      await PUT<FieldStateType, FieldStateType>(
+        `${FIELDS}/${values.id}`,
+        values
+      );
+      dispatch(setFieldSuccess());
+      dispatch(editFieldToCardAction(oldName, values));
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
+    }
+  };
+
 export const getAllFieldAction =
   (): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
   async (dispatch) => {
@@ -73,6 +93,31 @@ export const getAllFieldAction =
       const { data } = await GET(FIELDS);
 
       dispatch(getFieldsSuccess(data));
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
+    }
+  };
+
+export const editFieldToCardAction =
+  (
+    oldName: string,
+    { name, type }: FieldStateType
+  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      const { data: cards } = await GET(CARDS);
+
+      cards.forEach(async (card: CardType) => {
+        const newCard = renameKeyObj(oldName, name, {
+          ...card,
+          [oldName]: type !== CHECKBOX ? card[oldName] || "---" : false,
+        });
+
+        await PUT(`${CARDS}/${card.id}`, newCard);
+      });
+      dispatch(setFieldSuccess());
+      dispatch(getAllCardsAction());
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
