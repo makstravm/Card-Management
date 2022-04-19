@@ -1,7 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 import {
   AppBar,
@@ -16,11 +17,19 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 import { selectUserState } from "store/auth/selectors";
 import { RoutesUrls } from "constants/routes";
+import { logoutSuccess } from "store/auth/actions";
 
 const { BOARD } = RoutesUrls;
 
 export const Header = () => {
   const userName = useSelector(selectUserState);
+
+  const dispatch = useDispatch();
+
+  const onLogOut = () => {
+    Cookies.remove("token");
+    dispatch(logoutSuccess());
+  };
 
   return (
     <AppBar className="Header" color="transparent" position="relative">
@@ -39,7 +48,7 @@ export const Header = () => {
                 <Typography variant="h6" pr={1} color="textSecondary">
                   {`Hi, ${userName}`}
                 </Typography>
-                <IconButton>
+                <IconButton onClick={onLogOut}>
                   <LogoutIcon fontSize="small" />
                 </IconButton>
               </Grid>

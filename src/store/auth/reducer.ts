@@ -8,6 +8,7 @@ const {
   LOGIN_STARTED,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGOUT_SUCCESS,
   REGISTER_STARTED,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -44,6 +45,14 @@ export const authReducer = (
         loading: false,
         user: null,
         error: action.payload,
+      };
+
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: null,
+        error: null,
       };
 
     case REGISTER_STARTED:
