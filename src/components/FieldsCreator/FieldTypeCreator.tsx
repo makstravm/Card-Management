@@ -2,14 +2,8 @@ import React, { useState } from "react";
 import { Box, Divider, SelectChangeEvent } from "@mui/material";
 
 import { SelectInput } from "components/common/SelectInput/SelectInput";
-import { v1 } from "uuid";
+import { fieldTypesOptions } from "constants/fieldTypesOptions/fieldTypesOptions";
 import { FieldCreator } from "./FieldTextCreator/FieldCreator";
-
-export const fieldTypesOptions = [
-  { id: v1(), value: "text" },
-  { id: v1(), value: "checkbox" },
-  { id: v1(), value: "select" },
-];
 
 export const FieldTypeCreator = () => {
   const [typeField, setTypeField] = useState<{ type: string }>({
