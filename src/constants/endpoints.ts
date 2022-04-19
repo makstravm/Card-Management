@@ -4,4 +4,5 @@ export enum Endpoints {
   FIELDS = "/fields",
   CARDS = "/cards",
   USERS = "/users",
+  FIELD_TYPES = "/fieldTypes",
 }

@@ -22,3 +22,10 @@ export const selectFieldsListAndInitValFormik = createSelector(
     return { fieldsList, initialValues };
   }
 );
+
+const getFieldTypes = (state: RootStateType) => state?.fields?.fieldTypes;
+
+export const selectFieldTypes = createSelector(
+  getFieldTypes,
+  (fieldTypes) => fieldTypes
+);

@@ -12,10 +12,12 @@ import {
   FieldsReducerActionsTypes,
   FieldStateType,
   GetFieldsSuccessType,
+  GetFieldTypesSuccessType,
+  OptionsType,
   SetFieldSuccessType,
 } from "./types";
 
-const { FIELDS, CARDS } = Endpoints;
+const { FIELDS, CARDS, FIELD_TYPES } = Endpoints;
 
 const { CHECKBOX } = TypesFields;
 
@@ -41,6 +43,13 @@ export const getFieldsSuccess = (
   payload,
 });
 
+export const getFieldTypesSuccess = (
+  payload: OptionsType[]
+): GetFieldTypesSuccessType => ({
+  type: FieldsActionTypes.GET_FIELD_TYPES_SUCCESS,
+  payload,
+});
+
 export const saveFieldAction =
   (
     values: FieldStateType
@@ -50,7 +59,7 @@ export const saveFieldAction =
     try {
       await POST<FieldStateType, FieldStateType>(FIELDS, values);
       dispatch(setFieldSuccess());
-      dispatch(saveFieldToCardAction(values.name, values.type));
+      dispatch(saveFieldToCardAction(values));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
@@ -70,10 +79,16 @@ export const getAllFieldAction =
   };
 
 export const saveFieldToCardAction =
-  (
-    field: string,
-    type: string
-  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  ({
+    name,
+    type,
+    options,
+  }: FieldStateType): ThunkAction<
+    void,
+    RootStateType,
+    unknown,
+    FieldsReducerActionsTypes
+  > =>
   async (dispatch) => {
     dispatch(fieldsActionStarted());
     try {
@@ -82,11 +97,24 @@ export const saveFieldToCardAction =
       cards.forEach(async (card: CardType) => {
         await PUT(`${CARDS}/${card.id}`, {
           ...card,
-          [field]: type !== CHECKBOX ? "" : false,
+          [name]: type !== CHECKBOX ? options?.[0]?.value || "---" : false,
         });
       });
       dispatch(setFieldSuccess());
       dispatch(getAllCardsAction());
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
+    }
+  };
+
+export const getFieldTypesAction =
+  (): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      const { data } = await GET(FIELD_TYPES);
+
+      dispatch(getFieldTypesSuccess(data));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }

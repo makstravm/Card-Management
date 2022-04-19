@@ -9,10 +9,12 @@ const {
   FIELDS_ACTION_FAILURE,
   SET_FIELD_SUCCESS,
   GET_FIELDS_SUCCESS,
+  GET_FIELD_TYPES_SUCCESS,
 } = FieldsActionTypes;
 
 const initailState: InitialStateFieldsListType = {
   fieldsList: [],
+  fieldTypes: [],
   loading: false,
   error: null,
 };
@@ -33,6 +35,7 @@ export const fieldsReducer = (
         ...state,
         loading: false,
         fieldsList: null,
+        fieldTypes: null,
         error: action.payload,
       };
 
@@ -48,6 +51,14 @@ export const fieldsReducer = (
         ...state,
         loading: false,
         fieldsList: [...action.payload],
+        error: null,
+      };
+
+    case GET_FIELD_TYPES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        fieldTypes: [...action.payload],
         error: null,
       };
 
