@@ -134,3 +134,19 @@ export const deleteFieldAction =
       dispatch(fieldsActionFailure(error));
     }
   };
+
+export const deleteFieldOptionAction =
+  (
+    id: number,
+    field: FieldStateType
+  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      await PUT(`${FIELDS}/${id}`, field);
+
+      dispatch(getAllFieldAction());
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
+    }
+  };
