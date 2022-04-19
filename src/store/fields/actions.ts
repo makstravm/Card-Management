@@ -50,7 +50,7 @@ export const saveFieldAction =
     try {
       await POST<FieldStateType, FieldStateType>(FIELDS, values);
       dispatch(setFieldSuccess());
-      dispatch(saveFieldToCardAction(values.name, values.type));
+      dispatch(saveFieldToCardAction(values));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
@@ -70,10 +70,16 @@ export const getAllFieldAction =
   };
 
 export const saveFieldToCardAction =
-  (
-    field: string,
-    type: string
-  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  ({
+    name,
+    type,
+    options,
+  }: FieldStateType): ThunkAction<
+    void,
+    RootStateType,
+    unknown,
+    FieldsReducerActionsTypes
+  > =>
   async (dispatch) => {
     dispatch(fieldsActionStarted());
     try {
@@ -82,7 +88,7 @@ export const saveFieldToCardAction =
       cards.forEach(async (card: CardType) => {
         await PUT(`${CARDS}/${card.id}`, {
           ...card,
-          [field]: type !== CHECKBOX ? "" : false,
+          [name]: type !== CHECKBOX ? options?.[0]?.value || "---" : false,
         });
       });
       dispatch(setFieldSuccess());
