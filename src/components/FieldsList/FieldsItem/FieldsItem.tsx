@@ -9,8 +9,13 @@ import {
   Typography,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useDispatch } from "react-redux";
+
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import { TypesFields } from "constants/typesFields";
+import { deleteFieldAction } from "store/fields/actions";
+
 import { FieldItemPropsType } from "../types";
 
 import "./style.scss";
@@ -18,9 +23,13 @@ import "./style.scss";
 const { SELECT } = TypesFields;
 
 export const FieldsItem = ({
-  field: { name, type, required, options },
+  field: { id, name, type, required, options },
 }: FieldItemPropsType) => {
+  const dispatch = useDispatch();
+
   const [showOptions, setShowOPtions] = useState<boolean>(false);
+
+  const onDeleteField = () => dispatch(deleteFieldAction(id));
 
   return (
     <Paper>
@@ -48,13 +57,17 @@ export const FieldsItem = ({
         <Grid>
           <Typography align="center"> {type}</Typography>
         </Grid>
-        <Grid />
+        <Grid>
+          <IconButton onClick={onDeleteField}>
+            <DeleteOutlineIcon fontSize="small" />
+          </IconButton>
+        </Grid>
       </Grid>
       {showOptions && (
         <Stack spacing={1} sx={{ marginTop: "-10px" }} mb={2}>
           <Divider />
-          {options.map(({ value, id }) => (
-            <Typography variant="subtitle2" pl={5} key={id}>
+          {options.map(({ value, id: idOption }) => (
+            <Typography key={idOption} variant="subtitle2" pl={5}>
               {value}
             </Typography>
           ))}

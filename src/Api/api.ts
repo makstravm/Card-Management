@@ -48,3 +48,9 @@ export const PUT = <T, Y>(
 
   return result;
 };
+
+export const DELETE = <T>(api: string): Promise<AxiosResponse<T>> => {
+  const result = axiosInstance.delete(api);
+
+  return result;
+};

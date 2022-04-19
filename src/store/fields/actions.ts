@@ -1,4 +1,4 @@
-import { GET, POST, PUT } from "api/api";
+import { DELETE, GET, POST, PUT } from "api/api";
 import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
 import { ThunkAction } from "redux-thunk";
@@ -115,6 +115,21 @@ export const getFieldTypesAction =
       const { data } = await GET(FIELD_TYPES);
 
       dispatch(getFieldTypesSuccess(data));
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
+    }
+  };
+
+export const deleteFieldAction =
+  (
+    id: number
+  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      await DELETE(`${FIELDS}/${id}`);
+
+      dispatch(getAllFieldAction());
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
