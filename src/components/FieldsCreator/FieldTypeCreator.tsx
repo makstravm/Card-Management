@@ -39,7 +39,7 @@ export const FieldTypeCreator = ({
 
   return (
     <Box pt={2}>
-      {fieldTypesOptions.length && (
+      {!!fieldTypesOptions.length && (
         <>
           <Box>
             <SelectInput
