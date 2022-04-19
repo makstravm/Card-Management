@@ -12,10 +12,12 @@ import {
   FieldsReducerActionsTypes,
   FieldStateType,
   GetFieldsSuccessType,
+  GetFieldTypesSuccessType,
+  OptionsType,
   SetFieldSuccessType,
 } from "./types";
 
-const { FIELDS, CARDS } = Endpoints;
+const { FIELDS, CARDS, FIELD_TYPES } = Endpoints;
 
 const { CHECKBOX } = TypesFields;
 
@@ -38,6 +40,13 @@ export const getFieldsSuccess = (
   payload: FieldStateType[]
 ): GetFieldsSuccessType => ({
   type: FieldsActionTypes.GET_FIELDS_SUCCESS,
+  payload,
+});
+
+export const getFieldTypesSuccess = (
+  payload: OptionsType[]
+): GetFieldTypesSuccessType => ({
+  type: FieldsActionTypes.GET_FIELD_TYPES_SUCCESS,
   payload,
 });
 
@@ -93,6 +102,19 @@ export const saveFieldToCardAction =
       });
       dispatch(setFieldSuccess());
       dispatch(getAllCardsAction());
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
+    }
+  };
+
+export const getFieldTypesAction =
+  (): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      const { data } = await GET(FIELD_TYPES);
+
+      dispatch(getFieldTypesSuccess(data));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }

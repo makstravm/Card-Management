@@ -3,8 +3,8 @@ export enum FieldsActionTypes {
   FIELDS_ACTION_FAILURE = "FIELDS_ACTION_FAILURE",
   SET_FIELD_SUCCESS = "SET_FIELD_SUCCESS",
   GET_FIELDS_SUCCESS = "GET_FIELDS_SUCCESS",
+  GET_FIELD_TYPES_SUCCESS = "GET_FIELD_TYPES_SUCCESS",
 }
-export type FieldTypes = "text" | "checkbox" | "select";
 
 export type OptionsType = {
   id: string;
@@ -21,6 +21,7 @@ export type FieldStateType = {
 
 export type InitialStateFieldsListType = {
   fieldsList: FieldStateType[] | [];
+  fieldTypes: OptionsType[] | [];
   error: string | null;
   loading: boolean;
 };
@@ -43,8 +44,14 @@ export type GetFieldsSuccessType = {
   payload: FieldStateType[];
 };
 
+export type GetFieldTypesSuccessType = {
+  type: FieldsActionTypes.GET_FIELD_TYPES_SUCCESS;
+  payload: OptionsType[];
+};
+
 export type FieldsReducerActionsTypes =
   | FieldsActionStartedType
   | FieldsActionFailureType
   | SetFieldSuccessType
-  | GetFieldsSuccessType;
+  | GetFieldsSuccessType
+  | GetFieldTypesSuccessType;
