@@ -21,6 +21,7 @@ import {
   LoginFailureType,
   LoginStartedType,
   LoginSuccessType,
+  LogoutSuccessType,
   RegisterFailureType,
   RegisterStartedType,
   RegisterSuccessType,
@@ -37,6 +38,10 @@ export const loginStarted = (): LoginStartedType => ({
 export const loginSuccess = (payload: AuthUserType): LoginSuccessType => ({
   type: AuthActionTypes.LOGIN_SUCCESS,
   payload,
+});
+
+export const logoutSuccess = (): LogoutSuccessType => ({
+  type: AuthActionTypes.LOGOUT_SUCCESS,
 });
 
 export const loginFailure = (payload: string): LoginFailureType => ({
