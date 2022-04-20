@@ -10,11 +10,13 @@ import { selectFieldsListAndInitValFormik } from "store/fields/selectors";
 
 import { FieldStateType } from "store/fields/types";
 import { validateSchemaCard } from "helpers/createCardValidSchema/createCardValidSchema";
-import { saveCardAction } from "store/cards/actions";
+import { editCardAction, saveCardAction } from "store/cards/actions";
 import { renderFieldByType } from "helpers/renderFieldByType/renderFieldByType";
 import { Btn } from "components/common/Btn/Btn";
+import { CardType } from "store/cards/types";
+import { CardCreatorType } from "./types";
 
-export const CardCreator = () => {
+export const CardCreator = ({ card }: CardCreatorType) => {
   const dispatch = useDispatch();
 
   const { fieldsList, initialValues } = useSelector(
@@ -25,12 +27,20 @@ export const CardCreator = () => {
     dispatch(getAllFieldAction());
   }, []);
 
+  const onSave = (values: CardType) => {
+    if (card) {
+      dispatch(editCardAction(values));
+    } else {
+      dispatch(saveCardAction(values));
+    }
+  };
+
   return (
     <Box>
       {!!Object.keys(initialValues).length && (
         <Formik
-          initialValues={initialValues}
-          onSubmit={async (values) => dispatch(saveCardAction(values))}
+          initialValues={card || initialValues}
+          onSubmit={async (values) => onSave(values)}
           validationSchema={validateSchemaCard<FieldStateType>(fieldsList)}
         >
           {(formik) => (
