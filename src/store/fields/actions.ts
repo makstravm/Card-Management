@@ -111,7 +111,10 @@ export const editFieldToCardAction =
       cards.forEach(async (card: CardType) => {
         const newCard = renameKeyObj(oldName, name, {
           ...card,
-          [oldName]: type !== CHECKBOX ? card[oldName] || "---" : false,
+          [oldName]:
+            type !== CHECKBOX
+              ? (typeof card[oldName] !== "boolean" && card[oldName]) || "---"
+              : !!card[oldName],
         });
 
         await PUT(`${CARDS}/${card.id}`, newCard);
