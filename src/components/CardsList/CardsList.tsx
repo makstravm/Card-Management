@@ -6,6 +6,7 @@ import { getAllCardsAction } from "store/cards/actions";
 import { selectCardList } from "store/cards/selectors";
 
 import "./style.scss";
+import { CardItemActions } from "./CardItemActions/CardItemActions";
 
 export const CardsList = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,9 @@ export const CardsList = () => {
                   )}
                 </Grid>
               ))}
+              <Box className="card-item__actions">
+                <CardItemActions id={card.id} />
+              </Box>
             </Box>
           </Paper>
         </Box>

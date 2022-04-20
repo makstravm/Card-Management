@@ -5,7 +5,10 @@ export enum CardsActionTypes {
   GET_CARDS_SUCCESS = "GET_CARDS_SUCCESS",
 }
 
-export type CardType = Record<string, string | boolean | number>;
+export type CardType = {
+  id: number;
+  [key: string]: string | boolean | number;
+};
 
 export type InitialStateCardsListType = {
   cardsList: CardType[];
