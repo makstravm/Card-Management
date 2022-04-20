@@ -26,6 +26,7 @@ export const SelectOptions = ({
               <TextField
                 size="small"
                 label="Name Option"
+                value={values[options]?.[i].value}
                 name={`options.${[i]}.value`}
                 onChange={handleChange}
                 error={!!errors?.options?.[i]?.value}
@@ -42,6 +43,7 @@ export const SelectOptions = ({
                 <ArrowCircleDownIcon />
               </IconButton>
             </Grid>
+
             {values.options.length > 2 && (
               <Grid item>
                 <IconButton onClick={() => remove(i)} size="small">

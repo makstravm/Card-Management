@@ -1,6 +1,7 @@
 import { DELETE, GET, POST, PUT } from "api/api";
 import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
+import { renameKeyObj } from "helpers/renameKeyObj";
 import { ThunkAction } from "redux-thunk";
 import { getAllCardsAction } from "store/cards/actions";
 import { CardType } from "store/cards/types";
@@ -65,14 +66,20 @@ export const saveFieldAction =
     }
   };
 
-export const getAllFieldAction =
-  (): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+export const editFieldAction =
+  (
+    oldName: string,
+    values: FieldStateType
+  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(fieldsActionStarted());
     try {
-      const { data } = await GET(FIELDS);
-
-      dispatch(getFieldsSuccess(data));
+      await PUT<FieldStateType, FieldStateType>(
+        `${FIELDS}/${values.id}`,
+        values
+      );
+      dispatch(setFieldSuccess());
+      dispatch(editFieldToCardAction(oldName, values));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
@@ -102,6 +109,46 @@ export const saveFieldToCardAction =
       });
       dispatch(setFieldSuccess());
       dispatch(getAllCardsAction());
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
+    }
+  };
+
+export const editFieldToCardAction =
+  (
+    oldName: string,
+    { name, type }: FieldStateType
+  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      const { data: cards } = await GET(CARDS);
+
+      cards.forEach(async (card: CardType) => {
+        const value =
+          type !== CHECKBOX
+            ? (typeof card[oldName] !== "boolean" && card[oldName]) || "---"
+            : !!card[oldName];
+
+        const newCard = renameKeyObj(card, oldName, name, value);
+
+        await PUT(`${CARDS}/${card.id}`, newCard);
+      });
+      dispatch(setFieldSuccess());
+      dispatch(getAllCardsAction());
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
+    }
+  };
+
+export const getAllFieldAction =
+  (): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      const { data } = await GET(FIELDS);
+
+      dispatch(getFieldsSuccess(data));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }

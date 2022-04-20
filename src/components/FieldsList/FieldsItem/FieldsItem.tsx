@@ -12,15 +12,19 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 import { TypesFields } from "constants/typesFields";
+
+import { FieldTypeCreator } from "components/FieldsCreator/FieldTypeCreator";
+
 import {
   deleteFieldAction,
   deleteFieldOptionAction,
 } from "store/fields/actions";
+import { showModal } from "store/modals/actions";
 
 import { FieldItemPropsType } from "../types";
-
 import "./style.scss";
 
 const { SELECT } = TypesFields;
@@ -35,10 +39,18 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
   const onDeleteField = () => dispatch(deleteFieldAction(id));
 
   const onDeleteOption = (idOption: string) => {
-    const newOptions = options.filter((option) => option.id !== idOption);
+    const newOptions = options.filter((option) => option?.id !== idOption);
 
     dispatch(deleteFieldOptionAction(id, { ...field, options: newOptions }));
   };
+
+  const onEditField = () =>
+    dispatch(
+      showModal(
+        "Edit Field",
+        <FieldTypeCreator field={field} typeEditField={type} />
+      )
+    );
 
   return (
     <Paper>
@@ -67,6 +79,9 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
           <Typography align="center"> {type}</Typography>
         </Grid>
         <Grid>
+          <IconButton onClick={onEditField}>
+            <ModeEditIcon fontSize="small" />
+          </IconButton>
           <IconButton onClick={onDeleteField}>
             <DeleteOutlineIcon fontSize="small" />
           </IconButton>
