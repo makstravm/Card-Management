@@ -1,4 +1,4 @@
-import { GET, POST } from "api/api";
+import { DELETE, GET, POST } from "api/api";
 import { Endpoints } from "constants/endpoints";
 import { ThunkAction } from "redux-thunk";
 import { RootStateType } from "store/store";
@@ -57,6 +57,21 @@ export const getAllCardsAction =
       const { data } = await GET(CARDS);
 
       dispatch(getCardsSuccess(data));
+    } catch (error) {
+      dispatch(cardsActionFailure(error));
+    }
+  };
+
+export const deleteCardAction =
+  (
+    id: number | string | boolean
+  ): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(cardsActionStarted());
+    try {
+      await DELETE(`${CARDS}/${id}`);
+
+      dispatch(getAllCardsAction());
     } catch (error) {
       dispatch(cardsActionFailure(error));
     }
