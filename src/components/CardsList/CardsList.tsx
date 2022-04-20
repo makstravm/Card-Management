@@ -51,7 +51,7 @@ export const CardsList = () => {
                 </Grid>
               ))}
               <Box className="card-item__actions">
-                <CardItemActions id={card.id} />
+                <CardItemActions card={card} />
               </Box>
             </Box>
           </Paper>

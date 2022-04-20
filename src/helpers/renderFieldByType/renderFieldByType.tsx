@@ -17,7 +17,13 @@ export const renderFieldByType = (
 ) => {
   switch (type) {
     case CHECKBOX:
-      return <CheckBox name={name} handleChange={handleChange} />;
+      return (
+        <CheckBox
+          name={name}
+          checked={!!values[name]}
+          handleChange={handleChange}
+        />
+      );
 
     case SELECT:
       return (
@@ -36,6 +42,7 @@ export const renderFieldByType = (
         <TextField
           fullWidth
           size="small"
+          value={values[name]}
           label={`${name}${required ? "*" : ""}`}
           name={name}
           error={!!(touched[name] && errors[name])}
