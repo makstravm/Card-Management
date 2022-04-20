@@ -64,7 +64,7 @@ export const getAllCardsAction =
 
 export const deleteCardAction =
   (
-    id: number | string | boolean
+    id: CardType["id"]
   ): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());

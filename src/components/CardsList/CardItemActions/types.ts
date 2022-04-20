@@ -1,3 +1,5 @@
+import { CardType } from "store/cards/types";
+
 export type CardItemActionsPropsType = {
-  id: number | string | boolean;
+  id: CardType["id"];
 };
