@@ -36,7 +36,7 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
 
   const [showOptions, setShowOPtions] = useState<boolean>(false);
 
-  const onDeleteField = () => dispatch(deleteFieldAction(id));
+  const onDeleteField = () => dispatch(deleteFieldAction(id, name));
 
   const onDeleteOption = (idOption: string) => {
     const newOptions = options.filter((option) => option?.id !== idOption);

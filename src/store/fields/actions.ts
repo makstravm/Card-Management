@@ -169,14 +169,36 @@ export const getFieldTypesAction =
 
 export const deleteFieldAction =
   (
-    id: number
+    id: number,
+    name: string
   ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(fieldsActionStarted());
     try {
       await DELETE(`${FIELDS}/${id}`);
-
+      dispatch(deleteFieldToCardAction(name));
       dispatch(getAllFieldAction());
+    } catch (error) {
+      dispatch(fieldsActionFailure(error));
+    }
+  };
+
+export const deleteFieldToCardAction =
+  (
+    keyName: string
+  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
+  async (dispatch) => {
+    dispatch(fieldsActionStarted());
+    try {
+      const { data: cards } = await GET(CARDS);
+
+      cards.forEach(async (card: CardType) => {
+        delete card[keyName];
+
+        await PUT(`${CARDS}/${card.id}`, card);
+      });
+      dispatch(setFieldSuccess());
+      dispatch(getAllCardsAction());
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
