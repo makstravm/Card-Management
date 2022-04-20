@@ -8,7 +8,7 @@
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "lib": ["es5", "es6", "es2017.object", "dom"],
+    "lib": ["es5", "es6", "es2017.object", "es2019", "dom"],
     "baseUrl": "./",
     "paths": {
       "components/*": ["./src/components/*"],
