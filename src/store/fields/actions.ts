@@ -3,7 +3,7 @@ import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
 import { renameKeyObj } from "helpers/renameKeyObj";
 import { ThunkAction } from "redux-thunk";
-import { getAllCardsAction, updateCard } from "store/cards/actions";
+import { updateCard } from "store/cards/actions";
 import { CardType } from "store/cards/types";
 import { RootStateType } from "store/store";
 import {
@@ -157,33 +157,27 @@ export const deleteFieldAction =
     id: number,
     name: string
   ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     dispatch(fieldsActionStarted());
     try {
       await DELETE(`${FIELDS}/${id}`);
-      dispatch(deleteFieldToCardAction(name));
-      dispatch(getAllFieldAction());
-    } catch (error) {
-      dispatch(fieldsActionFailure(error));
-    }
-  };
+      const cards = getState().cards.cardsList;
 
-export const deleteFieldToCardAction =
-  (
-    keyName: string
-  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
-  async (dispatch) => {
-    dispatch(fieldsActionStarted());
-    try {
-      const { data: cards } = await GET(CARDS);
+      const newCardList = cards.map(async (card: CardType) => {
+        delete card[name];
 
-      cards.forEach(async (card: CardType) => {
-        delete card[keyName];
+        const { data } = await PUT<CardType, CardType>(
+          `${CARDS}/${card.id}`,
+          card
+        );
 
-        await PUT(`${CARDS}/${card.id}`, card);
+        return data;
       });
+
+      const result = await Promise.all(newCardList);
+
+      dispatch(updateCard(result));
       dispatch(setFieldSuccess());
-      dispatch(getAllCardsAction());
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
