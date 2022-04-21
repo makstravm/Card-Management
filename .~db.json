@@ -1,0 +1,119 @@
+{
+  "users": [
+    {
+      "email": "test@t.t",
+      "password": "$2a$10$nhHiZBt/a6F2wPl5MdQBb.86nc8zuxwBTKVU/beRtvt7jNUd7B/A.",
+      "name": "Test",
+      "lastName": "test",
+      "confirmPassword": "1q2w3e4r",
+      "id": 5
+    },
+    {
+      "email": "t@t.t",
+      "password": "$2a$10$.Cp9Ty2/9fn3w0ZsDFpnoORV5xvL6VbKZNCjnFs51QB7YFfh5mVzW",
+      "name": "Maksym",
+      "lastName": "Maksym",
+      "confirmPassword": "1q2w3e4r",
+      "id": 6
+    }
+  ],
+  "fieldTypes": [
+    {
+      "id": 1,
+      "value": "text"
+    },
+    {
+      "id": 2,
+      "value": "checkbox"
+    },
+    {
+      "id": 3,
+      "value": "select"
+    }
+  ],
+  "fields": [
+    {
+      "name": "Name",
+      "type": "text",
+      "required": true,
+      "options": [],
+      "id": 1
+    },
+    {
+      "name": "Married",
+      "type": "checkbox",
+      "required": false,
+      "options": [],
+      "id": 2
+    },
+    {
+      "name": "Countries",
+      "type": "select",
+      "required": false,
+      "options": [
+        {
+          "id": "366ded00-ba70-11ec-b66c-f11a17d20ab8",
+          "value": "Ukraine"
+        },
+        {
+          "id": "39d11530-ba70-11ec-b66c-f11a17d20ab8",
+          "value": "Poland"
+        },
+        {
+          "id": "3bf331e0-ba70-11ec-b66c-f11a17d20ab8",
+          "value": "Spain"
+        },
+        {
+          "id": "3f244d90-ba70-11ec-b66c-f11a17d20ab8",
+          "value": "France"
+        },
+        {
+          "id": "422f1c90-ba70-11ec-b66c-f11a17d20ab8",
+          "value": "Italy"
+        }
+      ],
+      "id": 3
+    },
+    {
+      "name": "Car",
+      "type": "select",
+      "required": false,
+      "options": [
+        {
+          "id": "252d6680-c0c7-11ec-923d-d37acbd6eaa5",
+          "value": "BMW"
+        },
+        {
+          "id": "27c01f50-c0c7-11ec-923d-d37acbd6eaa5",
+          "value": "jeep"
+        }
+      ],
+      "id": 4
+    },
+    {
+      "name": "Maksym ",
+      "type": "text",
+      "required": false,
+      "options": [],
+      "id": 5
+    }
+  ],
+  "cards": [
+    {
+      "Name": "Maksym Mykulenko",
+      "Married": true,
+      "Countries": "Spain",
+      "Car": "jeep",
+      "id": 1,
+      "Maksym ": "---"
+    },
+    {
+      "Name": "Maksym Mykulenko",
+      "Married": true,
+      "Countries": "Poland",
+      "Car": "BMW",
+      "id": 2,
+      "Maksym ": "---"
+    }
+  ]
+}
