@@ -10,6 +10,7 @@ const {
   SET_FIELD_SUCCESS,
   GET_FIELDS_SUCCESS,
   GET_FIELD_TYPES_SUCCESS,
+  UPDATE_FIELD,
 } = FieldsActionTypes;
 
 const initailState: InitialStateFieldsListType = {
@@ -59,6 +60,16 @@ export const fieldsReducer = (
         ...state,
         loading: false,
         fieldTypes: [...action.payload],
+        error: null,
+      };
+
+    case UPDATE_FIELD:
+      return {
+        ...state,
+        loading: false,
+        fieldsList: state.fieldsList.map((field) =>
+          field.id === action.payload.id ? action.payload : field
+        ),
         error: null,
       };
 

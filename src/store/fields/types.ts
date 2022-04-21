@@ -6,6 +6,7 @@ export enum FieldsActionTypes {
   SET_FIELD_SUCCESS = "SET_FIELD_SUCCESS",
   GET_FIELDS_SUCCESS = "GET_FIELDS_SUCCESS",
   GET_FIELD_TYPES_SUCCESS = "GET_FIELD_TYPES_SUCCESS",
+  UPDATE_FIELD = "UPDATE_FIELD",
 }
 
 export type OptionsType = {
@@ -50,11 +51,15 @@ export type GetFieldTypesSuccessType = {
   type: FieldsActionTypes.GET_FIELD_TYPES_SUCCESS;
   payload: OptionsType[];
 };
-
+export type UpdateFieldType = {
+  type: FieldsActionTypes.UPDATE_FIELD;
+  payload: FieldStateType;
+};
 export type FieldsReducerActionsTypes =
   | FieldsActionStartedType
   | FieldsActionFailureType
   | SetFieldSuccessType
   | GetFieldsSuccessType
   | GetFieldTypesSuccessType
-  | UpdateCardType;
+  | UpdateCardType
+  | UpdateFieldType;

@@ -16,6 +16,7 @@ import {
   GetFieldTypesSuccessType,
   OptionsType,
   SetFieldSuccessType,
+  UpdateFieldType,
 } from "./types";
 
 const { FIELDS, CARDS, FIELD_TYPES } = Endpoints;
@@ -48,6 +49,11 @@ export const getFieldTypesSuccess = (
   payload: OptionsType[]
 ): GetFieldTypesSuccessType => ({
   type: FieldsActionTypes.GET_FIELD_TYPES_SUCCESS,
+  payload,
+});
+
+export const updateField = (payload: FieldStateType): UpdateFieldType => ({
+  type: FieldsActionTypes.UPDATE_FIELD,
   payload,
 });
 
@@ -177,7 +183,6 @@ export const deleteFieldAction =
       const result = await Promise.all(newCardList);
 
       dispatch(updateCard(result));
-      dispatch(setFieldSuccess());
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
@@ -191,9 +196,12 @@ export const deleteFieldOptionAction =
   async (dispatch) => {
     dispatch(fieldsActionStarted());
     try {
-      await PUT(`${FIELDS}/${id}`, field);
+      const { data } = await PUT<FieldStateType, FieldStateType>(
+        `${FIELDS}/${id}`,
+        field
+      );
 
-      dispatch(getAllFieldAction());
+      dispatch(updateField(data));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
