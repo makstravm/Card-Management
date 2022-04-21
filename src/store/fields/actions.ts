@@ -11,6 +11,8 @@ import { RootStateType } from "store/store";
 
 import { renameKeyObj } from "helpers/renameKeyObj";
 
+import { notifySuccess } from "utils/toast";
+import { hideModal } from "store/modals/actions";
 import {
   DeleteFieldSuccessType,
   FieldsActionFailureType,
@@ -101,6 +103,8 @@ export const saveFieldAction =
 
       const result = await Promise.all(newCardList);
 
+      notifySuccess("Field created");
+      dispatch(hideModal());
       dispatch(updateFieldsToCard(result));
       dispatch(setFieldSuccess());
     } catch (error) {
@@ -140,6 +144,8 @@ export const editFieldAction =
 
       const result = await Promise.all(newCardList);
 
+      notifySuccess("Field edited");
+      dispatch(hideModal());
       dispatch(updateFieldsToCard(result));
       dispatch(setFieldSuccess());
     } catch (error) {
@@ -197,6 +203,7 @@ export const deleteFieldAction =
 
       const result = await Promise.all(newCardList);
 
+      notifySuccess("Field deleted");
       dispatch(deleteFieldSuccess(id));
       dispatch(updateFieldsToCard(result));
     } catch (error) {
@@ -217,6 +224,7 @@ export const deleteFieldOptionAction =
         field
       );
 
+      notifySuccess("Option deleted");
       dispatch(updateFieldSuccess(data));
     } catch (error) {
       dispatch(fieldsActionFailure(error));

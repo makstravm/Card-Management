@@ -11,3 +11,12 @@ export const notify = (msg: string) => {
     pauseOnHover: true,
   });
 };
+export const notifySuccess = (msg: string) => {
+  toast.success(msg, {
+    position: "top-center",
+    autoClose: 2500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+  });
+};

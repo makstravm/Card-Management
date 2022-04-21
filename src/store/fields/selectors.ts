@@ -13,7 +13,7 @@ export const selectFieldsList = createSelector(
 export const selectFieldsListAndInitValFormik = createSelector(
   getFieldsList,
   (fieldsList) => {
-    const initialValues: CardType = {};
+    const initialValues: Omit<CardType, "id"> = {};
 
     fieldsList?.forEach(({ type, name }) => {
       initialValues[name] = type !== "checkbox" ? "" : false;

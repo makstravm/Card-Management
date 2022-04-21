@@ -36,8 +36,8 @@ export const fieldsReducer = (
       return {
         ...state,
         loading: false,
-        fieldsList: null,
-        fieldTypes: null,
+        fieldsList: [],
+        fieldTypes: [],
         error: action.payload,
       };
 
@@ -78,7 +78,7 @@ export const fieldsReducer = (
       return {
         ...state,
         loading: false,
-        fieldsList: state.fieldsList.filter(
+        fieldsList: [...state.fieldsList].filter(
           (field) => field.id !== action.payload
         ),
         error: null,
