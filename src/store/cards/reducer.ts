@@ -11,6 +11,7 @@ const {
   GET_CARDS_SUCCESS,
   UPDATE_FIELDS_CARD,
   UPDATE_CARD_SUCCESS,
+  DELETE_CARD_SUCCESS,
 } = CardsActionTypes;
 
 const initailState: InitialStateCardsListType = {
@@ -69,6 +70,14 @@ export const cardsReducer = (
         ...state,
         loading: false,
         cardsList: [...action.payload],
+        error: null,
+      };
+
+    case DELETE_CARD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cardsList: state.cardsList.filter((card) => card.id !== action.payload),
         error: null,
       };
 

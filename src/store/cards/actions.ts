@@ -16,6 +16,7 @@ import {
   SetCardSuccessType,
   UpdateFieldsToCardType,
   UpdateCardSuccessType,
+  DeleteCardSuccessType,
 } from "./types";
 
 const { CARDS } = Endpoints;
@@ -52,6 +53,13 @@ export const updateCardSuccess = (
   payload: CardType
 ): UpdateCardSuccessType => ({
   type: CardsActionTypes.UPDATE_CARD_SUCCESS,
+  payload,
+});
+
+export const deleteCardSuccess = (
+  payload: CardType["id"]
+): DeleteCardSuccessType => ({
+  type: CardsActionTypes.DELETE_CARD_SUCCESS,
   payload,
 });
 
@@ -108,9 +116,9 @@ export const deleteCardAction =
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
-      await DELETE(`${CARDS}/${id}`);
+      await DELETE<CardType>(`${CARDS}/${id}`);
 
-      dispatch(getAllCardsAction());
+      dispatch(deleteCardSuccess(id));
     } catch (error) {
       dispatch(cardsActionFailure(error));
     }

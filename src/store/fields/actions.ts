@@ -1,12 +1,18 @@
+import { ThunkAction } from "redux-thunk";
+
 import { DELETE, GET, POST, PUT } from "api/api";
+
 import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
-import { renameKeyObj } from "helpers/renameKeyObj";
-import { ThunkAction } from "redux-thunk";
+
 import { updateFieldsToCard } from "store/cards/actions";
 import { CardType } from "store/cards/types";
 import { RootStateType } from "store/store";
+
+import { renameKeyObj } from "helpers/renameKeyObj";
+
 import {
+  DeleteFieldSuccessType,
   FieldsActionFailureType,
   FieldsActionStartedType,
   FieldsActionTypes,
@@ -16,7 +22,7 @@ import {
   GetFieldTypesSuccessType,
   OptionsType,
   SetFieldSuccessType,
-  UpdateFieldType,
+  UpdateFieldSuccessType,
 } from "./types";
 
 const { FIELDS, CARDS, FIELD_TYPES } = Endpoints;
@@ -52,8 +58,17 @@ export const getFieldTypesSuccess = (
   payload,
 });
 
-export const updateField = (payload: FieldStateType): UpdateFieldType => ({
-  type: FieldsActionTypes.UPDATE_FIELD,
+export const updateFieldSuccess = (
+  payload: FieldStateType
+): UpdateFieldSuccessType => ({
+  type: FieldsActionTypes.UPDATE_FIELD_SUCCESS,
+  payload,
+});
+
+export const deleteFieldSuccess = (
+  payload: number
+): DeleteFieldSuccessType => ({
+  type: FieldsActionTypes.DELETE_FIELD_SUCCESS,
   payload,
 });
 
@@ -182,6 +197,7 @@ export const deleteFieldAction =
 
       const result = await Promise.all(newCardList);
 
+      dispatch(deleteFieldSuccess(id));
       dispatch(updateFieldsToCard(result));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
@@ -201,7 +217,7 @@ export const deleteFieldOptionAction =
         field
       );
 
-      dispatch(updateField(data));
+      dispatch(updateFieldSuccess(data));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
