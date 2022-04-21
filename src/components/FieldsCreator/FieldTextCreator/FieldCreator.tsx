@@ -26,7 +26,7 @@ export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
           ...field,
           name,
           type,
-          required,
+          required: (type === TEXT && required) || false,
           options: (type !== SELECT && []) || options,
         })
       );
@@ -35,7 +35,7 @@ export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
         saveFieldAction({
           name,
           type,
-          required,
+          required: (type === TEXT && required) || false,
           options: (type !== SELECT && []) || options,
         })
       );
