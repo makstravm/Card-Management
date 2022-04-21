@@ -3,7 +3,7 @@ import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
 import { renameKeyObj } from "helpers/renameKeyObj";
 import { ThunkAction } from "redux-thunk";
-import { updateCard } from "store/cards/actions";
+import { updateFieldsToCard } from "store/cards/actions";
 import { CardType } from "store/cards/types";
 import { RootStateType } from "store/store";
 import {
@@ -86,7 +86,7 @@ export const saveFieldAction =
 
       const result = await Promise.all(newCardList);
 
-      dispatch(updateCard(result));
+      dispatch(updateFieldsToCard(result));
       dispatch(setFieldSuccess());
     } catch (error) {
       dispatch(fieldsActionFailure(error));
@@ -125,7 +125,7 @@ export const editFieldAction =
 
       const result = await Promise.all(newCardList);
 
-      dispatch(updateCard(result));
+      dispatch(updateFieldsToCard(result));
       dispatch(setFieldSuccess());
     } catch (error) {
       dispatch(fieldsActionFailure(error));
@@ -182,7 +182,7 @@ export const deleteFieldAction =
 
       const result = await Promise.all(newCardList);
 
-      dispatch(updateCard(result));
+      dispatch(updateFieldsToCard(result));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }

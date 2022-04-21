@@ -1,4 +1,4 @@
-import { UpdateCardType } from "store/cards/types";
+import { UpdateFieldsToCardType } from "store/cards/types";
 
 export enum FieldsActionTypes {
   FIELDS_ACTION_STARTED = "FIELDS_ACTION_STARTED",
@@ -61,5 +61,5 @@ export type FieldsReducerActionsTypes =
   | SetFieldSuccessType
   | GetFieldsSuccessType
   | GetFieldTypesSuccessType
-  | UpdateCardType
+  | UpdateFieldsToCardType
   | UpdateFieldType;

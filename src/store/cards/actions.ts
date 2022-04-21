@@ -3,14 +3,14 @@ import { Endpoints } from "constants/endpoints";
 import { ThunkAction } from "redux-thunk";
 import { RootStateType } from "store/store";
 import {
-  CarddsReducerActionsTypes,
+  CardsReducerActionsTypes,
   CardsActionFailureType,
   CardsActionStartedType,
   CardsActionTypes,
   CardType,
   GetCardsSuccessType,
   SetCardSuccessType,
-  UpdateCardType,
+  UpdateFieldsToCardType,
 } from "./types";
 
 const { CARDS } = Endpoints;
@@ -35,15 +35,17 @@ export const getCardsSuccess = (payload: CardType[]): GetCardsSuccessType => ({
   payload,
 });
 
-export const updateCard = (payload: CardType[]): UpdateCardType => ({
-  type: CardsActionTypes.UPDATE_CARD,
+export const updateFieldsToCard = (
+  payload: CardType[]
+): UpdateFieldsToCardType => ({
+  type: CardsActionTypes.UPDATE_FIELDS_CARD,
   payload,
 });
 
 export const saveCardAction =
   (
     values: CardType
-  ): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
+  ): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
@@ -58,7 +60,7 @@ export const saveCardAction =
 export const editCardAction =
   (
     values: CardType
-  ): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
+  ): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
@@ -71,7 +73,7 @@ export const editCardAction =
   };
 
 export const getAllCardsAction =
-  (): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
+  (): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
@@ -86,7 +88,7 @@ export const getAllCardsAction =
 export const deleteCardAction =
   (
     id: CardType["id"]
-  ): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
+  ): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {

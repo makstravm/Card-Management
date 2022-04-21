@@ -1,5 +1,5 @@
 import {
-  CarddsReducerActionsTypes,
+  CardsReducerActionsTypes,
   CardsActionTypes,
   InitialStateCardsListType,
 } from "./types";
@@ -9,7 +9,7 @@ const {
   CARDS_ACTION_FAILURE,
   SET_CARD_SUCCESS,
   GET_CARDS_SUCCESS,
-  UPDATE_CARD,
+  UPDATE_FIELDS_CARD,
 } = CardsActionTypes;
 
 const initailState: InitialStateCardsListType = {
@@ -20,7 +20,7 @@ const initailState: InitialStateCardsListType = {
 
 export const cardsReducer = (
   state = initailState,
-  action: CarddsReducerActionsTypes
+  action: CardsReducerActionsTypes
 ) => {
   switch (action.type) {
     case CARDS_ACTION_STARTED:
@@ -52,7 +52,7 @@ export const cardsReducer = (
         error: null,
       };
 
-    case UPDATE_CARD:
+    case UPDATE_FIELDS_CARD:
       return {
         ...state,
         loading: false,
