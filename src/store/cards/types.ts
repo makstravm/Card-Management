@@ -3,6 +3,7 @@ export enum CardsActionTypes {
   CARDS_ACTION_FAILURE = "CARDS_ACTION_FAILURE",
   SET_CARD_SUCCESS = "SET_CARD_SUCCESS",
   GET_CARDS_SUCCESS = "GET_CARDS_SUCCESS",
+  UPDATE_CARD = "UPDATE_CARD",
 }
 
 export type CardType = {
@@ -34,8 +35,14 @@ export type GetCardsSuccessType = {
   payload: CardType[];
 };
 
+export type UpdateCardType = {
+  type: CardsActionTypes.UPDATE_CARD;
+  payload: CardType[];
+};
+
 export type CarddsReducerActionsTypes =
   | CardsActionStartedType
   | CardsActionFailureType
   | SetCardSuccessType
-  | GetCardsSuccessType;
+  | GetCardsSuccessType
+  | UpdateCardType;

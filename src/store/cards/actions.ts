@@ -10,6 +10,7 @@ import {
   CardType,
   GetCardsSuccessType,
   SetCardSuccessType,
+  UpdateCardType,
 } from "./types";
 
 const { CARDS } = Endpoints;
@@ -31,6 +32,11 @@ export const setCardSuccess = (): SetCardSuccessType => ({
 
 export const getCardsSuccess = (payload: CardType[]): GetCardsSuccessType => ({
   type: CardsActionTypes.GET_CARDS_SUCCESS,
+  payload,
+});
+
+export const updateCard = (payload: CardType[]): UpdateCardType => ({
+  type: CardsActionTypes.UPDATE_CARD,
   payload,
 });
 

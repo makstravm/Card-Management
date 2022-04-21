@@ -9,6 +9,7 @@ const {
   CARDS_ACTION_FAILURE,
   SET_CARD_SUCCESS,
   GET_CARDS_SUCCESS,
+  UPDATE_CARD,
 } = CardsActionTypes;
 
 const initailState: InitialStateCardsListType = {
@@ -44,6 +45,14 @@ export const cardsReducer = (
       };
 
     case GET_CARDS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cardsList: [...action.payload],
+        error: null,
+      };
+
+    case UPDATE_CARD:
       return {
         ...state,
         loading: false,

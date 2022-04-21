@@ -3,7 +3,7 @@ import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
 import { renameKeyObj } from "helpers/renameKeyObj";
 import { ThunkAction } from "redux-thunk";
-import { getAllCardsAction } from "store/cards/actions";
+import { getAllCardsAction, updateCard } from "store/cards/actions";
 import { CardType } from "store/cards/types";
 import { RootStateType } from "store/store";
 import {
@@ -55,12 +55,33 @@ export const saveFieldAction =
   (
     values: FieldStateType
   ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     dispatch(fieldsActionStarted());
     try {
       await POST<FieldStateType, FieldStateType>(FIELDS, values);
+      const cards = getState().cards.cardsList;
+
+      const newCardList = cards.map(async (card: CardType) => {
+        const newCard = {
+          ...card,
+          [values.name]:
+            values.type !== CHECKBOX
+              ? values.options?.[0]?.value || "---"
+              : false,
+        };
+
+        const { data } = await PUT<CardType, CardType>(
+          `${CARDS}/${card.id}`,
+          newCard
+        );
+
+        return data;
+      });
+
+      const result = await Promise.all(newCardList);
+
+      dispatch(updateCard(result));
       dispatch(setFieldSuccess());
-      dispatch(saveFieldToCardAction(values));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
