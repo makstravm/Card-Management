@@ -1,7 +1,11 @@
-import { DELETE, GET, POST, PUT } from "api/api";
-import { Endpoints } from "constants/endpoints";
 import { ThunkAction } from "redux-thunk";
+
+import { Endpoints } from "constants/endpoints";
+
+import { DELETE, GET, POST, PUT } from "api/api";
+
 import { RootStateType } from "store/store";
+
 import {
   CardsReducerActionsTypes,
   CardsActionFailureType,
@@ -11,6 +15,7 @@ import {
   GetCardsSuccessType,
   SetCardSuccessType,
   UpdateFieldsToCardType,
+  UpdateCardSuccessType,
 } from "./types";
 
 const { CARDS } = Endpoints;
@@ -26,8 +31,9 @@ export const cardsActionFailure = (
   payload,
 });
 
-export const setCardSuccess = (): SetCardSuccessType => ({
+export const setCardSuccess = (payload: CardType): SetCardSuccessType => ({
   type: CardsActionTypes.SET_CARD_SUCCESS,
+  payload,
 });
 
 export const getCardsSuccess = (payload: CardType[]): GetCardsSuccessType => ({
@@ -42,6 +48,13 @@ export const updateFieldsToCard = (
   payload,
 });
 
+export const updateCardSuccess = (
+  payload: CardType
+): UpdateCardSuccessType => ({
+  type: CardsActionTypes.UPDATE_CARD_SUCCESS,
+  payload,
+});
+
 export const saveCardAction =
   (
     values: CardType
@@ -49,9 +62,9 @@ export const saveCardAction =
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
-      await POST<CardType, CardType>(CARDS, values);
-      dispatch(setCardSuccess());
-      dispatch(getAllCardsAction());
+      const { data } = await POST<CardType, CardType>(CARDS, values);
+
+      dispatch(setCardSuccess(data));
     } catch (error) {
       dispatch(cardsActionFailure(error));
     }
@@ -64,9 +77,12 @@ export const editCardAction =
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
-      await PUT(`${CARDS}/${values.id}`, values);
-      dispatch(setCardSuccess());
-      dispatch(getAllCardsAction());
+      const { data } = await PUT<CardType, CardType>(
+        `${CARDS}/${values.id}`,
+        values
+      );
+
+      dispatch(updateCardSuccess(data));
     } catch (error) {
       dispatch(cardsActionFailure(error));
     }
