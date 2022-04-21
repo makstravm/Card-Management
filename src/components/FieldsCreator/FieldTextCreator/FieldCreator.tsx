@@ -1,15 +1,20 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik, FormikProps } from "formik";
 
-import { Box, Divider, TextField, Typography } from "@mui/material";
+import { Alert, Box, Divider, TextField, Typography } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
 import { CheckBox } from "components/common/CheckBox/CheckBox";
-import { switchedFieldCreateValidation } from "helpers/optionsValidSchema/optionsValidSchema";
-import { editFieldAction, saveFieldAction } from "store/fields/actions";
-import { TypesFields } from "constants/typesFields";
 import { Btn } from "components/common/Btn/Btn";
+
+import { selectFieldsList } from "store/fields/selectors";
+import { editFieldAction, saveFieldAction } from "store/fields/actions";
+
+import { TypesFields } from "constants/typesFields";
+
+import { switchedFieldCreateValidation } from "helpers/optionsValidSchema/optionsValidSchema";
+
 import { SelectOptions } from "../SelectOptions/SelectOptions";
 
 import { FieldCreatorPropsType, FormikStateType } from "./types";
@@ -18,6 +23,10 @@ const { TEXT, SELECT } = TypesFields;
 
 export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
   const dispatch = useDispatch();
+
+  const fieldsList = useSelector(selectFieldsList);
+
+  const [errorName, setErrorName] = useState(false);
 
   const onSaveField = ({ name, required, options }: FormikStateType) => {
     if (field?.id) {
@@ -31,14 +40,19 @@ export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
         })
       );
     } else {
-      dispatch(
-        saveFieldAction({
-          name,
-          type,
-          required: (type === TEXT && required) || false,
-          options: (type !== SELECT && []) || options,
-        })
-      );
+      const checkName = fieldsList.find((field) => field.name === name);
+
+      if (checkName) {
+        setErrorName(true);
+      } else
+        dispatch(
+          saveFieldAction({
+            name,
+            type,
+            required: (type === TEXT && required) || false,
+            options: (type !== SELECT && []) || options,
+          })
+        );
     }
   };
 
@@ -55,7 +69,7 @@ export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
           <Form>
             {type && (
               <Box pt={2}>
-                <Box pb={2}>
+                <Box pb={2} display="flex">
                   <TextField
                     label="Name Field"
                     name="name"
@@ -66,11 +80,13 @@ export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
                     helperText={touched.name && errors.name}
                   />
                   {type === TEXT && (
-                    <CheckBox
-                      name="required"
-                      checked={formik?.values?.required}
-                      handleChange={handleChange}
-                    />
+                    <Box pl={1}>
+                      <CheckBox
+                        name="required"
+                        checked={formik?.values?.required}
+                        handleChange={handleChange}
+                      />
+                    </Box>
                   )}
                 </Box>
                 {type === SELECT && (
@@ -83,7 +99,12 @@ export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
                 )}
               </Box>
             )}
-            <Box display="flex" justifyContent="center" pb={1}>
+            {errorName && (
+              <Alert variant="outlined" severity="error">
+                A field with this name exists!!!
+              </Alert>
+            )}
+            <Box display="flex" justifyContent="center" pt={1} pb={1}>
               <Btn
                 title="Save"
                 variantBtn="outlined"
