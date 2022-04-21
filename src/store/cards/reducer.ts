@@ -1,5 +1,5 @@
 import {
-  CarddsReducerActionsTypes,
+  CardsReducerActionsTypes,
   CardsActionTypes,
   InitialStateCardsListType,
 } from "./types";
@@ -9,6 +9,9 @@ const {
   CARDS_ACTION_FAILURE,
   SET_CARD_SUCCESS,
   GET_CARDS_SUCCESS,
+  UPDATE_FIELDS_CARD,
+  UPDATE_CARD_SUCCESS,
+  DELETE_CARD_SUCCESS,
 } = CardsActionTypes;
 
 const initailState: InitialStateCardsListType = {
@@ -19,7 +22,7 @@ const initailState: InitialStateCardsListType = {
 
 export const cardsReducer = (
   state = initailState,
-  action: CarddsReducerActionsTypes
+  action: CardsReducerActionsTypes
 ) => {
   switch (action.type) {
     case CARDS_ACTION_STARTED:
@@ -39,6 +42,7 @@ export const cardsReducer = (
     case SET_CARD_SUCCESS:
       return {
         ...state,
+        cardsList: [...state.cardsList, action.payload],
         loading: false,
         error: null,
       };
@@ -48,6 +52,32 @@ export const cardsReducer = (
         ...state,
         loading: false,
         cardsList: [...action.payload],
+        error: null,
+      };
+
+    case UPDATE_CARD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cardsList: state.cardsList.map((card) =>
+          card.id === action.payload.id ? action.payload : card
+        ),
+        error: null,
+      };
+
+    case UPDATE_FIELDS_CARD:
+      return {
+        ...state,
+        loading: false,
+        cardsList: [...action.payload],
+        error: null,
+      };
+
+    case DELETE_CARD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cardsList: state.cardsList.filter((card) => card.id !== action.payload),
         error: null,
       };
 

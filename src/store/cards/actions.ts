@@ -1,15 +1,22 @@
-import { DELETE, GET, POST, PUT } from "api/api";
-import { Endpoints } from "constants/endpoints";
 import { ThunkAction } from "redux-thunk";
+
+import { Endpoints } from "constants/endpoints";
+
+import { DELETE, GET, POST, PUT } from "api/api";
+
 import { RootStateType } from "store/store";
+
 import {
-  CarddsReducerActionsTypes,
+  CardsReducerActionsTypes,
   CardsActionFailureType,
   CardsActionStartedType,
   CardsActionTypes,
   CardType,
   GetCardsSuccessType,
   SetCardSuccessType,
+  UpdateFieldsToCardType,
+  UpdateCardSuccessType,
+  DeleteCardSuccessType,
 } from "./types";
 
 const { CARDS } = Endpoints;
@@ -25,8 +32,9 @@ export const cardsActionFailure = (
   payload,
 });
 
-export const setCardSuccess = (): SetCardSuccessType => ({
+export const setCardSuccess = (payload: CardType): SetCardSuccessType => ({
   type: CardsActionTypes.SET_CARD_SUCCESS,
+  payload,
 });
 
 export const getCardsSuccess = (payload: CardType[]): GetCardsSuccessType => ({
@@ -34,16 +42,37 @@ export const getCardsSuccess = (payload: CardType[]): GetCardsSuccessType => ({
   payload,
 });
 
+export const updateFieldsToCard = (
+  payload: CardType[]
+): UpdateFieldsToCardType => ({
+  type: CardsActionTypes.UPDATE_FIELDS_CARD,
+  payload,
+});
+
+export const updateCardSuccess = (
+  payload: CardType
+): UpdateCardSuccessType => ({
+  type: CardsActionTypes.UPDATE_CARD_SUCCESS,
+  payload,
+});
+
+export const deleteCardSuccess = (
+  payload: CardType["id"]
+): DeleteCardSuccessType => ({
+  type: CardsActionTypes.DELETE_CARD_SUCCESS,
+  payload,
+});
+
 export const saveCardAction =
   (
     values: CardType
-  ): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
+  ): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
-      await POST<CardType, CardType>(CARDS, values);
-      dispatch(setCardSuccess());
-      dispatch(getAllCardsAction());
+      const { data } = await POST<CardType, CardType>(CARDS, values);
+
+      dispatch(setCardSuccess(data));
     } catch (error) {
       dispatch(cardsActionFailure(error));
     }
@@ -52,20 +81,23 @@ export const saveCardAction =
 export const editCardAction =
   (
     values: CardType
-  ): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
+  ): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
-      await PUT(`${CARDS}/${values.id}`, values);
-      dispatch(setCardSuccess());
-      dispatch(getAllCardsAction());
+      const { data } = await PUT<CardType, CardType>(
+        `${CARDS}/${values.id}`,
+        values
+      );
+
+      dispatch(updateCardSuccess(data));
     } catch (error) {
       dispatch(cardsActionFailure(error));
     }
   };
 
 export const getAllCardsAction =
-  (): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
+  (): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
@@ -80,13 +112,13 @@ export const getAllCardsAction =
 export const deleteCardAction =
   (
     id: CardType["id"]
-  ): ThunkAction<void, RootStateType, unknown, CarddsReducerActionsTypes> =>
+  ): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
-      await DELETE(`${CARDS}/${id}`);
+      await DELETE<CardType>(`${CARDS}/${id}`);
 
-      dispatch(getAllCardsAction());
+      dispatch(deleteCardSuccess(id));
     } catch (error) {
       dispatch(cardsActionFailure(error));
     }

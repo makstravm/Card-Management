@@ -1,12 +1,18 @@
+import { ThunkAction } from "redux-thunk";
+
 import { DELETE, GET, POST, PUT } from "api/api";
+
 import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
-import { renameKeyObj } from "helpers/renameKeyObj";
-import { ThunkAction } from "redux-thunk";
-import { getAllCardsAction } from "store/cards/actions";
+
+import { updateFieldsToCard } from "store/cards/actions";
 import { CardType } from "store/cards/types";
 import { RootStateType } from "store/store";
+
+import { renameKeyObj } from "helpers/renameKeyObj";
+
 import {
+  DeleteFieldSuccessType,
   FieldsActionFailureType,
   FieldsActionStartedType,
   FieldsActionTypes,
@@ -16,6 +22,7 @@ import {
   GetFieldTypesSuccessType,
   OptionsType,
   SetFieldSuccessType,
+  UpdateFieldSuccessType,
 } from "./types";
 
 const { FIELDS, CARDS, FIELD_TYPES } = Endpoints;
@@ -51,16 +58,51 @@ export const getFieldTypesSuccess = (
   payload,
 });
 
+export const updateFieldSuccess = (
+  payload: FieldStateType
+): UpdateFieldSuccessType => ({
+  type: FieldsActionTypes.UPDATE_FIELD_SUCCESS,
+  payload,
+});
+
+export const deleteFieldSuccess = (
+  payload: number
+): DeleteFieldSuccessType => ({
+  type: FieldsActionTypes.DELETE_FIELD_SUCCESS,
+  payload,
+});
+
 export const saveFieldAction =
   (
     values: FieldStateType
   ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     dispatch(fieldsActionStarted());
     try {
       await POST<FieldStateType, FieldStateType>(FIELDS, values);
+      const cards = getState().cards.cardsList;
+
+      const newCardList = cards.map(async (card: CardType) => {
+        const newCard = {
+          ...card,
+          [values.name]:
+            values.type !== CHECKBOX
+              ? values.options?.[0]?.value || "---"
+              : false,
+        };
+
+        const { data } = await PUT<CardType, CardType>(
+          `${CARDS}/${card.id}`,
+          newCard
+        );
+
+        return data;
+      });
+
+      const result = await Promise.all(newCardList);
+
+      dispatch(updateFieldsToCard(result));
       dispatch(setFieldSuccess());
-      dispatch(saveFieldToCardAction(values));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
@@ -71,71 +113,35 @@ export const editFieldAction =
     oldName: string,
     values: FieldStateType
   ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     dispatch(fieldsActionStarted());
     try {
       await PUT<FieldStateType, FieldStateType>(
         `${FIELDS}/${values.id}`,
         values
       );
-      dispatch(setFieldSuccess());
-      dispatch(editFieldToCardAction(oldName, values));
-    } catch (error) {
-      dispatch(fieldsActionFailure(error));
-    }
-  };
+      const cards = getState().cards.cardsList;
 
-export const saveFieldToCardAction =
-  ({
-    name,
-    type,
-    options,
-  }: FieldStateType): ThunkAction<
-    void,
-    RootStateType,
-    unknown,
-    FieldsReducerActionsTypes
-  > =>
-  async (dispatch) => {
-    dispatch(fieldsActionStarted());
-    try {
-      const { data: cards } = await GET(CARDS);
-
-      cards.forEach(async (card: CardType) => {
-        await PUT(`${CARDS}/${card.id}`, {
-          ...card,
-          [name]: type !== CHECKBOX ? options?.[0]?.value || "---" : false,
-        });
-      });
-      dispatch(setFieldSuccess());
-      dispatch(getAllCardsAction());
-    } catch (error) {
-      dispatch(fieldsActionFailure(error));
-    }
-  };
-
-export const editFieldToCardAction =
-  (
-    oldName: string,
-    { name, type }: FieldStateType
-  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
-  async (dispatch) => {
-    dispatch(fieldsActionStarted());
-    try {
-      const { data: cards } = await GET(CARDS);
-
-      cards.forEach(async (card: CardType) => {
+      const newCardList = cards.map(async (card: CardType) => {
         const value =
-          type !== CHECKBOX
+          values.type !== CHECKBOX
             ? (typeof card[oldName] !== "boolean" && card[oldName]) || "---"
             : !!card[oldName];
 
-        const newCard = renameKeyObj(card, oldName, name, value);
+        const newCard = renameKeyObj(card, oldName, values.name, value);
 
-        await PUT(`${CARDS}/${card.id}`, newCard);
+        const { data } = await PUT<CardType, Omit<CardType, "id">>(
+          `${CARDS}/${card.id}`,
+          newCard
+        );
+
+        return data;
       });
+
+      const result = await Promise.all(newCardList);
+
+      dispatch(updateFieldsToCard(result));
       dispatch(setFieldSuccess());
-      dispatch(getAllCardsAction());
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
@@ -172,33 +178,27 @@ export const deleteFieldAction =
     id: number,
     name: string
   ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     dispatch(fieldsActionStarted());
     try {
       await DELETE(`${FIELDS}/${id}`);
-      dispatch(deleteFieldToCardAction(name));
-      dispatch(getAllFieldAction());
-    } catch (error) {
-      dispatch(fieldsActionFailure(error));
-    }
-  };
+      const cards = getState().cards.cardsList;
 
-export const deleteFieldToCardAction =
-  (
-    keyName: string
-  ): ThunkAction<void, RootStateType, unknown, FieldsReducerActionsTypes> =>
-  async (dispatch) => {
-    dispatch(fieldsActionStarted());
-    try {
-      const { data: cards } = await GET(CARDS);
+      const newCardList = cards.map(async (card: CardType) => {
+        delete card[name];
 
-      cards.forEach(async (card: CardType) => {
-        delete card[keyName];
+        const { data } = await PUT<CardType, CardType>(
+          `${CARDS}/${card.id}`,
+          card
+        );
 
-        await PUT(`${CARDS}/${card.id}`, card);
+        return data;
       });
-      dispatch(setFieldSuccess());
-      dispatch(getAllCardsAction());
+
+      const result = await Promise.all(newCardList);
+
+      dispatch(deleteFieldSuccess(id));
+      dispatch(updateFieldsToCard(result));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
@@ -212,9 +212,12 @@ export const deleteFieldOptionAction =
   async (dispatch) => {
     dispatch(fieldsActionStarted());
     try {
-      await PUT(`${FIELDS}/${id}`, field);
+      const { data } = await PUT<FieldStateType, FieldStateType>(
+        `${FIELDS}/${id}`,
+        field
+      );
 
-      dispatch(getAllFieldAction());
+      dispatch(updateFieldSuccess(data));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
