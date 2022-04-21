@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 toast.configure();
 
-export const notify = (msg: string) => {
+export const notifyError = (msg: string) => {
   toast.error(msg, {
     position: "top-center",
     autoClose: 3500,

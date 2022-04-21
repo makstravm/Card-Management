@@ -1,15 +1,22 @@
-import { notify } from "../utils/toast";
+import { notifyError } from "utils/toast";
 import { ErrorBoundaryPropsType } from "./types";
 
-export const errorBoundary = ({ status, data }: ErrorBoundaryPropsType) => {
+export const errorBoundary = ({
+  status,
+  data,
+  statusText,
+}: ErrorBoundaryPropsType) => {
   switch (status) {
     case 400:
-      return notify(data);
+      return notifyError(data);
 
     case 401:
-      return notify(data);
+      return notifyError(data);
+
+    case 404:
+      return notifyError(statusText);
 
     default:
-      return notify(`что-то не так ${data}`);
+      return notifyError(statusText);
   }
 };
