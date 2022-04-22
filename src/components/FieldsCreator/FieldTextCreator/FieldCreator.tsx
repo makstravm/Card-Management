@@ -40,7 +40,7 @@ export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
         })
       );
     } else {
-      const checkName = fieldsList.find((field) => field.name === name);
+      const checkName = fieldsList?.find((field) => field.name === name);
 
       if (checkName) {
         setErrorName(true);

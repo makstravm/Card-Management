@@ -23,7 +23,7 @@ import {
   GetFieldsSuccessType,
   GetFieldTypesSuccessType,
   OptionsType,
-  SetFieldSuccessType,
+  AddFieldSuccessType,
   UpdateFieldSuccessType,
 } from "./types";
 
@@ -42,8 +42,11 @@ export const fieldsActionFailure = (
   payload,
 });
 
-export const setFieldSuccess = (): SetFieldSuccessType => ({
-  type: FieldsActionTypes.SET_FIELD_SUCCESS,
+export const addFieldSuccess = (
+  payload: FieldStateType
+): AddFieldSuccessType => ({
+  type: FieldsActionTypes.ADD_FIELD_SUCCESS,
+  payload,
 });
 
 export const getFieldsSuccess = (
@@ -81,7 +84,11 @@ export const saveFieldAction =
   async (dispatch, getState) => {
     dispatch(fieldsActionStarted());
     try {
-      await POST<FieldStateType, FieldStateType>(FIELDS, values);
+      const { data } = await POST<FieldStateType, FieldStateType>(
+        FIELDS,
+        values
+      );
+
       const cards = getState().cards.cardsList;
 
       const newCardList = cards.map(async (card: CardType) => {
@@ -106,7 +113,7 @@ export const saveFieldAction =
       notifySuccess("Field created");
       dispatch(hideModal());
       dispatch(updateFieldsToCard(result));
-      dispatch(setFieldSuccess());
+      dispatch(addFieldSuccess(data));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
@@ -120,10 +127,11 @@ export const editFieldAction =
   async (dispatch, getState) => {
     dispatch(fieldsActionStarted());
     try {
-      await PUT<FieldStateType, FieldStateType>(
+      const { data } = await PUT<FieldStateType, FieldStateType>(
         `${FIELDS}/${values.id}`,
         values
       );
+
       const cards = getState().cards.cardsList;
 
       const newCardList = cards.map(async (card: CardType) => {
@@ -147,7 +155,7 @@ export const editFieldAction =
       notifySuccess("Field edited");
       dispatch(hideModal());
       dispatch(updateFieldsToCard(result));
-      dispatch(setFieldSuccess());
+      dispatch(updateFieldSuccess(data));
     } catch (error) {
       dispatch(fieldsActionFailure(error));
     }
