@@ -20,7 +20,7 @@ export const FieldsList = () => {
   }, []);
 
   return (
-    <Box className="fieldsList">
+    <Box className="fields-list">
       {fieldsList?.map((field) => (
         <FieldsItem key={field.id} field={field} />
       ))}

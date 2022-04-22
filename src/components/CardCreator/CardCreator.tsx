@@ -5,16 +5,20 @@ import { Form, Formik } from "formik";
 import { Box } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
+import { Btn } from "components/common/Btn/Btn";
+
 import { getAllFieldAction } from "store/fields/actions";
 import { selectFieldsListAndInitValFormik } from "store/fields/selectors";
-
 import { FieldStateType } from "store/fields/types";
-import { validateSchemaCard } from "helpers/createCardValidSchema/createCardValidSchema";
 import { editCardAction, saveCardAction } from "store/cards/actions";
-import { renderFieldByType } from "helpers/renderFieldByType/renderFieldByType";
-import { Btn } from "components/common/Btn/Btn";
 import { CardType } from "store/cards/types";
+
+import { validateSchemaCard } from "helpers/createCardValidSchema/createCardValidSchema";
+import { renderFieldByType } from "helpers/renderFieldByType/renderFieldByType";
+
 import { CardCreatorType } from "./types";
+
+import "./style.scss";
 
 export const CardCreator = ({ card }: CardCreatorType) => {
   const dispatch = useDispatch();
@@ -27,7 +31,7 @@ export const CardCreator = ({ card }: CardCreatorType) => {
     dispatch(getAllFieldAction());
   }, []);
 
-  const onSave = (values: CardType) => {
+  const onSave = (values: CardType | Omit<CardType, "id">) => {
     if (card) {
       dispatch(editCardAction(values));
     } else {
@@ -45,21 +49,21 @@ export const CardCreator = ({ card }: CardCreatorType) => {
         >
           {(formik) => (
             <Form>
-              <Box className="FieldsList">
+              <Box className="card-create">
                 {fieldsList.map((field) => (
                   <Box key={field.id} pt={1}>
                     {renderFieldByType(field, formik)}
                   </Box>
                 ))}
-                <Box textAlign="center" pt={2}>
-                  <Btn
-                    title="Save"
-                    variantBtn="outlined"
-                    handleClick={() => formik.handleSubmit()}
-                    disabled={!formik.isValid && !formik.dirty}
-                    icon={<SaveIcon fontSize="small" />}
-                  />
-                </Box>
+              </Box>
+              <Box textAlign="center" pt={2}>
+                <Btn
+                  title="Save"
+                  variantBtn="outlined"
+                  handleClick={() => formik.handleSubmit()}
+                  disabled={!formik.isValid && !formik.dirty}
+                  icon={<SaveIcon fontSize="small" />}
+                />
               </Box>
             </Form>
           )}

@@ -68,12 +68,15 @@ export const deleteCardSuccess = (
 
 export const saveCardAction =
   (
-    values: CardType
+    values: CardType | Omit<CardType, "id">
   ): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
-      const { data } = await POST<CardType, CardType>(CARDS, values);
+      const { data } = await POST<CardType, CardType | Omit<CardType, "id">>(
+        CARDS,
+        values
+      );
 
       dispatch(hideModal());
       notifySuccess("Card created");
@@ -85,12 +88,12 @@ export const saveCardAction =
 
 export const editCardAction =
   (
-    values: CardType
+    values: CardType | Omit<CardType, "id">
   ): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch) => {
     dispatch(cardsActionStarted());
     try {
-      const { data } = await PUT<CardType, CardType>(
+      const { data } = await PUT<CardType, CardType | Omit<CardType, "id">>(
         `${CARDS}/${values.id}`,
         values
       );
