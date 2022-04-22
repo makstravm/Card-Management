@@ -4,7 +4,7 @@ import { HideModalActionType } from "store/modals/types";
 export enum FieldsActionTypes {
   FIELDS_ACTION_STARTED = "FIELDS_ACTION_STARTED",
   FIELDS_ACTION_FAILURE = "FIELDS_ACTION_FAILURE",
-  SET_FIELD_SUCCESS = "SET_FIELD_SUCCESS",
+  ADD_FIELD_SUCCESS = "ADD_FIELD_SUCCESS",
   GET_FIELDS_SUCCESS = "GET_FIELDS_SUCCESS",
   GET_FIELD_TYPES_SUCCESS = "GET_FIELD_TYPES_SUCCESS",
   UPDATE_FIELD_SUCCESS = "UPDATE_FIELD_SUCCESS",
@@ -40,8 +40,9 @@ export type FieldsActionFailureType = {
   payload: string | null;
 };
 
-export type SetFieldSuccessType = {
-  type: FieldsActionTypes.SET_FIELD_SUCCESS;
+export type AddFieldSuccessType = {
+  type: FieldsActionTypes.ADD_FIELD_SUCCESS;
+  payload: FieldStateType;
 };
 
 export type GetFieldsSuccessType = {
@@ -68,7 +69,7 @@ export type FieldsReducerActionsTypes =
   | HideModalActionType
   | FieldsActionStartedType
   | FieldsActionFailureType
-  | SetFieldSuccessType
+  | AddFieldSuccessType
   | GetFieldsSuccessType
   | GetFieldTypesSuccessType
   | UpdateFieldsToCardType
