@@ -39,7 +39,7 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
   const onDeleteField = () => dispatch(deleteFieldAction(id, name));
 
   const onDeleteOption = (idOption: string) => {
-    const newOptions = options.filter((option) => option?.id !== idOption);
+    const newOptions = options?.filter((option) => option?.id !== idOption);
 
     dispatch(deleteFieldOptionAction(id, { ...field, options: newOptions }));
   };

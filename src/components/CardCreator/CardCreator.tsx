@@ -27,7 +27,7 @@ export const CardCreator = ({ card }: CardCreatorType) => {
     dispatch(getAllFieldAction());
   }, []);
 
-  const onSave = (values: CardType) => {
+  const onSave = (values: CardType | Omit<CardType, "id">) => {
     if (card) {
       dispatch(editCardAction(values));
     } else {

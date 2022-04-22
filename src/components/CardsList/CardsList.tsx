@@ -26,7 +26,7 @@ export const CardsList = () => {
           </Typography>
         </Paper>
       </Box>
-      {cardsList?.map((card) => (
+      {cardsList?.map((card, i) => (
         <Box key={`${card.id}`} sx={{ maxWidth: 275 }} pb={2}>
           <Paper elevation={3}>
             <Box p={2} className="card-item">
@@ -43,7 +43,7 @@ export const CardsList = () => {
 
                   {typeof value !== "boolean" ? (
                     <Typography className="card-item__value">
-                      {value}
+                      {key !== "id" ? value : i + 1}
                     </Typography>
                   ) : (
                     <Checkbox checked={value} disableRipple size="small" />

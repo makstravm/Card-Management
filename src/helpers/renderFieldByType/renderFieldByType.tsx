@@ -13,7 +13,12 @@ const { SELECT, CHECKBOX } = TypesFields;
 
 export const renderFieldByType = (
   { name, type, options, required }: FieldStateType,
-  { values, handleChange, errors, touched }: FormikProps<CardType>
+  {
+    values,
+    handleChange,
+    errors,
+    touched,
+  }: FormikProps<CardType | Omit<CardType, "id">>
 ) => {
   switch (type) {
     case CHECKBOX:

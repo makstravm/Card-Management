@@ -29,6 +29,11 @@ export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
   const [errorName, setErrorName] = useState(false);
 
   const onSaveField = ({ name, required, options }: FormikStateType) => {
+    const checkName = fieldsList?.find((field) => field?.name === name);
+
+    if (checkName) {
+      setErrorName(true);
+    }
     if (field?.id) {
       dispatch(
         editFieldAction(field.name, {
@@ -40,19 +45,14 @@ export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
         })
       );
     } else {
-      const checkName = fieldsList?.find((field) => field.name === name);
-
-      if (checkName) {
-        setErrorName(true);
-      } else
-        dispatch(
-          saveFieldAction({
-            name,
-            type,
-            required: (type === TEXT && required) || false,
-            options: (type !== SELECT && []) || options,
-          })
-        );
+      dispatch(
+        saveFieldAction({
+          name,
+          type,
+          required: (type === TEXT && required) || false,
+          options: (type !== SELECT && []) || options,
+        })
+      );
     }
   };
 
