@@ -14,7 +14,7 @@ export const SelectInput = ({
   errors,
   touched,
   handleChange,
-}: SelectInputPropsType<CardType, OptionsType[]>) => (
+}: SelectInputPropsType<Omit<CardType, "id">, OptionsType[]>) => (
   <FormControl fullWidth size="small">
     <InputLabel id={`select-label-${name}`}>{name}</InputLabel>
     <Select

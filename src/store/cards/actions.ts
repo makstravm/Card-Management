@@ -5,6 +5,9 @@ import { Endpoints } from "constants/endpoints";
 import { DELETE, GET, POST, PUT } from "api/api";
 
 import { RootStateType } from "store/store";
+import { hideModal } from "store/modals/actions";
+
+import { notifySuccess } from "utils/toast";
 
 import {
   CardsReducerActionsTypes,
@@ -72,6 +75,8 @@ export const saveCardAction =
     try {
       const { data } = await POST<CardType, CardType>(CARDS, values);
 
+      dispatch(hideModal());
+      notifySuccess("Card created");
       dispatch(setCardSuccess(data));
     } catch (error) {
       dispatch(cardsActionFailure(error));
@@ -90,6 +95,8 @@ export const editCardAction =
         values
       );
 
+      dispatch(hideModal());
+      notifySuccess("Card edited");
       dispatch(updateCardSuccess(data));
     } catch (error) {
       dispatch(cardsActionFailure(error));
@@ -118,6 +125,7 @@ export const deleteCardAction =
     try {
       await DELETE<CardType>(`${CARDS}/${id}`);
 
+      notifySuccess("Card deleted");
       dispatch(deleteCardSuccess(id));
     } catch (error) {
       dispatch(cardsActionFailure(error));

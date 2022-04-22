@@ -1,3 +1,5 @@
+import { HideModalActionType } from "store/modals/types";
+
 export enum CardsActionTypes {
   CARDS_ACTION_STARTED = "CARDS_ACTION_STARTED",
   CARDS_ACTION_FAILURE = "CARDS_ACTION_FAILURE",
@@ -54,6 +56,7 @@ export type DeleteCardSuccessType = {
 };
 
 export type CardsReducerActionsTypes =
+  | HideModalActionType
   | CardsActionStartedType
   | CardsActionFailureType
   | SetCardSuccessType

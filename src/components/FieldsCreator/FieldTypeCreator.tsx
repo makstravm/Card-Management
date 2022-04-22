@@ -6,7 +6,7 @@ import { Box, SelectChangeEvent } from "@mui/material";
 import { initialField } from "constants/field/initialField";
 import { SelectInput } from "components/common/SelectInput/SelectInput";
 
-import { getFieldTypesAction } from "store/fields/actions";
+import { getAllFieldAction, getFieldTypesAction } from "store/fields/actions";
 import { selectFieldTypes } from "store/fields/selectors";
 import { FieldCreator } from "./FieldTextCreator/FieldCreator";
 
@@ -26,6 +26,7 @@ export const FieldTypeCreator = ({
 
   useEffect(() => {
     dispatch(getFieldTypesAction());
+    dispatch(getAllFieldAction());
   }, []);
 
   useEffect(() => {
