@@ -27,7 +27,7 @@ export const BoardRenderCard = () => {
     <Box>
       <GroupCardsBtn title={group} handleChangeGroupBy={setGroup} />
       <Grid container spacing={2} pt={2}>
-        {Object.entries(groupCardsList).map(([title, cardsList], i) => (
+        {groupCardsList?.map(([title, cardsList], i) => (
           <Grid key={`${title + i}`} item xs={3} sx={{ minWidth: "250px" }}>
             <Paper variant="elevation">
               <Typography variant="subtitle1" align="center" color="primary">

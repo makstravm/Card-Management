@@ -16,5 +16,7 @@ export const selectGroupCardsList = (par: string) =>
         return acc;
       }, {});
 
-    return groupCardsList;
+    const sortGroupCardsList = Object.entries(groupCardsList).sort();
+
+    return sortGroupCardsList;
   });
