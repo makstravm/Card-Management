@@ -5,6 +5,7 @@ import { TypesFields } from "constants/typesFields";
 import { CardType } from "store/cards/types";
 
 import { RootStateType } from "store/store";
+import { v1 } from "uuid";
 
 const { TEXT } = TypesFields;
 
@@ -31,7 +32,7 @@ export const selectFieldsListAndInitValFormik = createSelector(
 export const selectGroupOptions = createSelector(
   getFieldsList,
   (fieldsList) => [
-    { id: `All-0`, value: "All" },
+    { id: v1(), value: "All" },
     ...fieldsList
       .filter((field) => field.type !== TEXT)
       .map((field) => ({ id: `${field.id}`, value: field.name })),

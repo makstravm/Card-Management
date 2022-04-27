@@ -6,10 +6,10 @@ import { GroupOneCardsListsType } from "./types";
 
 const getCardsList = (state: RootStateType) => state?.cards?.cardsList;
 
-export const selectGroupCardsList = (par: string) =>
+export const selectGroupCardsList = (groupName: string) =>
   createSelector(getCardsList, (cardsList) => {
     const groupCardsList = cardsList
-      .map((val) => (par !== "All" ? `${val[par]}` : par))
+      .map((val) => (groupName !== "All" ? `${val[groupName]}` : groupName))
       .reduce((acc: GroupOneCardsListsType, val, i) => {
         acc[val] = [...(acc?.[val] || []), cardsList[i]];
 

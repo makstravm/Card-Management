@@ -7,14 +7,18 @@ import { getAllCardsAction } from "store/cards/actions";
 import { selectGroupCardsList } from "store/cards/selectors";
 import { getAllFieldAction } from "store/fields/actions";
 
+import { cardsGroupByName } from "constants/cardsGroupByName";
+
 import { CardsList } from "components/CardsList/CardsList";
 
 import { GroupCardsBtn } from "./GroupCardsBtn/GroupCardsBtn";
 
+const { ALL } = cardsGroupByName;
+
 export const BoardRenderCard = () => {
   const dispatch = useDispatch();
 
-  const [group, setGroup] = useState<string>("All");
+  const [group, setGroup] = useState<string>(ALL);
 
   const groupCardsList = useSelector(selectGroupCardsList(group));
 
