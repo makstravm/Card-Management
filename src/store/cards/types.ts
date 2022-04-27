@@ -15,6 +15,8 @@ export type CardType = {
   [key: string]: string | boolean | number;
 };
 
+export type GroupOneCardsListsType = { [key: string]: CardType[] };
+
 export type InitialStateCardsListType = {
   cardsList: CardType[];
   error: string | null;

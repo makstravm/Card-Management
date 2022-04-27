@@ -1,62 +1,45 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
 import { Box, Checkbox, Grid, Paper, Typography } from "@mui/material";
-import { getAllCardsAction } from "store/cards/actions";
-import { selectCardList } from "store/cards/selectors";
 
-import "./style.scss";
 import { CardItemActions } from "./CardItemActions/CardItemActions";
 
-export const CardsList = () => {
-  const dispatch = useDispatch();
+import { CardsListPropsType } from "./types";
 
-  const cardsList = useSelector(selectCardList);
+import "./style.scss";
 
-  useEffect(() => {
-    dispatch(getAllCardsAction());
-  }, []);
+export const CardsList = ({ cardsList }: CardsListPropsType) => (
+  <Box>
+    {cardsList?.map((card, i) => (
+      <Box key={`${card.id}`} sx={{ maxWidth: 275 }} pt={2}>
+        <Paper elevation={3}>
+          <Box p={2} pr={3.5} className="card-item">
+            {Object.entries(card).map(([key, value]) => (
+              <Grid
+                key={`${card.id}-${key}`}
+                className={key === "id" ? "card-item__number" : ""}
+                container
+                alignItems="center"
+              >
+                {key !== "id" && (
+                  <Typography className="card-item__key">{key}</Typography>
+                )}
 
-  return (
-    <Box>
-      <Box pb={3}>
-        <Paper variant="elevation">
-          <Typography variant="subtitle1" align="center" color="primary">
-            All Card
-          </Typography>
+                {typeof value !== "boolean" ? (
+                  <Typography className="card-item__value">
+                    {key !== "id" ? value : i + 1}
+                  </Typography>
+                ) : (
+                  <Checkbox checked={value} disableRipple size="small" />
+                )}
+              </Grid>
+            ))}
+            <Box className="card-item__actions">
+              <CardItemActions card={card} />
+            </Box>
+          </Box>
         </Paper>
       </Box>
-      {cardsList?.map((card, i) => (
-        <Box key={`${card.id}`} sx={{ maxWidth: 275 }} pb={2}>
-          <Paper elevation={3}>
-            <Box p={2} className="card-item">
-              {Object.entries(card).map(([key, value]) => (
-                <Grid
-                  key={`${card.id}-${key}`}
-                  className={key === "id" ? "card-item__number" : ""}
-                  container
-                  alignItems="center"
-                >
-                  {key !== "id" && (
-                    <Typography className="card-item__key">{key}</Typography>
-                  )}
-
-                  {typeof value !== "boolean" ? (
-                    <Typography className="card-item__value">
-                      {key !== "id" ? value : i + 1}
-                    </Typography>
-                  ) : (
-                    <Checkbox checked={value} disableRipple size="small" />
-                  )}
-                </Grid>
-              ))}
-              <Box className="card-item__actions">
-                <CardItemActions card={card} />
-              </Box>
-            </Box>
-          </Paper>
-        </Box>
-      ))}
-    </Box>
-  );
-};
+    ))}
+  </Box>
+);

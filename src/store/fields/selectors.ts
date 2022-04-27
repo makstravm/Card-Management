@@ -1,7 +1,13 @@
 import { createSelector } from "reselect";
+
+import { TypesFields } from "constants/typesFields";
+
 import { CardType } from "store/cards/types";
 
 import { RootStateType } from "store/store";
+import { v1 } from "uuid";
+
+const { TEXT } = TypesFields;
 
 const getFieldsList = (state: RootStateType) => state?.fields?.fieldsList;
 
@@ -21,6 +27,16 @@ export const selectFieldsListAndInitValFormik = createSelector(
 
     return { fieldsList, initialValues };
   }
+);
+
+export const selectGroupOptions = createSelector(
+  getFieldsList,
+  (fieldsList) => [
+    { id: v1(), value: "All" },
+    ...fieldsList
+      .filter((field) => field.type !== TEXT)
+      .map((field) => ({ id: `${field.id}`, value: field.name })),
+  ]
 );
 
 const getFieldTypes = (state: RootStateType) => state?.fields?.fieldTypes;
