@@ -5,12 +5,12 @@ import { Box, Grid } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ListIcon from "@mui/icons-material/List";
 
-import { showModal } from "store/modals/actions";
-
 import { FieldTypeCreator } from "components/FieldsCreator/FieldTypeCreator";
-import { CardCreator } from "components/CardCreator/CardCreator";
+import { CardCreator } from "components/CardCreator";
 import { Btn } from "components/common/Btn/Btn";
-import { FieldsList } from "components/FieldsList/FieldsList";
+import { FieldsList } from "components/FieldsList";
+
+import { showModal } from "store/modals/actions";
 
 export const BoardControlPanel = () => {
   const dispatch = useDispatch();

@@ -9,8 +9,10 @@ import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 
-import { OptionsType } from "store/fields/types";
 import { Btn } from "components/common/Btn/Btn";
+
+import { OptionsType } from "store/fields/types";
+
 import { SelectOptionsPropsType } from "./types";
 
 export const SelectOptions = ({

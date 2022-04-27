@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { RootStateType } from "store/store";
+import { RootStateType } from "..";
 
 import { GroupOneCardsListsType } from "./types";
 

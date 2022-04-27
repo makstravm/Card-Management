@@ -13,8 +13,8 @@ import { FieldStateType } from "store/fields/types";
 import { editCardAction, saveCardAction } from "store/cards/actions";
 import { CardType } from "store/cards/types";
 
-import { validateSchemaCard } from "helpers/createCardValidSchema/createCardValidSchema";
-import { renderFieldByType } from "helpers/renderFieldByType/renderFieldByType";
+import { validateSchemaCard } from "helpers/createCardValidSchema";
+import { renderFieldByType } from "helpers/renderFieldByType";
 
 import { CardCreatorType } from "./types";
 

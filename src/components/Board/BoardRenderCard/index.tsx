@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Box, Grid, Paper, Typography } from "@mui/material";
 
+import { CardsList } from "components/CardsList";
+
+import { cardsGroupByName } from "constants/cardsGroupByName";
+
 import { getAllCardsAction } from "store/cards/actions";
 import { selectGroupCardsList } from "store/cards/selectors";
 import { getAllFieldAction } from "store/fields/actions";
 
-import { cardsGroupByName } from "constants/cardsGroupByName";
-
-import { CardsList } from "components/CardsList/CardsList";
-
-import { GroupCardsBtn } from "./GroupCardsBtn/GroupCardsBtn";
+import { GroupCardsBtn } from "./GroupCardsBtn";
 
 const { ALL } = cardsGroupByName;
 

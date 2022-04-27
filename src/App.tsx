@@ -14,17 +14,18 @@ import {
 } from "constants/forms/registrationFormsFields";
 import { RoutesUrls } from "constants/routes";
 
-import store from "store/store";
 import { loginAction, registrationAction } from "store/auth/actions";
 
+import { Board } from "components/Board";
 import { Layout } from "components/Layout";
-import { Board } from "components/Board/Board";
 import { Form } from "components/common/Form";
 import { AuthenticationLayout } from "components/AuthenticationLayout";
 
-import { loginValidationSchema } from "helpers/login/loginValidationSchema";
-import { registerValidationSchema } from "helpers/registration/registrationValidationSchema";
 import { PrivateRoute } from "route/PrivateRoute";
+import { registerValidationSchema } from "helpers/registrationValidationSchema";
+import { loginValidationSchema } from "helpers/loginValidationSchema";
+
+import store from "./store";
 
 const { MAIN, LOGIN, REGISTRATION, BOARD } = RoutesUrls;
 

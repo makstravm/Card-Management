@@ -3,16 +3,15 @@ import Cookies from "js-cookie";
 
 import { Endpoints } from "constants/endpoints";
 
-import { GET, POST } from "api/api";
-
+import { GET, POST } from "api/index";
 import {
   LoginInitialValueType,
   RegistrationInitialValueType,
 } from "helpers/types";
 
-import { RootStateType } from "store/store";
 import { RoutesUrls } from "constants/routes";
 import { NavigateOptions, To } from "react-router-dom";
+import { RootStateType } from "..";
 import {
   AuthActionTypes,
   AuthReducerActionsTypes,
