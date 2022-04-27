@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Box, SelectChangeEvent } from "@mui/material";
 
-import { initialField } from "constants/field/initialField";
 import { SelectInput } from "components/common/SelectInput/SelectInput";
+
+import { initialField } from "constants/field/initialField";
 
 import { getFieldTypesAction } from "store/fields/actions";
 import { selectFieldTypes } from "store/fields/selectors";
-import { FieldCreator } from "./FieldTextCreator/FieldCreator";
 
 import { FieldTypeCreatorPropsType } from "./types";
+import { FieldCreator } from "./FieldTextCreator";
 
 export const FieldTypeCreator = ({
   typeEditField = "",

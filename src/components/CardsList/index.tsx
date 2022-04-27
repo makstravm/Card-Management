@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box, Checkbox, Grid, Paper, Typography } from "@mui/material";
 
-import { CardItemActions } from "./CardItemActions/CardItemActions";
+import { CardItemActions } from "./CardItemActions";
 
 import { CardsListPropsType } from "./types";
 

@@ -1,18 +1,19 @@
 import { ThunkAction } from "redux-thunk";
 
-import { DELETE, GET, POST, PUT } from "api/api";
-
 import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
 
 import { updateFieldsToCard } from "store/cards/actions";
+import { hideModal } from "store/modals/actions";
 import { CardType } from "store/cards/types";
-import { RootStateType } from "store/store";
 
 import { renameKeyObj } from "helpers/renameKeyObj";
 
 import { notifySuccess } from "utils/toast";
-import { hideModal } from "store/modals/actions";
+
+import { DELETE, GET, POST, PUT } from "api/index";
+import { RootStateType } from "..";
+
 import {
   DeleteFieldSuccessType,
   FieldsActionFailureType,

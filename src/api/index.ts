@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+
 import { errorBoundary } from "../services/errorBoundary";
 
 const axiosInstance = axios.create({

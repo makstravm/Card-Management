@@ -1,15 +1,16 @@
 import React, { MouseEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { deleteCardAction } from "store/cards/actions";
-
 import { Box, ButtonGroup, Divider, IconButton, Popover } from "@mui/material";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
 
+import { CardCreator } from "components/CardCreator";
+
+import { deleteCardAction } from "store/cards/actions";
 import { showModal } from "store/modals/actions";
-import { CardCreator } from "components/CardCreator/CardCreator";
+
 import { CardItemActionsPropsType } from "./types";
 
 export const CardItemActions = ({ card }: CardItemActionsPropsType) => {

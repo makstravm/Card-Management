@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllFieldAction } from "store/fields/actions";
 import { selectFieldsList } from "store/fields/selectors";
 
-import { FieldsItem } from "./FieldsItem/FieldsItem";
+import { FieldsItem } from "./FieldsItem";
 
 import "./style.scss";
 

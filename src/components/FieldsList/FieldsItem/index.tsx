@@ -25,6 +25,7 @@ import {
 import { showModal } from "store/modals/actions";
 
 import { FieldItemPropsType } from "../types";
+
 import "./style.scss";
 
 const { SELECT } = TypesFields;

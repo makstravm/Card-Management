@@ -8,14 +8,14 @@ import SaveIcon from "@mui/icons-material/Save";
 import { CheckBox } from "components/common/CheckBox/CheckBox";
 import { Btn } from "components/common/Btn/Btn";
 
+import { TypesFields } from "constants/typesFields";
+
 import { selectFieldsList } from "store/fields/selectors";
 import { editFieldAction, saveFieldAction } from "store/fields/actions";
 
-import { TypesFields } from "constants/typesFields";
+import { switchedFieldCreateValidation } from "helpers/optionsValidSchema";
 
-import { switchedFieldCreateValidation } from "helpers/optionsValidSchema/optionsValidSchema";
-
-import { SelectOptions } from "../SelectOptions/SelectOptions";
+import { SelectOptions } from "../SelectOptions";
 
 import { FieldCreatorPropsType, FormikStateType } from "./types";
 

@@ -1,11 +1,11 @@
 import { createSelector } from "reselect";
+import { v1 } from "uuid";
 
 import { TypesFields } from "constants/typesFields";
 
 import { CardType } from "store/cards/types";
 
-import { RootStateType } from "store/store";
-import { v1 } from "uuid";
+import { RootStateType } from "..";
 
 const { TEXT } = TypesFields;
 

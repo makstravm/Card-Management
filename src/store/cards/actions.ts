@@ -2,13 +2,13 @@ import { ThunkAction } from "redux-thunk";
 
 import { Endpoints } from "constants/endpoints";
 
-import { DELETE, GET, POST, PUT } from "api/api";
+import { DELETE, GET, POST, PUT } from "api/index";
 
-import { RootStateType } from "store/store";
 import { hideModal } from "store/modals/actions";
 
 import { notifySuccess } from "utils/toast";
 
+import { RootStateType } from "..";
 import {
   CardsReducerActionsTypes,
   CardsActionFailureType,
