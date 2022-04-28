@@ -11,7 +11,7 @@ import "./style.scss";
 
 export const Card = ({ card, idx }: CardPropsType) => (
   <Draggable draggableId={`${card.id}`} index={idx}>
-    {(provided) => (
+    {(provided, snapshot) => (
       <Box
         ref={provided.innerRef}
         {...provided.draggableProps}
@@ -20,7 +20,11 @@ export const Card = ({ card, idx }: CardPropsType) => (
         pt={2}
       >
         <Paper elevation={3}>
-          <Box p={2} pr={3.5} className="card-item">
+          <Box
+            p={2}
+            pr={3.5}
+            className={`card-item ${snapshot.isDragging && "--active"}`}
+          >
             {Object.entries(card).map(([key, value]) => (
               <Grid
                 key={`${card.id}-${key}`}

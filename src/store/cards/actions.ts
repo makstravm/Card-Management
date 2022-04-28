@@ -134,3 +134,34 @@ export const deleteCardAction =
       dispatch(cardsActionFailure(error));
     }
   };
+// values: CardType | Omit<CardType, "id">
+export const moveEditCardAction =
+  (
+    id: number,
+    key: string,
+    value: string
+  ): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
+  async (dispatch, getState) => {
+    dispatch(cardsActionStarted());
+    try {
+      const { cardsList } = getState().cards;
+
+      const card = cardsList.find((c) => c.id === id);
+
+      if (value === "false" || value === "true") {
+        card[key] = JSON.parse(value);
+      } else {
+        card[key] = value;
+      }
+      const { data } = await PUT<CardType, CardType | Omit<CardType, "id">>(
+        `${CARDS}/${id}`,
+        card
+      );
+
+      dispatch(updateCardSuccess(data));
+
+      notifySuccess("Card edited");
+    } catch (error) {
+      dispatch(cardsActionFailure(error));
+    }
+  };
