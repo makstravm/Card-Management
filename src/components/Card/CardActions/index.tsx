@@ -11,9 +11,9 @@ import { CardCreator } from "components/CardCreator";
 import { deleteCardAction } from "store/cards/actions";
 import { showModal } from "store/modals/actions";
 
-import { CardItemActionsPropsType } from "./types";
+import { CardActionsPropsType } from "./types";
 
-export const CardItemActions = ({ card }: CardItemActionsPropsType) => {
+export const CardActions = ({ card }: CardActionsPropsType) => {
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);

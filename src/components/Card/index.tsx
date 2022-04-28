@@ -1,17 +1,24 @@
 import React from "react";
+import { Draggable } from "react-beautiful-dnd";
 
 import { Box, Checkbox, Grid, Paper, Typography } from "@mui/material";
 
-import { CardItemActions } from "./CardItemActions";
+import { CardActions } from "./CardActions";
 
-import { CardsListPropsType } from "./types";
+import { CardPropsType } from "./types";
 
 import "./style.scss";
 
-export const CardsList = ({ cardsList }: CardsListPropsType) => (
-  <Box>
-    {cardsList?.map((card, i) => (
-      <Box key={`${card.id}`} sx={{ maxWidth: 275 }} pt={2}>
+export const Card = ({ card, idx }: CardPropsType) => (
+  <Draggable draggableId={`${card.id}`} index={idx}>
+    {(provided) => (
+      <Box
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        sx={{ maxWidth: 275 }}
+        pt={2}
+      >
         <Paper elevation={3}>
           <Box p={2} pr={3.5} className="card-item">
             {Object.entries(card).map(([key, value]) => (
@@ -27,7 +34,7 @@ export const CardsList = ({ cardsList }: CardsListPropsType) => (
 
                 {typeof value !== "boolean" ? (
                   <Typography className="card-item__value">
-                    {key !== "id" ? value : i + 1}
+                    {key !== "id" ? value : idx + 1}
                   </Typography>
                 ) : (
                   <Checkbox checked={value} disableRipple size="small" />
@@ -35,11 +42,11 @@ export const CardsList = ({ cardsList }: CardsListPropsType) => (
               </Grid>
             ))}
             <Box className="card-item__actions">
-              <CardItemActions card={card} />
+              <CardActions card={card} />
             </Box>
           </Box>
         </Paper>
       </Box>
-    ))}
-  </Box>
+    )}
+  </Draggable>
 );
