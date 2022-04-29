@@ -35,7 +35,7 @@ export const cardsReducer = (
       return {
         ...state,
         loading: false,
-        cardsList: null,
+        cardsList: [],
         error: action.payload,
       };
 
