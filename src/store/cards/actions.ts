@@ -143,25 +143,27 @@ export const moveEditCardAction =
   ): ThunkAction<void, RootStateType, unknown, CardsReducerActionsTypes> =>
   async (dispatch, getState) => {
     dispatch(cardsActionStarted());
-    try {
-      const { cardsList } = getState().cards;
+    const { cardsList } = getState().cards;
 
-      const card = cardsList.find((c) => c.id === id);
+    const card = cardsList.find((c) => c.id === id);
+
+    try {
+      const updatedCard = { ...card };
 
       if (value === "false" || value === "true") {
-        card[key] = JSON.parse(value);
+        updatedCard[key] = JSON.parse(value);
       } else {
-        card[key] = value;
+        updatedCard[key] = value;
       }
-      const { data } = await PUT<CardType, CardType | Omit<CardType, "id">>(
+      dispatch(updateCardSuccess(updatedCard));
+      await PUT<CardType, CardType | Omit<CardType, "id">>(
         `${CARDS}/${id}`,
         card
       );
 
-      dispatch(updateCardSuccess(data));
-
       notifySuccess("Card edited");
     } catch (error) {
       dispatch(cardsActionFailure(error));
+      dispatch(updateCardSuccess(card));
     }
   };
