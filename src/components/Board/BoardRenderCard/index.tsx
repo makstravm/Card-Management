@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 import { Box, Grid, Paper, Typography } from "@mui/material";
 
-import { CardsList } from "components/CardsList";
+import { Card } from "components/Card";
 
 import { cardsGroupByName } from "constants/cardsGroupByName";
 
-import { getAllCardsAction } from "store/cards/actions";
+import { getAllCardsAction, moveEditCardAction } from "store/cards/actions";
 import { selectGroupCardsList } from "store/cards/selectors";
 import { getAllFieldAction } from "store/fields/actions";
 
@@ -27,21 +28,55 @@ export const BoardRenderCard = () => {
     dispatch(getAllFieldAction());
   }, []);
 
+  const onDragEndHandler = ({
+    destination,
+    source,
+    draggableId,
+  }: DropResult) => {
+    if (!destination) {
+      return;
+    }
+    if (destination.droppableId === source.droppableId) {
+      return;
+    }
+    dispatch(moveEditCardAction(+draggableId, group, destination.droppableId));
+  };
+
   return (
     <Box>
-      <GroupCardsBtn title={group} handleChangeGroupBy={setGroup} />
-      <Grid container spacing={2} pt={2}>
-        {groupCardsList?.map(([title, cardsList], i) => (
-          <Grid key={`${title + i}`} item xs={3} sx={{ minWidth: "250px" }}>
-            <Paper variant="elevation">
-              <Typography variant="subtitle1" align="center" color="primary">
-                {title}
-              </Typography>
-            </Paper>
-            <CardsList cardsList={cardsList} />;
-          </Grid>
-        ))}
-      </Grid>
+      <DragDropContext onDragEnd={onDragEndHandler}>
+        <GroupCardsBtn title={group} handleChangeGroupBy={setGroup} />
+        <Grid container spacing={2} pt={2}>
+          {groupCardsList?.map(([title, cardsList], i) => (
+            <Droppable droppableId={`${title}`} key={`${title + i}`}>
+              {(provided, snapshot) => (
+                <Grid item xs={3} sx={{ minWidth: "250px" }}>
+                  <Paper variant="elevation">
+                    <Typography
+                      sx={{
+                        backgroundColor: snapshot.isDraggingOver && "#1976d2",
+                        borderRadius: "4px",
+                        color: !snapshot.isDraggingOver ? "#1976d2" : "#ffffff",
+                        transition: "all .3s",
+                      }}
+                      variant="subtitle1"
+                      align="center"
+                    >
+                      {title}
+                    </Typography>
+                  </Paper>
+                  <Box ref={provided.innerRef} {...provided.droppableProps}>
+                    {cardsList?.map((card, i) => (
+                      <Card key={`${card.id}`} card={card} idx={i} />
+                    ))}
+                    {provided.placeholder}
+                  </Box>
+                </Grid>
+              )}
+            </Droppable>
+          ))}
+        </Grid>
+      </DragDropContext>
     </Box>
   );
 };
