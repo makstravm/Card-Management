@@ -20,6 +20,7 @@ import { Board } from "components/Board";
 import { Layout } from "components/Layout";
 import { Form } from "components/common/Form";
 import { AuthenticationLayout } from "components/AuthenticationLayout";
+import { Preloader } from "components/Preloader";
 
 import { PrivateRoute } from "route/PrivateRoute";
 import { registerValidationSchema } from "helpers/registrationValidationSchema";
@@ -33,6 +34,7 @@ const App = () => (
   <BrowserRouter>
     <Provider store={store}>
       <CssBaseline />
+      <Preloader />
       <Routes>
         <Route element={<AuthenticationLayout />}>
           <Route
