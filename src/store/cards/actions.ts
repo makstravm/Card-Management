@@ -134,7 +134,7 @@ export const deleteCardAction =
       dispatch(cardsActionFailure(error));
     }
   };
-// values: CardType | Omit<CardType, "id">
+
 export const moveEditCardAction =
   (
     id: number,
@@ -155,7 +155,9 @@ export const moveEditCardAction =
       } else {
         updatedCard[key] = value;
       }
+
       dispatch(updateCardSuccess(updatedCard));
+
       await PUT<CardType, CardType | Omit<CardType, "id">>(
         `${CARDS}/${id}`,
         card
