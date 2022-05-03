@@ -22,7 +22,7 @@ import { AuthenticationLayout } from "components/AuthenticationLayout";
 import { PrivateRoute } from "route/PrivateRoute";
 import { registerValidationSchema } from "helpers/registrationValidationSchema";
 import { loginValidationSchema } from "helpers/loginValidationSchema";
-import auth from "store/auth/Authentification";
+import auth from "store/auth";
 import store from "./store";
 
 const { MAIN, LOGIN, REGISTRATION, BOARD } = RoutesUrls;

@@ -4,10 +4,9 @@ import { Endpoints } from "constants/endpoints";
 
 import { DELETE, GET, POST, PUT } from "api/index";
 
-import { hideModal } from "store/modals/actions";
-
 import { notifySuccess } from "utils/toast";
 
+import modal from "store/modals";
 import { RootStateType } from "..";
 import {
   CardsReducerActionsTypes,
@@ -23,6 +22,8 @@ import {
 } from "./types";
 
 const { CARDS } = Endpoints;
+
+const { hideModalAction } = modal;
 
 export const cardsActionStarted = (): CardsActionStartedType => ({
   type: CardsActionTypes.CARDS_ACTION_STARTED,
@@ -78,7 +79,7 @@ export const saveCardAction =
         values
       );
 
-      dispatch(hideModal());
+      hideModalAction();
       notifySuccess("Card created");
       dispatch(setCardSuccess(data));
     } catch (error) {
@@ -98,7 +99,7 @@ export const editCardAction =
         values
       );
 
-      dispatch(hideModal());
+      hideModalAction();
       notifySuccess("Card edited");
       dispatch(updateCardSuccess(data));
     } catch (error) {

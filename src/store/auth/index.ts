@@ -10,7 +10,7 @@ import {
   LoginInitialValueType,
   RegistrationInitialValueType,
 } from "helpers/types";
-import { AuthResponseType, AuthUserType, InitialStateAuthType } from "./types";
+import { AuthResponseType, AuthUserType } from "./types";
 
 const { LOGIN, REGISTER, USERS } = Endpoints;
 
@@ -22,8 +22,6 @@ export class Authentication {
   loading: boolean = false;
 
   error: string | null = null;
-
-  auth: InitialStateAuthType;
 
   constructor() {
     makeAutoObservable(this);

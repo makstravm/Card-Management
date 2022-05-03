@@ -16,7 +16,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 import { RoutesUrls } from "constants/routes";
 
-import auth from "store/auth/Authentification";
+import auth from "store/auth";
 
 const { BOARD } = RoutesUrls;
 

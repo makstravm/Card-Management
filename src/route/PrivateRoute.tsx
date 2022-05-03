@@ -5,7 +5,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 import { RoutesUrls } from "constants/routes";
 
-import auth from "store/auth/Authentification";
+import auth from "store/auth";
 
 import { jwtDecode } from "helpers/jwtDecode";
 

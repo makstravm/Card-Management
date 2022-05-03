@@ -4,8 +4,8 @@ import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
 
 import { updateFieldsToCard } from "store/cards/actions";
-import { hideModal } from "store/modals/actions";
 import { CardType } from "store/cards/types";
+import modal from "store/modals";
 
 import { renameKeyObj } from "helpers/renameKeyObj";
 
@@ -31,6 +31,8 @@ import {
 const { FIELDS, CARDS, FIELD_TYPES } = Endpoints;
 
 const { CHECKBOX } = TypesFields;
+
+const { hideModalAction } = modal;
 
 export const fieldsActionStarted = (): FieldsActionStartedType => ({
   type: FieldsActionTypes.FIELDS_ACTION_STARTED,
@@ -112,7 +114,7 @@ export const saveFieldAction =
       const result = await Promise.all(newCardList);
 
       notifySuccess("Field created");
-      dispatch(hideModal());
+      hideModalAction();
       dispatch(updateFieldsToCard(result));
       dispatch(addFieldSuccess(data));
     } catch (error) {
@@ -154,7 +156,7 @@ export const editFieldAction =
       const result = await Promise.all(newCardList);
 
       notifySuccess("Field edited");
-      dispatch(hideModal());
+      hideModalAction();
       dispatch(updateFieldsToCard(result));
       dispatch(updateFieldSuccess(data));
     } catch (error) {

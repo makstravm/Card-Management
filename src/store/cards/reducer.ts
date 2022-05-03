@@ -43,7 +43,6 @@ export const cardsReducer = (
         ...state,
         cardsList: [...state.cardsList, action.payload],
         loading: false,
-        error: null,
       };
 
     case GET_CARDS_SUCCESS:
