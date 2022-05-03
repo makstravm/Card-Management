@@ -1,6 +1,5 @@
 import React from "react";
 import { FormikProps, useFormik } from "formik";
-import { useDispatch } from "react-redux";
 
 import {
   Box,
@@ -26,8 +25,6 @@ export const Form = ({
   onSubmit,
   validationSchema,
 }: FormPropsType) => {
-  const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const {
@@ -40,7 +37,7 @@ export const Form = ({
   }: FormikProps<FormicValuesType> = useFormik({
     initialValues,
     onSubmit: (values) => {
-      dispatch(onSubmit(values, navigate));
+      onSubmit(values, navigate);
     },
     validationSchema,
   });

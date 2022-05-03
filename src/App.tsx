@@ -14,18 +14,15 @@ import {
 } from "constants/forms/registrationFormsFields";
 import { RoutesUrls } from "constants/routes";
 
-import { loginAction, registrationAction } from "store/auth/actions";
-
 import { Board } from "components/Board";
 import { Layout } from "components/Layout";
 import { Form } from "components/common/Form";
 import { AuthenticationLayout } from "components/AuthenticationLayout";
-import { Preloader } from "components/Preloader";
 
 import { PrivateRoute } from "route/PrivateRoute";
 import { registerValidationSchema } from "helpers/registrationValidationSchema";
 import { loginValidationSchema } from "helpers/loginValidationSchema";
-
+import auth from "store/auth/Authentification";
 import store from "./store";
 
 const { MAIN, LOGIN, REGISTRATION, BOARD } = RoutesUrls;
@@ -34,7 +31,6 @@ const App = () => (
   <BrowserRouter>
     <Provider store={store}>
       <CssBaseline />
-      <Preloader />
       <Routes>
         <Route element={<AuthenticationLayout />}>
           <Route
@@ -47,7 +43,7 @@ const App = () => (
                 buttonText="Sign In"
                 initialValues={loginInitialValue}
                 formFields={loginFormFields}
-                onSubmit={loginAction}
+                onSubmit={auth.loginAction}
                 validationSchema={loginValidationSchema}
               />
             }
@@ -62,7 +58,7 @@ const App = () => (
                 buttonText="Sign Up"
                 initialValues={registrationInitialValue}
                 formFields={registrationFormFields}
-                onSubmit={registrationAction}
+                onSubmit={auth.registrationAction}
                 validationSchema={registerValidationSchema}
               />
             }
