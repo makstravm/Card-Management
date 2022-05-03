@@ -65,7 +65,11 @@ export const BoardRenderCard = () => {
                       {title}
                     </Typography>
                   </Paper>
-                  <Box ref={provided.innerRef} {...provided.droppableProps}>
+                  <Box
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    sx={{ minHeight: "150px" }}
+                  >
                     {cardsList?.map((card, i) => (
                       <Card key={`${card.id}`} card={card} idx={i} />
                     ))}
