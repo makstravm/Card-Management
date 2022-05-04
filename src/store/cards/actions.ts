@@ -6,7 +6,7 @@ import { DELETE, GET, POST, PUT } from "api/index";
 
 import { notifySuccess } from "utils/toast";
 
-import modal from "store/modals";
+// import modal from "store/modals";
 import { RootStateType } from "..";
 import {
   CardsReducerActionsTypes,
@@ -23,7 +23,7 @@ import {
 
 const { CARDS } = Endpoints;
 
-const { hideModalAction } = modal;
+// const { hideModalAction } = modal;
 
 export const cardsActionStarted = (): CardsActionStartedType => ({
   type: CardsActionTypes.CARDS_ACTION_STARTED,
@@ -79,7 +79,7 @@ export const saveCardAction =
         values
       );
 
-      hideModalAction();
+      // hideModalAction();
       notifySuccess("Card created");
       dispatch(setCardSuccess(data));
     } catch (error) {
@@ -99,7 +99,7 @@ export const editCardAction =
         values
       );
 
-      hideModalAction();
+      // hideModalAction();
       notifySuccess("Card edited");
       dispatch(updateCardSuccess(data));
     } catch (error) {

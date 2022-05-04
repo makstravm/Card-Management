@@ -1,5 +1,6 @@
-import React, { MouseEvent, useState } from "react";
+import React, { MouseEvent, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
+import { observer } from "mobx-react-lite";
 
 import { Box, ButtonGroup, Divider, IconButton, Popover } from "@mui/material";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
@@ -9,13 +10,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import { CardCreator } from "components/CardCreator";
 
 import { deleteCardAction } from "store/cards/actions";
-import modal from "store/modals";
+import { StoreContext } from "store/index";
 
 import { CardActionsPropsType } from "./types";
 
-const { showModalAction } = modal;
+export const CardActions = observer(({ card }: CardActionsPropsType) => {
+  const { showModalAction } = useContext(StoreContext).modal;
 
-export const CardActions = ({ card }: CardActionsPropsType) => {
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -32,7 +33,7 @@ export const CardActions = ({ card }: CardActionsPropsType) => {
 
   const onEditCard = () => {
     setAnchorEl(null);
-    dispatch(showModalAction("Edit Card", <CardCreator card={card} />));
+    showModalAction("Edit Card", <CardCreator card={card} />);
   };
 
   return (
@@ -65,4 +66,4 @@ export const CardActions = ({ card }: CardActionsPropsType) => {
       </Popover>
     </Box>
   );
-};
+});

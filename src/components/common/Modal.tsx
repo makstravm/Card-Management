@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import { observer } from "mobx-react-lite";
@@ -6,12 +6,13 @@ import { observer } from "mobx-react-lite";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Divider, IconButton, Paper, Typography } from "@mui/material";
 
-import modal from "store/modals";
+import { StoreContext } from "store/index";
 
 import "./style.scss";
 
 export const Modal = observer(() => {
-  const { showModal, title, component, hideModalAction } = modal;
+  const { showModal, title, component, hideModalAction } =
+    useContext(StoreContext).modal;
 
   return createPortal(
     <CSSTransition in={showModal} mountOnEnter unmountOnExit timeout={300}>

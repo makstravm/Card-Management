@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useContext, useState } from "react";
 
 import {
   Box,
@@ -18,11 +17,7 @@ import { TypesFields } from "constants/typesFields";
 
 import { FieldTypeCreator } from "components/FieldsCreator/FieldTypeCreator";
 
-import {
-  deleteFieldAction,
-  deleteFieldOptionAction,
-} from "store/fields/actions";
-import modal from "store/modals";
+import { StoreContext } from "store/index";
 
 import { FieldItemPropsType } from "../types";
 
@@ -30,29 +25,28 @@ import "./style.scss";
 
 const { SELECT } = TypesFields;
 
-const { showModalAction } = modal;
-
 export const FieldsItem = ({ field }: FieldItemPropsType) => {
   const { id, name, type, required, options } = field;
 
-  const dispatch = useDispatch();
+  const {
+    modal: { showModalAction },
+    fields: { deleteFieldAction, deleteFieldOptionAction },
+  } = useContext(StoreContext);
 
   const [showOptions, setShowOPtions] = useState<boolean>(false);
 
-  const onDeleteField = () => dispatch(deleteFieldAction(id, name));
+  const onDeleteField = () => deleteFieldAction(id, name);
 
   const onDeleteOption = (idOption: string) => {
-    const newOptions = options?.filter((option) => option?.id !== idOption);
+    const newOptions = options?.filter(({ id }) => id !== idOption);
 
-    dispatch(deleteFieldOptionAction(id, { ...field, options: newOptions }));
+    deleteFieldOptionAction(id, { ...field, options: newOptions });
   };
 
   const onEditField = () =>
-    dispatch(
-      showModalAction(
-        "Edit Field",
-        <FieldTypeCreator field={field} typeEditField={type} />
-      )
+    showModalAction(
+      "Edit Field",
+      <FieldTypeCreator field={field} typeEditField={type} />
     );
 
   return (

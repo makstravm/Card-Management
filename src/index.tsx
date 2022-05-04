@@ -5,5 +5,11 @@ import App from "./App";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./style.scss";
+import { RootStore, StoreContext } from "./store";
 
-render(<App />, document.getElementById("root"));
+render(
+  <StoreContext.Provider value={new RootStore()}>
+    <App />
+  </StoreContext.Provider>,
+  document.getElementById("root")
+);

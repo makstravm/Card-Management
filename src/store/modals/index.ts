@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { makeAutoObservable } from "mobx";
+import { RootStore } from "..";
 
 export class Modal {
   showModal: boolean = false;
@@ -8,8 +9,11 @@ export class Modal {
 
   component: ReactNode | null = null;
 
-  constructor() {
+  rootStore: RootStore;
+
+  constructor(rootStore: RootStore) {
     makeAutoObservable(this);
+    this.rootStore = rootStore;
   }
 
   showModalAction = (title: string, component: ReactNode) => {
@@ -24,7 +28,3 @@ export class Modal {
     this.component = null;
   };
 }
-
-const modal = new Modal();
-
-export default modal;

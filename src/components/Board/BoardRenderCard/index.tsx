@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { observer } from "mobx-react-lite";
 
 import { Box, Grid, Paper, Typography } from "@mui/material";
 
@@ -10,13 +11,17 @@ import { cardsGroupByName } from "constants/cardsGroupByName";
 
 import { getAllCardsAction, moveEditCardAction } from "store/cards/actions";
 import { selectGroupCardsList } from "store/cards/selectors";
-import { getAllFieldAction } from "store/fields/actions";
+import { StoreContext } from "store/index";
 
 import { GroupCardsBtn } from "./GroupCardsBtn";
 
 const { ALL } = cardsGroupByName;
 
-export const BoardRenderCard = () => {
+export const BoardRenderCard = observer(() => {
+  const {
+    fields: { getAllFieldAction },
+  } = useContext(StoreContext);
+
   const dispatch = useDispatch();
 
   const [group, setGroup] = useState<string>(ALL);
@@ -25,7 +30,7 @@ export const BoardRenderCard = () => {
 
   useEffect(() => {
     dispatch(getAllCardsAction());
-    dispatch(getAllFieldAction());
+    getAllFieldAction();
   }, []);
 
   const onDragEndHandler = ({
@@ -83,4 +88,4 @@ export const BoardRenderCard = () => {
       </DragDropContext>
     </Box>
   );
-};
+});

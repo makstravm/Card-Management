@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { runInAction, makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { NavigateOptions, To } from "react-router-dom";
 
 import { GET, POST } from "api/index";
@@ -11,6 +11,7 @@ import {
   RegistrationInitialValueType,
 } from "helpers/types";
 import { AuthResponseType, AuthUserType } from "./types";
+import { RootStore } from "..";
 
 const { LOGIN, REGISTER, USERS } = Endpoints;
 
@@ -23,8 +24,11 @@ export class Authentication {
 
   error: string | null = null;
 
-  constructor() {
+  rootStore: RootStore;
+
+  constructor(rootStore: RootStore) {
     makeAutoObservable(this);
+    this.rootStore = rootStore;
   }
 
   loginAction = async (
@@ -39,17 +43,13 @@ export class Authentication {
 
       Cookies.set("token", accessToken);
 
-      runInAction(() => {
-        this.user = user;
-        this.loading = false;
-      });
+      this.user = user;
+      this.loading = false;
 
       navigate(MAIN, { replace: true });
     } catch (error) {
-      runInAction(() => {
-        this.error = error;
-        this.loading = false;
-      });
+      this.error = error;
+      this.loading = false;
     }
   };
 
@@ -66,10 +66,8 @@ export class Authentication {
 
       this.loginAction(value, navigate);
     } catch (error) {
-      runInAction(() => {
-        this.error = error;
-        this.loading = false;
-      });
+      this.error = error;
+      this.loading = false;
     }
   };
 
@@ -78,15 +76,11 @@ export class Authentication {
     try {
       const { data } = await GET(`${USERS}/${id}`);
 
-      runInAction(() => {
-        this.user = data;
-        this.loading = false;
-      });
+      this.user = data;
+      this.loading = false;
     } catch (error) {
-      runInAction(() => {
-        this.error = error;
-        this.loading = false;
-      });
+      this.error = error;
+      this.loading = false;
     }
   };
 
@@ -96,7 +90,3 @@ export class Authentication {
     this.error = null;
   }
 }
-
-const auth = new Authentication();
-
-export default auth;

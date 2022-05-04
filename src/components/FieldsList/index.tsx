@@ -1,22 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import { observer } from "mobx-react-lite";
 
 import { Box } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
 
-import { getAllFieldAction } from "store/fields/actions";
-import { selectFieldsList } from "store/fields/selectors";
-
+import { StoreContext } from "store/index";
 import { FieldsItem } from "./FieldsItem";
 
 import "./style.scss";
 
-export const FieldsList = () => {
-  const dispatch = useDispatch();
-
-  const fieldsList = useSelector(selectFieldsList);
+export const FieldsList = observer(() => {
+  const { fieldsList, getAllFieldAction } = useContext(StoreContext).fields;
 
   useEffect(() => {
-    dispatch(getAllFieldAction());
+    getAllFieldAction();
   }, []);
 
   return (
@@ -26,4 +22,4 @@ export const FieldsList = () => {
       ))}
     </Box>
   );
-};
+});
