@@ -1,26 +1,21 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
-import { useDispatch, useSelector } from "react-redux";
+import { observer } from "mobx-react-lite";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Divider, IconButton, Paper, Typography } from "@mui/material";
 
-import { hideModal } from "store/modals/actions";
-import { selectModalChange } from "store/modals/selectors";
+import modal from "store/modals";
 
 import "./style.scss";
 
-export const Modal = () => {
-  const { showModal, title, component } = useSelector(selectModalChange);
-
-  const dispatch = useDispatch();
-
-  const closeModal = () => dispatch(hideModal());
+export const Modal = observer(() => {
+  const { showModal, title, component, hideModalAction } = modal;
 
   return createPortal(
     <CSSTransition in={showModal} mountOnEnter unmountOnExit timeout={300}>
-      <Box className={`modal ${showModal && "show"}`} onClick={closeModal}>
+      <Box className={`modal ${showModal && "show"}`} onClick={hideModalAction}>
         <Paper
           className="modal__content"
           onClick={(e) => e.stopPropagation()}
@@ -28,7 +23,7 @@ export const Modal = () => {
         >
           <Box className="modal__header">
             <Typography variant="h5">{title}</Typography>
-            <IconButton className="modal__close-btn" onClick={closeModal}>
+            <IconButton className="modal__close-btn" onClick={hideModalAction}>
               <CloseIcon />
             </IconButton>
           </Box>
@@ -39,4 +34,4 @@ export const Modal = () => {
     </CSSTransition>,
     document.getElementById("root")
   );
-};
+});

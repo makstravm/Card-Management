@@ -1,18 +1,18 @@
 import React from "react";
 import Cookies from "js-cookie";
+import { observer } from "mobx-react-lite";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getDataUserAction } from "store/auth/actions";
-import { selectUserState } from "store/auth/selectors";
+
 import { RoutesUrls } from "constants/routes";
+
+import auth from "store/auth";
+
 import { jwtDecode } from "helpers/jwtDecode";
 
 const { LOGIN } = RoutesUrls;
 
-export const PrivateRoute = () => {
-  const dispatch = useDispatch();
-
-  const userName = useSelector(selectUserState);
+export const PrivateRoute = observer(() => {
+  const userName = auth?.user;
 
   const location = useLocation();
 
@@ -24,8 +24,8 @@ export const PrivateRoute = () => {
   if (!userName) {
     const user = jwtDecode(isAuthentification);
 
-    dispatch(getDataUserAction(user.sub));
+    auth.getDataUserAction(user.sub);
   }
 
   return <Outlet />;
-};
+});

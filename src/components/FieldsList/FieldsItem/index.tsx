@@ -22,13 +22,15 @@ import {
   deleteFieldAction,
   deleteFieldOptionAction,
 } from "store/fields/actions";
-import { showModal } from "store/modals/actions";
+import modal from "store/modals";
 
 import { FieldItemPropsType } from "../types";
 
 import "./style.scss";
 
 const { SELECT } = TypesFields;
+
+const { showModalAction } = modal;
 
 export const FieldsItem = ({ field }: FieldItemPropsType) => {
   const { id, name, type, required, options } = field;
@@ -47,7 +49,7 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
 
   const onEditField = () =>
     dispatch(
-      showModal(
+      showModalAction(
         "Edit Field",
         <FieldTypeCreator field={field} typeEditField={type} />
       )

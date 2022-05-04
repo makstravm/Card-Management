@@ -9,9 +9,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import { CardCreator } from "components/CardCreator";
 
 import { deleteCardAction } from "store/cards/actions";
-import { showModal } from "store/modals/actions";
+import modal from "store/modals";
 
 import { CardActionsPropsType } from "./types";
+
+const { showModalAction } = modal;
 
 export const CardActions = ({ card }: CardActionsPropsType) => {
   const dispatch = useDispatch();
@@ -30,7 +32,7 @@ export const CardActions = ({ card }: CardActionsPropsType) => {
 
   const onEditCard = () => {
     setAnchorEl(null);
-    dispatch(showModal("Edit Card", <CardCreator card={card} />));
+    dispatch(showModalAction("Edit Card", <CardCreator card={card} />));
   };
 
   return (

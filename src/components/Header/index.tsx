@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
-import { useDispatch, useSelector } from "react-redux";
+import { observer } from "mobx-react-lite";
 import Cookies from "js-cookie";
 
 import {
@@ -15,20 +14,18 @@ import {
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-import { selectUserState } from "store/auth/selectors";
 import { RoutesUrls } from "constants/routes";
-import { logoutSuccess } from "store/auth/actions";
+
+import auth from "store/auth";
 
 const { BOARD } = RoutesUrls;
 
-export const Header = () => {
-  const userName = useSelector(selectUserState);
-
-  const dispatch = useDispatch();
+export const Header = observer(() => {
+  const userName = auth?.user?.name;
 
   const onLogOut = () => {
     Cookies.remove("token");
-    dispatch(logoutSuccess());
+    auth.logOut();
   };
 
   return (
@@ -58,4 +55,4 @@ export const Header = () => {
       </Container>
     </AppBar>
   );
-};
+});
