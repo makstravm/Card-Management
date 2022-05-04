@@ -5,7 +5,7 @@ import { TypesFields } from "constants/typesFields";
 
 import { updateFieldsToCard } from "store/cards/actions";
 import { CardType } from "store/cards/types";
-import modal from "store/modals";
+// import modal from "store/modals";
 
 import { renameKeyObj } from "helpers/renameKeyObj";
 
@@ -32,7 +32,7 @@ const { FIELDS, CARDS, FIELD_TYPES } = Endpoints;
 
 const { CHECKBOX } = TypesFields;
 
-const { hideModalAction } = modal;
+// const { hideModalAction } = modal;
 
 export const fieldsActionStarted = (): FieldsActionStartedType => ({
   type: FieldsActionTypes.FIELDS_ACTION_STARTED,

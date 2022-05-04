@@ -29,7 +29,9 @@ export const FieldCreator = ({ type, field }: FieldCreatorPropsType) => {
   const [errorName, setErrorName] = useState(false);
 
   const onSaveField = ({ name, required, options }: FormikStateType) => {
-    const checkName = fieldsList?.find((field) => field?.name === name);
+    const checkName = fieldsList?.find(
+      ({ name: fieldName }) => fieldName === name
+    );
 
     if (checkName) {
       setErrorName(true);

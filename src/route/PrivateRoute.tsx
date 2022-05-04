@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Cookies from "js-cookie";
 import { observer } from "mobx-react-lite";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 import { RoutesUrls } from "constants/routes";
 
-import auth from "store/auth";
-
 import { jwtDecode } from "helpers/jwtDecode";
+
+import { StoreContext } from "store/index";
 
 const { LOGIN } = RoutesUrls;
 
 export const PrivateRoute = observer(() => {
-  const userName = auth?.user;
+  const { getDataUserAction, user } = useContext(StoreContext).auth;
 
   const location = useLocation();
 
@@ -21,10 +21,10 @@ export const PrivateRoute = observer(() => {
   if (!isAuthentification) {
     return <Navigate to={LOGIN} state={location} />;
   }
-  if (!userName) {
-    const user = jwtDecode(isAuthentification);
+  if (!user) {
+    const { sub } = jwtDecode(isAuthentification);
 
-    auth.getDataUserAction(user.sub);
+    getDataUserAction(sub);
   }
 
   return <Outlet />;

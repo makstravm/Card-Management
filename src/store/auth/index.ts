@@ -11,6 +11,7 @@ import {
   RegistrationInitialValueType,
 } from "helpers/types";
 import { AuthResponseType, AuthUserType } from "./types";
+import { RootStore } from "..";
 
 const { LOGIN, REGISTER, USERS } = Endpoints;
 
@@ -23,8 +24,11 @@ export class Authentication {
 
   error: string | null = null;
 
-  constructor() {
+  rootStore;
+
+  constructor(rootStore: RootStore) {
     makeAutoObservable(this);
+    this.rootStore = rootStore;
   }
 
   loginAction = async (
@@ -96,7 +100,3 @@ export class Authentication {
     this.error = null;
   }
 }
-
-const auth = new Authentication();
-
-export default auth;

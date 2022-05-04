@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import Cookies from "js-cookie";
@@ -15,17 +15,16 @@ import {
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import { RoutesUrls } from "constants/routes";
-
-import auth from "store/auth";
+import { StoreContext } from "store/index";
 
 const { BOARD } = RoutesUrls;
 
 export const Header = observer(() => {
-  const userName = auth?.user?.name;
+  const { logOut, user } = useContext(StoreContext).auth;
 
   const onLogOut = () => {
     Cookies.remove("token");
-    auth.logOut();
+    logOut();
   };
 
   return (
@@ -39,11 +38,11 @@ export const Header = observer(() => {
               </NavLink>
             </Toolbar>
           </Grid>
-          {userName && (
+          {user?.name && (
             <Grid item>
               <Grid container alignItems="center">
                 <Typography variant="h6" pr={1} color="textSecondary">
-                  {`Hi, ${userName}`}
+                  {`Hi, ${user?.name}`}
                 </Typography>
                 <IconButton onClick={onLogOut}>
                   <LogoutIcon fontSize="small" />

@@ -1,5 +1,4 @@
 import { UpdateFieldsToCardType } from "store/cards/types";
-import { HideModalActionType } from "store/modals/types";
 
 export enum FieldsActionTypes {
   FIELDS_ACTION_STARTED = "FIELDS_ACTION_STARTED",
@@ -66,7 +65,6 @@ export type DeleteFieldSuccessType = {
 };
 
 export type FieldsReducerActionsTypes =
-  | HideModalActionType
   | FieldsActionStartedType
   | FieldsActionFailureType
   | AddFieldSuccessType
