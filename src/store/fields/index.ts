@@ -1,9 +1,9 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { v1 } from "uuid";
 
 import { DELETE, GET, POST, PUT } from "api/index";
-import { Endpoints } from "constants/endpoints";
 import { TypesFields } from "constants/typesFields";
+import { Endpoints } from "constants/endpoints";
 
 import { CardType } from "store/cards/types";
 
@@ -32,30 +32,28 @@ export class Fields {
   rootStore;
 
   constructor(rootStore: RootStore) {
-    makeAutoObservable(this);
     this.rootStore = rootStore;
+    makeAutoObservable(this);
   }
 
   get groupOptions() {
     return [
       { id: v1(), value: "All" },
-      this.fieldsList
+      ...this.fieldsList
         .filter(({ type }) => type !== TEXT)
         .map((field) => ({ id: `${field.id}`, value: field.name })),
     ];
   }
 
-
-  get fieldsListAndInitValFormik (){
+  get fieldsListAndInitValFormik() {
     const initialValues: Omit<CardType, "id"> = {};
 
     this.fieldsList?.forEach(({ type, name }) => {
       initialValues[name] = type !== "checkbox" ? "" : false;
     });
 
-    return { fieldsList:this.fieldsList, initialValues };
+    return { fieldsList: this.fieldsList, initialValues };
   }
-
 
   saveFieldAction = async (values: FieldStateType) => {
     this.loading = true;
@@ -66,11 +64,9 @@ export class Fields {
       );
 
       const {
-        cards: { cardsList },
+        cards: { cardsList, updateFieldsToCard },
         modal: { hideModalAction },
       } = this.rootStore;
-
-      // const cards = getState().cards.cardsList;
 
       const newCardList = cardsList.map(async (card: CardType) => {
         const newCard = {
@@ -93,12 +89,17 @@ export class Fields {
 
       notifySuccess("Field created");
       hideModalAction();
-      // dispatch(updateFieldsToCard(result));
-      this.fieldsList = [...this.fieldsList, data];
-      this.loading = false;
+
+      updateFieldsToCard(result);
+      runInAction(() => {
+        this.fieldsList = [...this.fieldsList, data];
+        this.loading = false;
+      });
     } catch (error) {
-      this.error = error;
-      this.loading = false;
+      runInAction(() => {
+        this.error = error;
+        this.loading = false;
+      });
     }
   };
 
@@ -111,7 +112,7 @@ export class Fields {
       );
 
       const {
-        cards: { cardsList },
+        cards: { cardsList, updateFieldsToCard },
         modal: { hideModalAction },
       } = this.rootStore;
 
@@ -135,14 +136,18 @@ export class Fields {
 
       notifySuccess("Field edited");
       hideModalAction();
-      // dispatch(updateFieldsToCard(result));
-      this.fieldsList = this.fieldsList.map((field) =>
-        field.id === data.id ? data : field
-      );
-      this.loading = false;
+      updateFieldsToCard(result);
+      runInAction(() => {
+        this.fieldsList = this.fieldsList.map((field) =>
+          field.id === data.id ? data : field
+        );
+        this.loading = false;
+      });
     } catch (error) {
-      this.error = error;
-      this.loading = false;
+      runInAction(() => {
+        this.error = error;
+        this.loading = false;
+      });
     }
   };
 
@@ -151,11 +156,15 @@ export class Fields {
     try {
       const { data } = await GET(FIELDS);
 
-      this.fieldsList = data;
-      this.loading = false;
+      runInAction(() => {
+        this.fieldsList = data;
+        this.loading = false;
+      });
     } catch (error) {
-      this.error = error;
-      this.loading = false;
+      runInAction(() => {
+        this.error = error;
+        this.loading = false;
+      });
     }
   };
 
@@ -164,11 +173,15 @@ export class Fields {
     try {
       const { data } = await GET(FIELD_TYPES);
 
-      this.fieldTypes = data;
-      this.loading = false;
+      runInAction(() => {
+        this.fieldTypes = data;
+        this.loading = false;
+      });
     } catch (error) {
-      this.error = error;
-      this.loading = false;
+      runInAction(() => {
+        this.error = error;
+        this.loading = false;
+      });
     }
   };
 
@@ -177,7 +190,7 @@ export class Fields {
     try {
       await DELETE(`${FIELDS}/${id}`);
       const {
-        cards: { cardsList },
+        cards: { cardsList, updateFieldsToCard },
       } = this.rootStore;
 
       const newCardList = cardsList.map(async (card: CardType) => {
@@ -194,14 +207,18 @@ export class Fields {
       const result = await Promise.all(newCardList);
 
       notifySuccess("Field deleted");
-      // dispatch(updateFieldsToCard(result));
-      this.fieldsList = this.fieldsList.filter(
-        ({ id: fieldId }) => fieldId !== id
-      );
-      this.loading = false;
+      updateFieldsToCard(result);
+      runInAction(() => {
+        this.fieldsList = this.fieldsList.filter(
+          ({ id: fieldId }) => fieldId !== id
+        );
+        this.loading = false;
+      });
     } catch (error) {
-      this.error = error;
-      this.loading = false;
+      runInAction(() => {
+        this.error = error;
+        this.loading = false;
+      });
     }
   };
 
@@ -214,13 +231,17 @@ export class Fields {
       );
 
       notifySuccess("Option deleted");
-      this.fieldsList = this.fieldsList.map((field) =>
-        field.id === data.id ? data : field
-      );
-      this.loading = false;
+      runInAction(() => {
+        this.fieldsList = this.fieldsList.map((field) =>
+          field.id === data.id ? data : field
+        );
+        this.loading = false;
+      });
     } catch (error) {
-      this.error = error;
-      this.loading = false;
+      runInAction(() => {
+        this.error = error;
+        this.loading = false;
+      });
     }
   };
 }

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { observer } from "mobx-react-lite";
 
@@ -7,29 +6,26 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { Card } from "components/Card";
 
-import { cardsGroupByName } from "constants/cardsGroupByName";
+import { CardsGroupByName } from "constants/cardsGroupByName";
 
-import { getAllCardsAction, moveEditCardAction } from "store/cards/actions";
-import { selectGroupCardsList } from "store/cards/selectors";
 import { StoreContext } from "store/index";
 
 import { GroupCardsBtn } from "./GroupCardsBtn";
 
-const { ALL } = cardsGroupByName;
+const { ALL } = CardsGroupByName;
 
 export const BoardRenderCard = observer(() => {
   const {
     fields: { getAllFieldAction },
+    cards: { getAllCardsAction, getGroupCardsList, moveEditCardAction },
   } = useContext(StoreContext);
-
-  const dispatch = useDispatch();
 
   const [group, setGroup] = useState<string>(ALL);
 
-  const groupCardsList = useSelector(selectGroupCardsList(group));
+  const groupCardsList = getGroupCardsList(group);
 
   useEffect(() => {
-    dispatch(getAllCardsAction());
+    getAllCardsAction();
     getAllFieldAction();
   }, []);
 
@@ -44,7 +40,7 @@ export const BoardRenderCard = observer(() => {
     if (destination.droppableId === source.droppableId) {
       return;
     }
-    dispatch(moveEditCardAction(+draggableId, group, destination.droppableId));
+    moveEditCardAction(+draggableId, group, destination.droppableId);
   };
 
   return (

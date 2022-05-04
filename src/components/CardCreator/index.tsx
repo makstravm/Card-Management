@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
+import { observer } from "mobx-react-lite";
 
 import { Box } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
@@ -8,7 +8,6 @@ import SaveIcon from "@mui/icons-material/Save";
 import { Btn } from "components/common/Btn/Btn";
 
 import { FieldStateType } from "store/fields/types";
-import { editCardAction, saveCardAction } from "store/cards/actions";
 import { CardType } from "store/cards/types";
 import { StoreContext } from "store/index";
 
@@ -19,13 +18,14 @@ import { CardCreatorType } from "./types";
 
 import "./style.scss";
 
-export const CardCreator = ({ card }: CardCreatorType) => {
-  const dispatch = useDispatch();
-
+export const CardCreator = observer(({ card }: CardCreatorType) => {
   const {
-    fieldsListAndInitValFormik: { initialValues, fieldsList },
-    getAllFieldAction,
-  } = useContext(StoreContext).fields;
+    fields: {
+      fieldsListAndInitValFormik: { initialValues, fieldsList },
+      getAllFieldAction,
+    },
+    cards: { editCardAction, saveCardAction },
+  } = useContext(StoreContext);
 
   useEffect(() => {
     getAllFieldAction();
@@ -33,9 +33,9 @@ export const CardCreator = ({ card }: CardCreatorType) => {
 
   const onSave = (values: CardType | Omit<CardType, "id">) => {
     if (card) {
-      dispatch(editCardAction(values));
+      editCardAction(values);
     } else {
-      dispatch(saveCardAction(values));
+      saveCardAction(values);
     }
   };
 
@@ -50,7 +50,7 @@ export const CardCreator = ({ card }: CardCreatorType) => {
           {(formik) => (
             <Form>
               <Box className="card-create">
-                {fieldsList.map((field) => (
+                {fieldsList.map((field: FieldStateType) => (
                   <Box key={field.id} pt={1}>
                     {renderFieldByType(field, formik)}
                   </Box>
@@ -71,4 +71,4 @@ export const CardCreator = ({ card }: CardCreatorType) => {
       )}
     </Box>
   );
-};
+});

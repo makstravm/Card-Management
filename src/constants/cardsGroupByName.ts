@@ -1,3 +1,3 @@
-export enum cardsGroupByName {
+export enum CardsGroupByName {
   ALL = "All",
 }

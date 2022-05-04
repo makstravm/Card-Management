@@ -12,8 +12,8 @@ export class Modal {
   rootStore: RootStore;
 
   constructor(rootStore: RootStore) {
-    makeAutoObservable(this);
     this.rootStore = rootStore;
+    makeAutoObservable(this);
   }
 
   showModalAction = (title: string, component: ReactNode) => {
