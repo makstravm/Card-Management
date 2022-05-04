@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useContext, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
 
 import { Box } from "@mui/material";
@@ -7,11 +7,10 @@ import SaveIcon from "@mui/icons-material/Save";
 
 import { Btn } from "components/common/Btn/Btn";
 
-import { getAllFieldAction } from "store/fields/actions";
-import { selectFieldsListAndInitValFormik } from "store/fields/selectors";
 import { FieldStateType } from "store/fields/types";
 import { editCardAction, saveCardAction } from "store/cards/actions";
 import { CardType } from "store/cards/types";
+import { StoreContext } from "store/index";
 
 import { validateSchemaCard } from "helpers/createCardValidSchema";
 import { renderFieldByType } from "helpers/renderFieldByType";
@@ -23,12 +22,13 @@ import "./style.scss";
 export const CardCreator = ({ card }: CardCreatorType) => {
   const dispatch = useDispatch();
 
-  const { fieldsList, initialValues } = useSelector(
-    selectFieldsListAndInitValFormik
-  );
+  const {
+    fieldsListAndInitValFormik: { initialValues, fieldsList },
+    getAllFieldAction,
+  } = useContext(StoreContext).fields;
 
   useEffect(() => {
-    dispatch(getAllFieldAction());
+    getAllFieldAction();
   }, []);
 
   const onSave = (values: CardType | Omit<CardType, "id">) => {

@@ -3,6 +3,7 @@ import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { Authentication } from "./auth";
+import { Fields } from "./fields";
 import { Modal } from "./modals";
 
 import { rootReducer } from "./reducers";
@@ -19,13 +20,17 @@ export class RootStore {
 
   modal;
 
+  fields;
+
   constructor() {
     this.auth = new Authentication(this);
     this.modal = new Modal(this);
+    this.fields = new Fields(this);
   }
 }
+// export type RootStateType1 = typeof ;
 
-export const StoreContext = createContext<RootStore>(RootStore);
+export const StoreContext = createContext<RootStore>(new RootStore());
 
 // const TimerView = observer(() => {
 //   const timer = useContext(TimerContext); // See the Timer definition above.

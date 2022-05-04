@@ -9,7 +9,7 @@ export class Modal {
 
   component: ReactNode | null = null;
 
-  rootStore;
+  rootStore: RootStore;
 
   constructor(rootStore: RootStore) {
     makeAutoObservable(this);
