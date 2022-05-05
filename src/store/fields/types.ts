@@ -10,10 +10,3 @@ export type FieldStateType = {
   required: boolean;
   options: OptionsType[] | [];
 };
-
-export type InitialStateFieldsListType = {
-  fieldsList: FieldStateType[] | [];
-  fieldTypes: OptionsType[] | [];
-  error: string | null;
-  loading: boolean;
-};

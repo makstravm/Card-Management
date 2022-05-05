@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { NavigateOptions, To } from "react-router-dom";
 
 import { GET, POST } from "api/index";
@@ -27,8 +27,8 @@ export class Authentication {
   rootStore: RootStore;
 
   constructor(rootStore: RootStore) {
-    makeAutoObservable(this);
     this.rootStore = rootStore;
+    makeAutoObservable(this);
   }
 
   loginAction = async (
@@ -42,14 +42,16 @@ export class Authentication {
       } = await POST<AuthResponseType, LoginInitialValueType>(LOGIN, value);
 
       Cookies.set("token", accessToken);
-
-      this.user = user;
-      this.loading = false;
-
+      runInAction(() => {
+        this.user = user;
+        this.loading = false;
+      });
       navigate(MAIN, { replace: true });
     } catch (error) {
-      this.error = error;
-      this.loading = false;
+      runInAction(() => {
+        this.error = error;
+        this.loading = false;
+      });
     }
   };
 
@@ -66,8 +68,10 @@ export class Authentication {
 
       this.loginAction(value, navigate);
     } catch (error) {
-      this.error = error;
-      this.loading = false;
+      runInAction(() => {
+        this.error = error;
+        this.loading = false;
+      });
     }
   };
 
@@ -76,11 +80,15 @@ export class Authentication {
     try {
       const { data } = await GET(`${USERS}/${id}`);
 
-      this.user = data;
-      this.loading = false;
+      runInAction(() => {
+        this.user = data;
+        this.loading = false;
+      });
     } catch (error) {
-      this.error = error;
-      this.loading = false;
+      runInAction(() => {
+        this.error = error;
+        this.loading = false;
+      });
     }
   };
 
