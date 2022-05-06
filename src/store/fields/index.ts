@@ -16,9 +16,7 @@ import { RootStore } from "..";
 
 const { FIELDS, CARDS, FIELD_TYPES } = Endpoints;
 
-const { CHECKBOX } = TypesFields;
-
-const { TEXT } = TypesFields;
+const { CHECKBOX, TEXT, SELECT } = TypesFields;
 
 export class Fields {
   fieldsList: FieldStateType[] | [] = [];
@@ -71,7 +69,7 @@ export class Fields {
       const newCardList = cardsList.map(async (card: CardType) => {
         const newCard = {
           ...card,
-          [values.name]: values.type !== CHECKBOX ? "---" : false,
+          [values.name]: values.type !== CHECKBOX ? "none" : false,
         };
 
         const { data } = await PUT<CardType, CardType>(
@@ -103,7 +101,7 @@ export class Fields {
   editFieldAction = async (oldName: string, values: FieldStateType) => {
     this.loading = true;
     try {
-      const { data } = await PUT<FieldStateType, FieldStateType>(
+      const { data: updatedField } = await PUT<FieldStateType, FieldStateType>(
         `${FIELDS}/${values.id}`,
         values
       );
@@ -116,12 +114,30 @@ export class Fields {
       const newCardList = cardsList.map(async (card: CardType) => {
         const newCard = renameKeyObj(card, oldName, values.name, card[oldName]);
 
-        const { data } = await PUT<CardType, Omit<CardType, "id">>(
+        if (values.type === SELECT) {
+          const checkedIsValueCard = updatedField.options.some(
+            ({ value }) => value === card[oldName]
+          );
+
+          const aa = {
+            ...newCard,
+            [values.name]: checkedIsValueCard ? card[oldName] : "none",
+          };
+
+          const { data: updatedCard } = await PUT<
+            CardType,
+            Omit<CardType, "id">
+          >(`${CARDS}/${card.id}`, aa);
+
+          return updatedCard;
+        }
+
+        const { data: updatedCard } = await PUT<CardType, Omit<CardType, "id">>(
           `${CARDS}/${card.id}`,
           newCard
         );
 
-        return data;
+        return updatedCard;
       });
 
       const result = await Promise.all(newCardList);
@@ -131,7 +147,7 @@ export class Fields {
       updateFieldsToCard(result);
       runInAction(() => {
         this.fieldsList = this.fieldsList.map((field) =>
-          field.id === data.id ? data : field
+          field.id === updatedField.id ? updatedField : field
         );
         this.loading = false;
       });
@@ -236,7 +252,7 @@ export class Fields {
         if (card[name] === fieldValue) {
           const { data } = await PUT<CardType, Omit<CardType, "id">>(
             `${CARDS}/${card.id}`,
-            { ...card, [name]: "---" }
+            { ...card, [name]: "none" }
           );
 
           return data;

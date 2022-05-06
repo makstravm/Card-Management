@@ -46,7 +46,7 @@ export class Cards {
         findField?.options?.forEach(({ value }) => {
           groupCardsList[value] = [];
         });
-        groupCardsList["---"] = [];
+        groupCardsList.none = [];
       }
       if (Object.keys(groupCardsList).length) {
         this.cardsList?.forEach((element) => {

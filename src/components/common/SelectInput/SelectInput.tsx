@@ -26,7 +26,7 @@ export const SelectInput = ({
       error={!!(touched?.[name] && errors?.[name])}
       onChange={handleChange}
     >
-      <MenuItem value="---">---</MenuItem>
+      <MenuItem value="none">none</MenuItem>
       {options.map(({ id, value }) => (
         <MenuItem key={id} value={value}>
           {value}
