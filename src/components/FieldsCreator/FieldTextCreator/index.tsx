@@ -33,8 +33,7 @@ export const FieldCreator = observer(
 
       if (checkName) {
         setErrorName(true);
-      }
-      if (field?.id) {
+      } else if (field?.id) {
         editFieldAction(field.name, {
           ...field,
           name,
