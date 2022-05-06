@@ -45,7 +45,7 @@ export const CardCreator = observer(({ card }: CardCreatorType) => {
         <Formik
           initialValues={card || initialValues}
           onSubmit={async (values) => onSave(values)}
-          validationSchema={validateSchemaCard<FieldStateType>(fieldsList)}
+          validationSchema={validateSchemaCard(fieldsList)}
         >
           {(formik) => (
             <Form>
