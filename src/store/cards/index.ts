@@ -46,6 +46,7 @@ export class Cards {
         findField?.options?.forEach(({ value }) => {
           groupCardsList[value] = [];
         });
+        groupCardsList["---"] = [];
       }
       if (Object.keys(groupCardsList).length) {
         this.cardsList?.forEach((element) => {
@@ -54,6 +55,8 @@ export class Cards {
           groupCardsList[key] = [...groupCardsList[key], element];
         });
       }
+      console.log(groupCardsList);
+
       const sortGroupCardsList = Object.entries(groupCardsList).sort();
 
       return sortGroupCardsList;
