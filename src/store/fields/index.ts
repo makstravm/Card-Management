@@ -117,12 +117,9 @@ export class Fields {
       } = this.rootStore;
 
       const newCardList = cardsList.map(async (card: CardType) => {
-        const value =
-          values.type !== CHECKBOX
-            ? (typeof card[oldName] !== "boolean" && card[oldName]) || "---"
-            : !!card[oldName];
 
-        const newCard = renameKeyObj(card, oldName, values.name, value);
+
+        const newCard = renameKeyObj(card, oldName, values.name, card[oldName]);
 
         const { data } = await PUT<CardType, Omit<CardType, "id">>(
           `${CARDS}/${card.id}`,

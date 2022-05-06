@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Form, Formik, FormikProps } from "formik";
 import { observer } from "mobx-react-lite";
 
-import { Alert, Box, Divider, TextField, Typography } from "@mui/material";
+import { Box, Divider, TextField, Typography } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
 import { CheckBox } from "components/common/CheckBox/CheckBox";
@@ -21,23 +21,14 @@ const { TEXT, SELECT } = TypesFields;
 
 export const FieldCreator = observer(
   ({ type, field }: FieldCreatorPropsType) => {
-    const { fieldsList, editFieldAction, saveFieldAction } =
+    const { editFieldAction, saveFieldAction } =
       useContext(StoreContext).fields;
 
-    const [errorName, setErrorName] = useState(false);
-
     const onSaveField = ({ name, required, options }: FormikStateType) => {
-      const checkName = fieldsList?.find(
-        ({ name: fieldName }) => fieldName === name
-      );
-
-      if (checkName) {
-        setErrorName(true);
-      } else if (field?.id) {
+      if (field?.id) {
         editFieldAction(field.name, {
           ...field,
           name,
-          type,
           required: (type === TEXT && required) || false,
           options: (type !== SELECT && []) || options,
         });
@@ -93,11 +84,6 @@ export const FieldCreator = observer(
                     </>
                   )}
                 </Box>
-              )}
-              {errorName && (
-                <Alert variant="outlined" severity="error">
-                  A field with this name exists!!!
-                </Alert>
               )}
               <Box display="flex" justifyContent="center" pt={1} pb={1}>
                 <Btn
