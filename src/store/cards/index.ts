@@ -55,7 +55,6 @@ export class Cards {
           groupCardsList[key] = [...groupCardsList[key], element];
         });
       }
-      console.log(groupCardsList);
 
       const sortGroupCardsList = Object.entries(groupCardsList).sort();
 
