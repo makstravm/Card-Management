@@ -59,7 +59,7 @@ export const FieldCreator = observer(
         validationSchema={switchedFieldCreateValidation(type)}
       >
         {(formik: FormikProps<FormikStateType>) => {
-          const { errors, touched, handleChange, isValid, dirty } = formik;
+          const { errors, touched, handleChange, isValid } = formik;
 
           return (
             <Form>
@@ -105,7 +105,7 @@ export const FieldCreator = observer(
                   title="Save"
                   variantBtn="outlined"
                   handleClick={() => formik.handleSubmit()}
-                  disabled={!isValid && !dirty}
+                  disabled={!isValid}
                   icon={<SaveIcon fontSize="small" />}
                 />
               </Box>
