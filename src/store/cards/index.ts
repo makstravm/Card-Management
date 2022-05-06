@@ -81,7 +81,7 @@ export class Cards {
       hideModalAction();
       notifySuccess("Card created");
       runInAction(() => {
-        this.cardsList.push(data);
+        this.cardsList = [...this.cardsList, data];
         this.loading = false;
       });
     } catch (error) {
@@ -174,7 +174,7 @@ export class Cards {
 
       await PUT<CardType, CardType | Omit<CardType, "id">>(
         `${CARDS}/${id}`,
-        card
+        updatedCard
       );
 
       notifySuccess("Card edited");

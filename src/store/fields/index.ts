@@ -201,6 +201,12 @@ export class Fields {
         cards: { cardsList, updateFieldsToCard },
       } = this.rootStore;
 
+      runInAction(() => {
+        this.fieldsList = this.fieldsList.filter(
+          ({ id: fieldId }) => fieldId !== id
+        );
+        this.loading = false;
+      });
       const newCardList = cardsList.map(async (card: CardType) => {
         delete card[name];
 
@@ -216,12 +222,6 @@ export class Fields {
 
       notifySuccess("Field deleted");
       updateFieldsToCard(result);
-      runInAction(() => {
-        this.fieldsList = this.fieldsList.filter(
-          ({ id: fieldId }) => fieldId !== id
-        );
-        this.loading = false;
-      });
     } catch (error) {
       runInAction(() => {
         this.error = error;
