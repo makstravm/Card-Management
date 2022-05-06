@@ -97,9 +97,11 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
               justifyContent="space-between"
             >
               <Typography variant="subtitle2">{value}</Typography>
-              <IconButton onClick={() => onDeleteOption(idOption)}>
-                <DeleteOutlineIcon fontSize="small" />
-              </IconButton>
+              {options.length > 2 && (
+                <IconButton onClick={() => onDeleteOption(idOption)}>
+                  <DeleteOutlineIcon fontSize="small" />
+                </IconButton>
+              )}
             </Box>
           ))}
         </Stack>
