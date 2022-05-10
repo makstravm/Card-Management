@@ -16,9 +16,7 @@ import { RootStore } from "..";
 
 const { FIELDS, CARDS, FIELD_TYPES } = Endpoints;
 
-const { CHECKBOX } = TypesFields;
-
-const { TEXT } = TypesFields;
+const { CHECKBOX, TEXT, SELECT } = TypesFields;
 
 export class Fields {
   fieldsList: FieldStateType[] | [] = [];
@@ -71,10 +69,7 @@ export class Fields {
       const newCardList = cardsList.map(async (card: CardType) => {
         const newCard = {
           ...card,
-          [values.name]:
-            values.type !== CHECKBOX
-              ? values.options?.[0]?.value || "---"
-              : false,
+          [values.name]: values.type !== CHECKBOX ? "none" : false,
         };
 
         const { data } = await PUT<CardType, CardType>(
@@ -106,7 +101,7 @@ export class Fields {
   editFieldAction = async (oldName: string, values: FieldStateType) => {
     this.loading = true;
     try {
-      const { data } = await PUT<FieldStateType, FieldStateType>(
+      const { data: updatedField } = await PUT<FieldStateType, FieldStateType>(
         `${FIELDS}/${values.id}`,
         values
       );
@@ -117,19 +112,32 @@ export class Fields {
       } = this.rootStore;
 
       const newCardList = cardsList.map(async (card: CardType) => {
-        const value =
-          values.type !== CHECKBOX
-            ? (typeof card[oldName] !== "boolean" && card[oldName]) || "---"
-            : !!card[oldName];
+        const newCard = renameKeyObj(card, oldName, values.name, card[oldName]);
 
-        const newCard = renameKeyObj(card, oldName, values.name, value);
+        if (values.type === SELECT) {
+          const checkedIsValueCard = updatedField.options.some(
+            ({ value }) => value === card[oldName]
+          );
 
-        const { data } = await PUT<CardType, Omit<CardType, "id">>(
+          const aa = {
+            ...newCard,
+            [values.name]: checkedIsValueCard ? card[oldName] : "none",
+          };
+
+          const { data: updatedCard } = await PUT<
+            CardType,
+            Omit<CardType, "id">
+          >(`${CARDS}/${card.id}`, aa);
+
+          return updatedCard;
+        }
+
+        const { data: updatedCard } = await PUT<CardType, Omit<CardType, "id">>(
           `${CARDS}/${card.id}`,
           newCard
         );
 
-        return data;
+        return updatedCard;
       });
 
       const result = await Promise.all(newCardList);
@@ -139,7 +147,7 @@ export class Fields {
       updateFieldsToCard(result);
       runInAction(() => {
         this.fieldsList = this.fieldsList.map((field) =>
-          field.id === data.id ? data : field
+          field.id === updatedField.id ? updatedField : field
         );
         this.loading = false;
       });
@@ -193,6 +201,12 @@ export class Fields {
         cards: { cardsList, updateFieldsToCard },
       } = this.rootStore;
 
+      runInAction(() => {
+        this.fieldsList = this.fieldsList.filter(
+          ({ id: fieldId }) => fieldId !== id
+        );
+        this.loading = false;
+      });
       const newCardList = cardsList.map(async (card: CardType) => {
         delete card[name];
 
@@ -208,12 +222,6 @@ export class Fields {
 
       notifySuccess("Field deleted");
       updateFieldsToCard(result);
-      runInAction(() => {
-        this.fieldsList = this.fieldsList.filter(
-          ({ id: fieldId }) => fieldId !== id
-        );
-        this.loading = false;
-      });
     } catch (error) {
       runInAction(() => {
         this.error = error;
@@ -222,19 +230,44 @@ export class Fields {
     }
   };
 
-  deleteFieldOptionAction = async (id: number, field: FieldStateType) => {
+  deleteFieldOptionAction = async (
+    id: number,
+    field: FieldStateType,
+    fieldValue: string,
+    name: string
+  ) => {
     this.loading = true;
+
     try {
       const { data } = await PUT<FieldStateType, FieldStateType>(
         `${FIELDS}/${id}`,
         field
       );
 
-      notifySuccess("Option deleted");
+      const {
+        cards: { cardsList, updateFieldsToCard },
+      } = this.rootStore;
+
+      const newCardList = cardsList.map(async (card: CardType) => {
+        if (card[name] === fieldValue) {
+          const { data } = await PUT<CardType, Omit<CardType, "id">>(
+            `${CARDS}/${card.id}`,
+            { ...card, [name]: "none" }
+          );
+
+          return data;
+        }
+
+        return card;
+      });
+
+      const result = await Promise.all(newCardList);
+
       runInAction(() => {
         this.fieldsList = this.fieldsList.map((field) =>
           field.id === data.id ? data : field
         );
+        updateFieldsToCard(result);
         this.loading = false;
       });
     } catch (error) {

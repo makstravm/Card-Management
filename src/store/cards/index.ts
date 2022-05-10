@@ -46,6 +46,7 @@ export class Cards {
         findField?.options?.forEach(({ value }) => {
           groupCardsList[value] = [];
         });
+        groupCardsList.none = [];
       }
       if (Object.keys(groupCardsList).length) {
         this.cardsList?.forEach((element) => {
@@ -54,6 +55,7 @@ export class Cards {
           groupCardsList[key] = [...groupCardsList[key], element];
         });
       }
+
       const sortGroupCardsList = Object.entries(groupCardsList).sort();
 
       return sortGroupCardsList;
@@ -79,7 +81,7 @@ export class Cards {
       hideModalAction();
       notifySuccess("Card created");
       runInAction(() => {
-        this.cardsList.push(data);
+        this.cardsList = [...this.cardsList, data];
         this.loading = false;
       });
     } catch (error) {
@@ -172,7 +174,7 @@ export class Cards {
 
       await PUT<CardType, CardType | Omit<CardType, "id">>(
         `${CARDS}/${id}`,
-        card
+        updatedCard
       );
 
       notifySuccess("Card edited");

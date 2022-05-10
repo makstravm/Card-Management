@@ -30,7 +30,6 @@ export const FieldTypeCreator = observer(
         setTypeField({ type: fieldTypesOptions?.[0]?.value });
       }
     }, [fieldTypesOptions]);
-
     const changeTypeField = (event: SelectChangeEvent) =>
       setTypeField({ type: event.target.value });
 
@@ -38,16 +37,18 @@ export const FieldTypeCreator = observer(
       <Box pt={2}>
         {!!fieldTypesOptions.length && (
           <>
-            <Box>
-              <SelectInput
-                value={{
-                  type: typeField?.type || fieldTypesOptions?.[0]?.value,
-                }}
-                options={fieldTypesOptions}
-                handleChange={changeTypeField}
-                name="type"
-              />
-            </Box>
+            {!field.id && (
+              <Box>
+                <SelectInput
+                  value={{
+                    type: typeField?.type || fieldTypesOptions?.[0]?.value,
+                  }}
+                  options={fieldTypesOptions}
+                  handleChange={changeTypeField}
+                  name="type"
+                />
+              </Box>
+            )}
             <FieldCreator type={typeField.type} field={field} />
           </>
         )}

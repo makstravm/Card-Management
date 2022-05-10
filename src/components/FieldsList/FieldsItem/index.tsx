@@ -37,10 +37,10 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
 
   const onDeleteField = () => deleteFieldAction(id, name);
 
-  const onDeleteOption = (idOption: string) => {
+  const onDeleteOption = (idOption: string, value: string) => {
     const newOptions = options?.filter(({ id }) => id !== idOption);
 
-    deleteFieldOptionAction(id, { ...field, options: newOptions });
+    deleteFieldOptionAction(id, { ...field, options: newOptions }, value, name);
   };
 
   const onEditField = () =>
@@ -97,9 +97,11 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
               justifyContent="space-between"
             >
               <Typography variant="subtitle2">{value}</Typography>
-              <IconButton onClick={() => onDeleteOption(idOption)}>
-                <DeleteOutlineIcon fontSize="small" />
-              </IconButton>
+              {options.length > 2 && (
+                <IconButton onClick={() => onDeleteOption(idOption, value)}>
+                  <DeleteOutlineIcon fontSize="small" />
+                </IconButton>
+              )}
             </Box>
           ))}
         </Stack>
