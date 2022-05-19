@@ -93,6 +93,7 @@ export class Authentication {
   };
 
   logOut() {
+    Cookies.remove("token");
     this.user = null;
     this.loading = false;
     this.error = null;

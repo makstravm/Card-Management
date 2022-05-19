@@ -9,7 +9,7 @@ export const Btn = ({
   handleClick,
   icon,
   variantBtn,
-  disabled = false,
+  disabled,
 }: BtnPropsType) => (
   <Button
     variant={variantBtn}

@@ -80,7 +80,12 @@ export const FieldCreator = observer(
                       <Divider textAlign="left" sx={{ paddingBottom: "15px" }}>
                         <Typography variant="subtitle2">Options</Typography>
                       </Divider>
-                      <SelectOptions options="options" formik={formik} />
+                      <Box
+                        pt={1}
+                        sx={{ maxHeight: "360px", overflowY: "auto" }}
+                      >
+                        <SelectOptions options="options" formik={formik} />
+                      </Box>
                     </>
                   )}
                 </Box>

@@ -27,7 +27,7 @@ export type FormPropsType = {
   titleLink: string;
   link: string;
   buttonText: string;
-  onSubmit: (values: InitialValuesFormType, navigate: NavigateFunction) => void;
+  onSubmit: (values: FormicValuesType, navigate: NavigateFunction) => void;
   validationSchema: SchemaOf<ValidationSchemaTypes>;
 };
 
