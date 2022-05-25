@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { observer } from "mobx-react-lite";
 
 import { Box, CircularProgress } from "@mui/material";
 
+import { StoreContext } from "store/index";
+
 import "./style.scss";
-import { useSelector } from "react-redux";
 
-export const Preloader = () => {
-  const allStore = useSelector((state) => state);
+export const Preloader = observer(() => {
+  const root = useContext(StoreContext);
 
-  const isLoading = Object.values(allStore).some((store) => store.loading);
+  const isLoading = Object.values(root).some((store) => store.loading);
 
   if (isLoading) {
     return (
@@ -19,4 +21,4 @@ export const Preloader = () => {
   }
 
   return null;
-};
+});
