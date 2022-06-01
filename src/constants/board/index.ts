@@ -1,7 +1,5 @@
-import { v1 } from "uuid";
-
 export const boardsNamesColumns = [
-  { id: v1(), title: "Tasks" },
-  { id: v1(), title: "Tasks in progress" },
-  { id: v1(), title: "Tasks is Done" },
+  { id: String(Math.random()), title: "Tasks" },
+  { id: String(Math.random()), title: "Tasks in progress" },
+  { id: String(Math.random()), title: "Tasks is Done" },
 ];

@@ -15,7 +15,7 @@ import { RootStore } from "..";
 
 const { LOGIN, REGISTER, USERS } = Endpoints;
 
-const { MAIN } = RoutesUrls;
+const { BOARD } = RoutesUrls;
 
 export class Authentication {
   user: AuthUserType | null = null;
@@ -46,7 +46,7 @@ export class Authentication {
         this.user = user;
         this.loading = false;
       });
-      navigate(MAIN, { replace: true });
+      navigate(BOARD, { replace: true });
     } catch (error) {
       runInAction(() => {
         this.error = error;

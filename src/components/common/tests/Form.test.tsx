@@ -30,7 +30,7 @@ describe("component Form", () => {
                 buttonText="Sign In"
                 initialValues={loginInitialValue}
                 formFields={loginFormFields}
-                onSubmit={handleClick}
+                onSubmit={() => handleClick()}
                 validationSchema={loginValidationSchema}
               />
             }
