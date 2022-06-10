@@ -1,5 +1,4 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { v1 } from "uuid";
 
 import { DELETE, GET, POST, PUT } from "api/index";
 import { TypesFields } from "constants/typesFields";
@@ -36,7 +35,7 @@ export class Fields {
 
   get groupOptions() {
     return [
-      { id: v1(), value: "All" },
+      { id: String(Math.random()), value: "All" },
       ...this.fieldsList
         .filter(({ type }) => type !== TEXT)
         .map((field) => ({ id: `${field.id}`, value: field.name })),

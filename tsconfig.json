@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
+    "types": ["node", "jest"],
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "esnext",
     "target": "es5",
     "jsx": "react",
     "allowJs": true,
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "lib": ["es5", "es6", "es2017.object", "es2019", "dom"],
@@ -19,5 +21,6 @@
       "utils/*": ["./src/utils/*"],
       "route/*": ["./src/route/*"]
     }
-  }
+  },
+  "exclude": ["node_modules"]
 }

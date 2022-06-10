@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import Cookies from "js-cookie";
 
 import {
   AppBar,
@@ -20,11 +19,10 @@ import { StoreContext } from "store/index";
 const { BOARD } = RoutesUrls;
 
 export const Header = observer(() => {
-  const { logOut, user } = useContext(StoreContext).auth;
+  const { auth } = useContext(StoreContext);
 
   const onLogOut = () => {
-    Cookies.remove("token");
-    logOut();
+    auth.logOut();
   };
 
   return (
@@ -38,11 +36,11 @@ export const Header = observer(() => {
               </NavLink>
             </Toolbar>
           </Grid>
-          {user?.name && (
+          {auth?.user?.name && (
             <Grid item>
               <Grid container alignItems="center">
                 <Typography variant="h6" pr={1} color="textSecondary">
-                  {`Hi, ${user?.name}`}
+                  {`Hi, ${auth?.user?.name}`}
                 </Typography>
                 <IconButton onClick={onLogOut}>
                   <LogoutIcon fontSize="small" />

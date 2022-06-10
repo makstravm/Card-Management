@@ -61,7 +61,7 @@ export const CardCreator = observer(({ card }: CardCreatorType) => {
                   title="Save"
                   variantBtn="outlined"
                   handleClick={() => formik.handleSubmit()}
-                  disabled={!formik.isValid && !formik.dirty}
+                  disabled={!(formik.isValid && formik.dirty)}
                   icon={<SaveIcon fontSize="small" />}
                 />
               </Box>

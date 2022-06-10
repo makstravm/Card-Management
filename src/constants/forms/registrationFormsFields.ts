@@ -1,32 +1,30 @@
-import { v1 } from "uuid";
-
 export const registrationFormFields = [
   {
-    id: v1(),
+    id: String(Math.random()),
     name: "name",
     type: "text",
     label: "Name",
   },
   {
-    id: v1(),
+    id: String(Math.random()),
     name: "lastName",
     type: "text",
     label: "Last Name",
   },
   {
-    id: v1(),
+    id: String(Math.random()),
     name: "email",
     type: "text",
     label: "Email",
   },
   {
-    id: v1(),
+    id: String(Math.random()),
     name: "password",
     type: "password",
     label: "Password",
   },
   {
-    id: v1(),
+    id: String(Math.random()),
     name: "confirmPassword",
     type: "password",
     label: "Confirm password",

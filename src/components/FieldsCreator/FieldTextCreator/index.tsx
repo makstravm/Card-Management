@@ -49,7 +49,7 @@ export const FieldCreator = observer(
         validationSchema={switchedFieldCreateValidation(type)}
       >
         {(formik: FormikProps<FormikStateType>) => {
-          const { errors, touched, handleChange, isValid } = formik;
+          const { errors, touched, handleChange, isValid, dirty } = formik;
 
           return (
             <Form>
@@ -80,7 +80,12 @@ export const FieldCreator = observer(
                       <Divider textAlign="left" sx={{ paddingBottom: "15px" }}>
                         <Typography variant="subtitle2">Options</Typography>
                       </Divider>
-                      <SelectOptions options="options" formik={formik} />
+                      <Box
+                        pt={1}
+                        sx={{ maxHeight: "360px", overflowY: "auto" }}
+                      >
+                        <SelectOptions options="options" formik={formik} />
+                      </Box>
                     </>
                   )}
                 </Box>
@@ -90,7 +95,7 @@ export const FieldCreator = observer(
                   title="Save"
                   variantBtn="outlined"
                   handleClick={() => formik.handleSubmit()}
-                  disabled={!isValid}
+                  disabled={!(dirty && isValid)}
                   icon={<SaveIcon fontSize="small" />}
                 />
               </Box>

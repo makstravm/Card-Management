@@ -170,6 +170,7 @@ export class Cards {
         this.cardsList = this.cardsList.map((card) =>
           card.id === updatedCard.id ? updatedCard : card
         );
+        this.loading = false;
       });
 
       await PUT<CardType, CardType | Omit<CardType, "id">>(

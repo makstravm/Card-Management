@@ -1,14 +1,12 @@
-import { v1 } from "uuid";
-
 export const loginFormFields = [
   {
-    id: v1(),
+    id: String(Math.random()),
     name: "email",
     type: "text",
     label: "Email",
   },
   {
-    id: v1(),
+    id: String(Math.random()),
     name: "password",
     type: "password",
     label: "Password",

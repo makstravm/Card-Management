@@ -1,6 +1,5 @@
 import React from "react";
 
-import { v1 } from "uuid";
 import { FieldArray } from "formik";
 
 import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
@@ -69,7 +68,7 @@ export const SelectOptions = ({
           <Btn
             title="Add"
             variantBtn="text"
-            handleClick={() => push({ id: v1(), value: "" })}
+            handleClick={() => push({ id: String(Math.random()), value: "" })}
             icon={<AddIcon fontSize="small" />}
           />
         </Box>
