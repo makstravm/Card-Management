@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-// import userEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import {
@@ -16,7 +16,7 @@ const { REGISTRATION } = RoutesUrls;
 describe("component Form", () => {
   const handleClick = jest.fn();
 
-  it("renders page login", () => {
+  beforeEach(() => {
     render(
       <MemoryRouter initialEntries={["/login"]}>
         <Routes>
@@ -38,7 +38,14 @@ describe("component Form", () => {
         </Routes>
       </MemoryRouter>
     );
+  });
+  it("renders page login", () => {
+    expect(screen.queryByRole("heading")).toBeInTheDocument();
+  });
+  it("click form button handlera", async () => {
     screen.debug();
-    // expect(screen.toJSON()).toMatchSnapshot();
+    // userEvent.type(screen)
+    await userEvent.click(screen.getByRole("button", { name: /sign/i }));
+    expect(handleClick).toHaveBeenCalled();
   });
 });

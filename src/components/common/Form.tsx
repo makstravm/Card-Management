@@ -27,7 +27,7 @@ export const Form = ({
 }: FormPropsType) => {
   const navigate = useNavigate();
 
-  const [props, setProps] = useState<
+  const [propsFormik, setPropsFormik] = useState<
     Pick<FormPropsType, "initialValues" | "validationSchema">
   >({
     initialValues,
@@ -35,7 +35,7 @@ export const Form = ({
   });
 
   useEffect(() => {
-    setProps({
+    setPropsFormik({
       initialValues,
       validationSchema,
     });
@@ -47,11 +47,11 @@ export const Form = ({
         <Typography variant="h4" align="center" sx={{ pb: 2 }}>
           {title}
         </Typography>
-        {props?.initialValues &&
-          Object.keys(props?.initialValues).length ===
+        {propsFormik.initialValues &&
+          Object.keys(propsFormik.initialValues).length ===
             Object.keys(initialValues).length && (
             <Formik
-              {...props}
+              {...propsFormik}
               onSubmit={(values) => onSubmit(values, navigate)}
             >
               {({
