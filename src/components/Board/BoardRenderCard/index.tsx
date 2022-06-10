@@ -3,6 +3,8 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { observer } from "mobx-react-lite";
 
 import { Box, Grid, Paper, Typography } from "@mui/material";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 import { Card } from "components/Card";
 
@@ -43,6 +45,17 @@ export const BoardRenderCard = observer(() => {
     moveEditCardAction(+draggableId, group, destination.droppableId);
   };
 
+  const renderTitle = (title: string | boolean) => {
+    if (title === "true") {
+      return <CheckBoxIcon />;
+    }
+    if (title === "false") {
+      return <CheckBoxOutlineBlankIcon />;
+    }
+
+    return title;
+  };
+
   return (
     <Box>
       <DragDropContext onDragEnd={onDragEndHandler}>
@@ -63,7 +76,7 @@ export const BoardRenderCard = observer(() => {
                       variant="subtitle1"
                       align="center"
                     >
-                      {title}
+                      {renderTitle(title)}
                     </Typography>
                   </Paper>
                   <Box
