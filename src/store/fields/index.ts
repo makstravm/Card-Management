@@ -8,7 +8,7 @@ import { CardType } from "store/cards/types";
 
 import { renameKeyObj } from "helpers/renameKeyObj";
 
-import { notifySuccess } from "utils/toast";
+import { notifyError, notifySuccess } from "utils/toast";
 
 import { FieldStateType, OptionsType } from "./types";
 import { RootStore } from "..";
@@ -91,6 +91,7 @@ export class Fields {
       });
     } catch (error) {
       runInAction(() => {
+        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -152,6 +153,7 @@ export class Fields {
       });
     } catch (error) {
       runInAction(() => {
+        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -169,6 +171,7 @@ export class Fields {
       });
     } catch (error) {
       runInAction(() => {
+        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -186,6 +189,7 @@ export class Fields {
       });
     } catch (error) {
       runInAction(() => {
+        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -223,6 +227,7 @@ export class Fields {
       updateFieldsToCard(result);
     } catch (error) {
       runInAction(() => {
+        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -271,6 +276,7 @@ export class Fields {
       });
     } catch (error) {
       runInAction(() => {
+        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
