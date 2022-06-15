@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 
 import {
-  Box,
   Divider,
   Grid,
   IconButton,
@@ -15,7 +14,9 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 import { TypesFields } from "constants/typesFields";
 
+import { OptionOfField } from "components/FieldsList/OptionOfField";
 import { FieldTypeCreator } from "components/FieldsCreator/FieldTypeCreator";
+import { ConfirmDialog } from "components/common/ConfirmDialog";
 
 import { StoreContext } from "store/index";
 
@@ -30,18 +31,14 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
 
   const {
     modal: { showModalAction },
-    fields: { deleteFieldAction, deleteFieldOptionAction },
+    fields: { deleteFieldAction },
   } = useContext(StoreContext);
+
+  const [openConfirmDialog, setOpenConfirmDialog] = useState<boolean>(false);
 
   const [showOptions, setShowOPtions] = useState<boolean>(false);
 
   const onDeleteField = () => deleteFieldAction(id, name);
-
-  const onDeleteOption = (idOption: string, value: string) => {
-    const newOptions = options?.filter(({ id }) => id !== idOption);
-
-    deleteFieldOptionAction(id, { ...field, options: newOptions }, value, name);
-  };
 
   const onEditField = () =>
     showModalAction(
@@ -79,7 +76,7 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
           <IconButton onClick={onEditField}>
             <ModeEditIcon fontSize="small" />
           </IconButton>
-          <IconButton onClick={onDeleteField}>
+          <IconButton onClick={() => setOpenConfirmDialog(true)}>
             <DeleteOutlineIcon fontSize="small" />
           </IconButton>
         </Grid>
@@ -88,24 +85,21 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
         <Stack spacing={1} sx={{ marginTop: "-10px" }} mb={2}>
           <Divider />
           {options.map(({ value, id: idOption }) => (
-            <Box
+            <OptionOfField
               key={idOption}
-              pr={2}
-              pl={5}
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Typography variant="subtitle2">{value}</Typography>
-              {options.length > 2 && (
-                <IconButton onClick={() => onDeleteOption(idOption, value)}>
-                  <DeleteOutlineIcon fontSize="small" />
-                </IconButton>
-              )}
-            </Box>
+              idOption={idOption}
+              value={value}
+              field={field}
+            />
           ))}
         </Stack>
       )}
+      <ConfirmDialog
+        open={openConfirmDialog}
+        setOpen={setOpenConfirmDialog}
+        handleClick={onDeleteField}
+        title={`Do you really want remove field - ${name}`}
+      />
     </Paper>
   );
 };

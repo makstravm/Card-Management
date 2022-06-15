@@ -81,7 +81,7 @@ export class Fields {
 
       const result = await Promise.all(newCardList);
 
-      notifySuccess("Field created");
+      notifySuccess(`Field named ${values.name} - created`);
       hideModalAction();
 
       updateFieldsToCard(result);
@@ -141,7 +141,7 @@ export class Fields {
 
       const result = await Promise.all(newCardList);
 
-      notifySuccess("Field edited");
+      notifySuccess(`Field named ${values.name} - edited`);
       hideModalAction();
       updateFieldsToCard(result);
       runInAction(() => {
@@ -219,7 +219,7 @@ export class Fields {
 
       const result = await Promise.all(newCardList);
 
-      notifySuccess("Field deleted");
+      notifySuccess(`Field named ${name} - removed`);
       updateFieldsToCard(result);
     } catch (error) {
       runInAction(() => {
@@ -266,6 +266,7 @@ export class Fields {
         this.fieldsList = this.fieldsList.map((field) =>
           field.id === data.id ? data : field
         );
+        notifySuccess(`option named ${fieldValue} - removed`);
         updateFieldsToCard(result);
         this.loading = false;
       });

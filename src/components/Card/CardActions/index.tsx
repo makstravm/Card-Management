@@ -10,6 +10,7 @@ import { CardCreator } from "components/CardCreator";
 
 import { StoreContext } from "store/index";
 
+import { ConfirmDialog } from "components/common/ConfirmDialog";
 import { CardActionsPropsType } from "./types";
 
 export const CardActions = observer(({ card }: CardActionsPropsType) => {
@@ -18,17 +19,20 @@ export const CardActions = observer(({ card }: CardActionsPropsType) => {
     cards: { deleteCardAction },
   } = useContext(StoreContext);
 
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = () => setAnchorEl(null);
 
-  const onDeleteCard = () => deleteCardAction(card.id);
+  const onDeleteCard = () => {
+    setOpenConfirmDialog(true);
+    handleClose();
+  };
 
   const onEditCard = () => {
     setAnchorEl(null);
@@ -63,6 +67,12 @@ export const CardActions = observer(({ card }: CardActionsPropsType) => {
           </IconButton>
         </ButtonGroup>
       </Popover>
+      <ConfirmDialog
+        open={openConfirmDialog}
+        setOpen={setOpenConfirmDialog}
+        handleClick={() => deleteCardAction(card.id)}
+        title="Do you really want to remove the card?"
+      />
     </Box>
   );
 });
