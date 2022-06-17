@@ -6,8 +6,6 @@ import { GET, POST } from "api/index";
 import { Endpoints } from "constants/endpoints";
 import { RoutesUrls } from "constants/routes";
 
-import { notifyError } from "utils/toast";
-
 import {
   LoginInitialValueType,
   RegistrationInitialValueType,
@@ -51,7 +49,6 @@ export class Authentication {
       navigate(BOARD, { replace: true });
     } catch (error) {
       runInAction(() => {
-        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -72,7 +69,6 @@ export class Authentication {
       this.loginAction(value, navigate);
     } catch (error) {
       runInAction(() => {
-        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -90,7 +86,6 @@ export class Authentication {
       });
     } catch (error) {
       runInAction(() => {
-        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });

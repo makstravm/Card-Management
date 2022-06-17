@@ -5,7 +5,7 @@ import { Endpoints } from "constants/endpoints";
 
 import { CardType } from "store/cards/types";
 
-import { notifyError, notifySuccess } from "utils/toast";
+import { notifySuccess } from "utils/toast";
 
 import { CardsGroupByName } from "constants/cardsGroupByName";
 import { RootStore } from "..";
@@ -86,7 +86,6 @@ export class Cards {
       });
     } catch (error) {
       runInAction(() => {
-        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -113,7 +112,6 @@ export class Cards {
       });
     } catch (error) {
       runInAction(() => {
-        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -131,7 +129,6 @@ export class Cards {
       });
     } catch (error) {
       runInAction(() => {
-        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -150,7 +147,6 @@ export class Cards {
       });
     } catch (error) {
       runInAction(() => {
-        notifyError("Cannot connect to server");
         this.error = error;
         this.loading = false;
       });
@@ -185,7 +181,6 @@ export class Cards {
       notifySuccess("Card edited");
     } catch (error) {
       runInAction(() => {
-        notifyError("Cannot connect to server");
         this.error = error;
         this.cardsList = this.cardsList.map((c) =>
           c.id === card.id ? card : c
