@@ -10,7 +10,7 @@ export const errorBoundary = ({
     case 400:
       return notifyError(data);
 
-    case 401:
+    case 402:
       return notifyError(data);
 
     case 404:

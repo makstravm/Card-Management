@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Formik, FormikProps } from "formik";
+import { Form, Formik, FormikProps } from "formik";
 
 import {
   Box,
@@ -11,11 +11,10 @@ import {
 } from "@mui/material";
 
 import { NavLink, useNavigate } from "react-router-dom";
-import { Btn } from "./Btn/Btn";
 
 import { FormicValuesType, FormPropsType } from "./types";
 
-export const Form = ({
+export const FormComponent = ({
   initialValues,
   formFields,
   title,
@@ -59,10 +58,9 @@ export const Form = ({
                 touched,
                 handleChange,
                 isValid,
-                handleSubmit,
                 dirty,
               }: FormikProps<FormicValuesType>) => (
-                <form>
+                <Form>
                   <Grid container justifyContent="center" spacing={2}>
                     {formFields.map(({ id, name, type, label }) => (
                       <Grid key={id} item xs={10}>
@@ -76,24 +74,27 @@ export const Form = ({
                           error={!!(touched[name] && errors[name])}
                           helperText={touched[name] && errors[name]}
                           onChange={handleChange}
+                          inputProps={{ "data-testid": `input-${name}` }}
                         />
                       </Grid>
                     ))}
                   </Grid>
                   <Box sx={{ mt: 3, mb: 2 }} textAlign="center">
-                    <Btn
-                      handleClick={() => handleSubmit()}
-                      title={buttonText}
-                      variantBtn="contained"
+                    <Button
+                      data-testid="qq"
+                      variant="contained"
+                      type="submit"
                       disabled={!isValid && !dirty}
-                    />{" "}
+                    >
+                      {buttonText}
+                    </Button>
                   </Box>
                   <Box textAlign="center">
                     <NavLink className="nav-link" to={link}>
                       <Button color="primary">{titleLink}</Button>
                     </NavLink>
                   </Box>
-                </form>
+                </Form>
               )}
             </Formik>
           )}
