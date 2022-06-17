@@ -17,8 +17,8 @@ export const FieldsList = observer(() => {
 
   return (
     <Box className="fields-list">
-      {fieldsList?.map((field) => (
-        <FieldsItem key={field.id} field={field} />
+      {fieldsList?.map((field, i) => (
+        <FieldsItem key={field.id} field={field} index={i} />
       ))}
     </Box>
   );
