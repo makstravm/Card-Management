@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
@@ -14,24 +14,36 @@ export const SelectInput = ({
   errors,
   touched,
   handleChange,
-}: SelectInputPropsType<Omit<CardType, "id">, OptionsType[]>) => (
-  <FormControl fullWidth size="small">
-    <InputLabel id={`select-label-${name}`}>{name}</InputLabel>
-    <Select
-      fullWidth
-      size="small"
-      value={value[name]}
-      label={`${name}`}
-      name={name}
-      error={!!(touched?.[name] && errors?.[name])}
-      onChange={handleChange}
-    >
-      {name !== "type" && <MenuItem value="none">none</MenuItem>}
-      {options.map(({ id, value }) => (
-        <MenuItem key={id} value={value}>
-          {value}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-);
+}: SelectInputPropsType<Omit<CardType, "id">, OptionsType[]>) => {
+  useEffect(() => {
+    const findValue = options.find(
+      ({ value: optionValues }) => optionValues === "JS/UI"
+    );
+
+    if (findValue && !value[name]) {
+      value[name] = findValue.value;
+    }
+  }, []);
+
+  return (
+    <FormControl fullWidth size="small">
+      <InputLabel id={`select-label-${name}`}>{name}</InputLabel>
+      <Select
+        fullWidth
+        size="small"
+        value={value[name]}
+        label={`${name}`}
+        name={name}
+        error={!!(touched?.[name] && errors?.[name])}
+        onChange={handleChange}
+      >
+        {name !== "type" && <MenuItem value="none">none</MenuItem>}
+        {options.map(({ id, value }) => (
+          <MenuItem key={id} value={value}>
+            {value}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
+};
