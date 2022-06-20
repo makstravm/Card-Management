@@ -16,7 +16,7 @@ import { RoutesUrls } from "constants/routes";
 
 import { Board } from "components/Board";
 import { Layout } from "components/Layout";
-import { Form } from "components/common/Form";
+import { FormComponent } from "components/common/FormComponent";
 import { AuthenticationLayout } from "components/AuthenticationLayout";
 
 import { PrivateRoute } from "route/PrivateRoute";
@@ -37,7 +37,7 @@ const App = observer(() => {
           <Route
             path={LOGIN}
             element={
-              <Form
+              <FormComponent
                 title="Log In"
                 titleLink="Don't have an account? Sign Up"
                 link={REGISTRATION}
@@ -52,7 +52,7 @@ const App = observer(() => {
           <Route
             path={REGISTRATION}
             element={
-              <Form
+              <FormComponent
                 title="Registration"
                 titleLink="Do have an account? Sign In"
                 link={LOGIN}
