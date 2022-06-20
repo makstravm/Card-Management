@@ -182,7 +182,6 @@ export class Cards {
     } catch (error) {
       runInAction(() => {
         this.error = error;
-
         this.cardsList = this.cardsList.map((c) =>
           c.id === card.id ? card : c
         );
