@@ -47,7 +47,7 @@ export const renderFieldByType = (
         <TextField
           fullWidth
           size="small"
-          value={values[name]}
+          value={values[name] || (name === "Position" && "Programmer") || ""}
           label={`${name}${required ? "*" : ""}`}
           name={name}
           error={!!(touched[name] && errors[name])}

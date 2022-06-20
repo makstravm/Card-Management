@@ -26,7 +26,7 @@ import "./style.scss";
 
 const { SELECT } = TypesFields;
 
-export const FieldsItem = ({ field }: FieldItemPropsType) => {
+export const FieldsItem = ({ field, index }: FieldItemPropsType) => {
   const { id, name, type, required, options } = field;
 
   const {
@@ -39,6 +39,8 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
   const [showOptions, setShowOPtions] = useState<boolean>(false);
 
   const onDeleteField = () => deleteFieldAction(id, name);
+
+  const renderBtnDelete = index < 3;
 
   const onEditField = () =>
     showModalAction(
@@ -73,12 +75,17 @@ export const FieldsItem = ({ field }: FieldItemPropsType) => {
           <Typography align="center"> {type}</Typography>
         </Grid>
         <Grid>
-          <IconButton onClick={onEditField}>
+          <IconButton
+            onClick={onEditField}
+            sx={{ marginRight: renderBtnDelete ? "36px" : "0" }}
+          >
             <ModeEditIcon fontSize="small" />
           </IconButton>
-          <IconButton onClick={() => setOpenConfirmDialog(true)}>
-            <DeleteOutlineIcon fontSize="small" />
-          </IconButton>
+          {!renderBtnDelete && (
+            <IconButton onClick={() => setOpenConfirmDialog(true)}>
+              <DeleteOutlineIcon fontSize="small" />
+            </IconButton>
+          )}
         </Grid>
       </Grid>
       {showOptions && (
