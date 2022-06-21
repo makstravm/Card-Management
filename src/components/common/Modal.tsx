@@ -21,6 +21,7 @@ export const Modal = observer(() => {
           className="modal__content"
           onClick={(e) => e.stopPropagation()}
           elevation={3}
+          data-testid="modal-paper"
         >
           <Box className="modal__header">
             <Typography variant="h5">{title}</Typography>
