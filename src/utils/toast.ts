@@ -11,6 +11,7 @@ export const notifyError = (msg: string) => {
     pauseOnHover: true,
   });
 };
+
 export const notifySuccess = (msg: string) => {
   toast.success(msg, {
     position: "top-center",
