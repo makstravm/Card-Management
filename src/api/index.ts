@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { errorBoundary } from "../services/errorBoundary";
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: process.env.BASE_URL,
 });
 
