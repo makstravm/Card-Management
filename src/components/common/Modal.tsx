@@ -25,7 +25,11 @@ export const Modal = observer(() => {
         >
           <Box className="modal__header">
             <Typography variant="h5">{title}</Typography>
-            <IconButton className="modal__close-btn" onClick={hideModalAction}>
+            <IconButton
+              className="modal__close-btn"
+              onClick={hideModalAction}
+              data-testid="modal-close"
+            >
               <CloseIcon />
             </IconButton>
           </Box>

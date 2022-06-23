@@ -45,4 +45,12 @@ describe("component Modal", () => {
       screen.getByRole("heading", { name: /test title/i })
     ).toBeInTheDocument();
   });
+
+  it("shouldn't close component Modal", async () => {
+    await userEvent.click(screen.getByTestId("btn"));
+
+    await userEvent.click(screen.getByTestId("modal-paper"));
+
+    expect(screen.getByTestId("modal-paper")).toBeInTheDocument();
+  });
 });
