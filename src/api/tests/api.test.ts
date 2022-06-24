@@ -66,7 +66,7 @@ describe("api", () => {
     }
   });
 
-  it("should be error on response interceptor", () => {
+  it("shouldn't be error on response interceptor", () => {
     try {
       mockResponseCallback(response);
     } catch {
@@ -74,7 +74,7 @@ describe("api", () => {
     }
   });
 
-  it("should be get data", async () => {
+  it("should get data", async () => {
     const getSpy = jest.spyOn(axiosInstance, "get").mockResolvedValue(response);
 
     expect(getSpy).not.toHaveBeenCalled();
@@ -85,7 +85,7 @@ describe("api", () => {
     expect(getSpy).toHaveBeenCalledTimes(1);
   });
 
-  it("should be delete data", async () => {
+  it("should  delete data", async () => {
     const deleteSpy = jest
       .spyOn(axiosInstance, "delete")
       .mockResolvedValue(response);
@@ -98,7 +98,7 @@ describe("api", () => {
     expect(deleteSpy).toHaveBeenCalledTimes(1);
   });
 
-  it("should be put data", async () => {
+  it("should put data", async () => {
     const putSpy = jest.spyOn(axiosInstance, "put").mockResolvedValue(response);
 
     expect(putSpy).not.toHaveBeenCalled();
@@ -109,7 +109,7 @@ describe("api", () => {
     expect(putSpy).toHaveBeenCalledTimes(1);
   });
 
-  it("should be post data", async () => {
+  it("should  post data", async () => {
     const postSpy = jest
       .spyOn(axiosInstance, "post")
       .mockResolvedValue(response);
