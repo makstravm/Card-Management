@@ -66,7 +66,7 @@ export class Authentication {
         value
       );
 
-      this.loginAction(value, navigate);
+      await this.loginAction(value, navigate);
     } catch (error) {
       runInAction(() => {
         this.error = error;
