@@ -118,7 +118,7 @@ export class Fields {
             ({ value }) => value === card[oldName]
           );
 
-          const aa = {
+          const updatedValueNewCard = {
             ...newCard,
             [values.name]: checkedIsValueCard ? card[oldName] : "none",
           };
@@ -126,7 +126,7 @@ export class Fields {
           const { data: updatedCard } = await PUT<
             CardType,
             Omit<CardType, "id">
-          >(`${CARDS}/${card.id}`, aa);
+          >(`${CARDS}/${card.id}`, updatedValueNewCard);
 
           return updatedCard;
         }

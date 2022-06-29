@@ -96,7 +96,6 @@ describe("auth", () => {
       jest.spyOn(axiosInstance, "post").mockResolvedValue(response);
 
       await auth.registrationAction(registerValue, navigate);
-      // expect(Cookies.set).toBeCalledTimes(1);
       expect(auth.user).toEqual(response.data.user);
     });
 
