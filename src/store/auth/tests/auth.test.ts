@@ -1,7 +1,6 @@
 import Cookies from "js-cookie";
 import { RootStore } from "store/index";
 import { axiosInstance } from "api/index";
-import { waitFor } from "@testing-library/react";
 
 const response = {
   data: {
@@ -51,43 +50,36 @@ describe("auth", () => {
 
   describe("get data user", () => {
     it("should receive data for successful response", async () => {
+      const response = {
+        data: {
+          email: "bob@b.b",
+          password: "1q2w3e4r5t",
+        },
+      };
+
       jest.spyOn(axiosInstance, "get").mockResolvedValue(response);
-
-      auth.getDataUserAction("2");
-
-      waitFor(() => {
-        expect(auth.user).toEqual(response.data.user);
-      });
+      await auth.getDataUserAction("2");
+      expect(auth.user).toEqual(response.data);
     });
 
     it("should receive data for error response", async () => {
-      jest.spyOn(axiosInstance, "get").mockRejectedValue(TypeError);
-      auth.getDataUserAction("2");
-      waitFor(() => {
-        expect(auth.error).toEqual(TypeError);
-      });
+      jest.spyOn(axiosInstance, "get").mockRejectedValue("Error");
+      await auth.getDataUserAction("2");
+      expect(auth.error).toEqual("Error");
     });
   });
 
   describe("log in", () => {
     it("should be  successful response for  log in", async () => {
       jest.spyOn(axiosInstance, "post").mockResolvedValue(response);
-
-      auth.loginAction({ email: "B@b.b", password: "1234" }, navigate);
-
-      waitFor(() => {
-        expect(Cookies.set).toBeCalledTimes(1);
-        expect(auth.user).toEqual(response.data.user);
-      });
+      await auth.loginAction({ email: "B@b.b", password: "1234" }, navigate);
+      expect(Cookies.set).toBeCalledTimes(1);
+      expect(auth.user).toEqual(response.data.user);
     });
-
     it("should be  error response for  log in", async () => {
-      jest.spyOn(axiosInstance, "post").mockRejectedValue(TypeError);
-
-      auth.loginAction({ email: "B@b.b", password: "1234" }, navigate);
-      waitFor(() => {
-        expect(auth.error).toEqual(TypeError);
-      });
+      jest.spyOn(axiosInstance, "post").mockRejectedValue("Error");
+      await auth.loginAction({ email: "B@b.b", password: "1234" }, navigate);
+      expect(auth.error).toEqual("Error");
     });
   });
 
@@ -103,21 +95,15 @@ describe("auth", () => {
     it("should be  successful response for registration", async () => {
       jest.spyOn(axiosInstance, "post").mockResolvedValue(response);
 
-      auth.registrationAction(registerValue, navigate);
-
-      waitFor(() => {
-        expect(Cookies.set).toBeCalledTimes(1);
-        expect(auth.user).toEqual(response.data.user);
-      });
+      await auth.registrationAction(registerValue, navigate);
+      expect(auth.user).toEqual(response.data.user);
     });
 
     it("should be  error response for registration", async () => {
-      jest.spyOn(axiosInstance, "post").mockRejectedValue(TypeError);
+      jest.spyOn(axiosInstance, "post").mockRejectedValue("Error");
 
-      auth.registrationAction(registerValue, navigate);
-      waitFor(() => {
-        expect(auth.error).toEqual(TypeError);
-      });
+      await auth.registrationAction(registerValue, navigate);
+      expect(auth.error).toEqual("Error");
     });
   });
 });
