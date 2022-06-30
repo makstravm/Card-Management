@@ -38,12 +38,12 @@ export class Cards {
 
       const findField = fieldsList?.find(({ name }) => name === groupName);
 
-      if (findField?.type === "checkbox") {
+      if (findField.type === "checkbox") {
         groupCardsList.true = [];
         groupCardsList.false = [];
       }
-      if (findField?.type === "select") {
-        findField?.options?.forEach(({ value }) => {
+      if (findField.type === "select") {
+        findField.options.forEach(({ value }) => {
           groupCardsList[value] = [];
         });
         groupCardsList.none = [];

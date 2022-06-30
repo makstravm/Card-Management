@@ -679,7 +679,7 @@ describe("fields", () => {
     });
   });
 
-  it("should get field types", () => {
+  it("should get groupOptions", () => {
     fields.fieldsList = response.data;
     fields.getFieldTypesAction();
 
@@ -688,7 +688,7 @@ describe("fields", () => {
     expect(groupOptions[1].value).toBe("Department");
   });
 
-  it("should get field types", () => {
+  it("should get fieldsListAndInitValFormi", () => {
     fields.fieldsList = response.data;
 
     const { fieldsListAndInitValFormik } = fields;
