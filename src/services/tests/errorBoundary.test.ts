@@ -14,6 +14,17 @@ describe("errorBoudary", () => {
     expect(fn.notifyError).toHaveBeenCalledWith("Error StatusText");
   });
 
+  it("should be show error when status 404 without statusText", () => {
+    const err = {
+      status: 404,
+      data: "Error",
+      statusText: "",
+    };
+
+    errorBoundary(err);
+    expect(fn.notifyError).toHaveBeenCalledWith("Network Error");
+  });
+
   it("should be show error when status 400", () => {
     const err = {
       status: 400,
