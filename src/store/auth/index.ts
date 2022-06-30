@@ -66,7 +66,7 @@ export class Authentication {
         value
       );
 
-      this.loginAction(value, navigate);
+      await this.loginAction(value, navigate);
     } catch (error) {
       runInAction(() => {
         this.error = error;
@@ -77,6 +77,7 @@ export class Authentication {
 
   getDataUserAction = async (id: string) => {
     this.loading = true;
+
     try {
       const { data } = await GET(`${USERS}/${id}`);
 
