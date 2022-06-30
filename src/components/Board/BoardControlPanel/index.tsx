@@ -16,7 +16,7 @@ export const BoardControlPanel = observer(() => {
   const { showModalAction } = useContext(StoreContext).modal;
 
   return (
-    <Grid container>
+    <Grid container data-testid="BoardControlPanel">
       <Grid>
         <Box pb={1} pt={3}>
           <Btn
