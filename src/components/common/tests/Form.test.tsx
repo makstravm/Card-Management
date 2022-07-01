@@ -117,21 +117,9 @@ describe("component Form, registration page", () => {
 
   it("should to submit form when value is valid", async () => {
     await userEvent.type(screen.getByTestId("input-name"), "Bob");
-
-    expect(screen.getByTestId("input-name")).toHaveValue("Bob");
-
     await userEvent.type(screen.getByTestId("input-lastName"), "Bob Test");
-
-    expect(screen.getByTestId("input-lastName")).toHaveValue("Bob Test");
-
     await userEvent.type(screen.getByTestId("input-email"), "bob@b.b");
-
-    expect(screen.getByTestId("input-email")).toHaveValue("bob@b.b");
-
     await userEvent.type(screen.getByTestId("input-password"), "bob123456");
-
-    expect(screen.getByTestId("input-password")).toHaveValue("bob123456");
-
     await userEvent.type(
       screen.getByTestId("input-confirmPassword"),
       "bob123456"
