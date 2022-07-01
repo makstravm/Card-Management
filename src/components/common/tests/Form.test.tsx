@@ -124,11 +124,6 @@ describe("component Form, registration page", () => {
       screen.getByTestId("input-confirmPassword"),
       "bob123456"
     );
-
-    expect(screen.getByTestId("input-confirmPassword")).toHaveValue(
-      "bob123456"
-    );
-
     await userEvent.click(screen.getByRole("button", { name: /sign up/i }));
 
     await waitFor(() => {
