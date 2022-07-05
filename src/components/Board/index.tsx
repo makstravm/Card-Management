@@ -6,7 +6,7 @@ import { BoardControlPanel } from "./BoardControlPanel";
 import { BoardRenderCard } from "./BoardRenderCard";
 
 export const Board = () => (
-  <Container maxWidth="lg">
+  <Container maxWidth="lg" data-testid="board-container">
     <BoardControlPanel />
     <BoardRenderCard />
   </Container>
