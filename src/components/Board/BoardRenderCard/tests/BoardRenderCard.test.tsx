@@ -74,9 +74,6 @@ jest.mock("axios", () => ({
       },
     },
     get: jest.fn(),
-    delete: jest.fn(),
-    put: jest.fn(),
-    post: jest.fn(),
   })),
 }));
 
