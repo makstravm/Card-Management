@@ -32,22 +32,35 @@ export const SelectOptions = ({
                 onChange={handleChange}
                 error={!!errors?.options?.[i]?.value}
                 helperText={errors?.options?.[i]?.value}
+                inputProps={{ "data-testid": `input-option-${i}` }}
               />
             </Grid>
             <Grid item>
-              <IconButton onClick={() => move(i, i - 1)} size="small">
+              <IconButton
+                onClick={() => move(i, i - 1)}
+                size="small"
+                data-testid={`move-up-${i}`}
+              >
                 <ArrowCircleUpIcon />
               </IconButton>
             </Grid>
             <Grid item>
-              <IconButton onClick={() => move(i, i + 1)} size="small">
+              <IconButton
+                onClick={() => move(i, i + 1)}
+                size="small"
+                data-testid={`move-down-${i}`}
+              >
                 <ArrowCircleDownIcon />
               </IconButton>
             </Grid>
 
             {values.options.length > 2 && (
               <Grid item>
-                <IconButton onClick={() => remove(i)} size="small">
+                <IconButton
+                  onClick={() => remove(i)}
+                  size="small"
+                  data-testid={`btn-delete-${i}`}
+                >
                   <DeleteForeverIcon />
                 </IconButton>
               </Grid>
