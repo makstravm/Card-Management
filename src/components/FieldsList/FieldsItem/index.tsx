@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { observer } from "mobx-react-lite";
 
 import {
   Divider,
@@ -26,7 +27,7 @@ import "./style.scss";
 
 const { SELECT } = TypesFields;
 
-export const FieldsItem = ({ field, index }: FieldItemPropsType) => {
+export const FieldsItem = observer(({ field, index }: FieldItemPropsType) => {
   const { id, name, type, required, options } = field;
 
   const {
@@ -66,7 +67,10 @@ export const FieldsItem = ({ field, index }: FieldItemPropsType) => {
           <Typography>{name}</Typography>
           {required && <Typography color="red">*</Typography>}
           {type === SELECT && (
-            <IconButton onClick={() => setShowOPtions(!showOptions)}>
+            <IconButton
+              onClick={() => setShowOPtions(!showOptions)}
+              data-testid="showOptionsBtn"
+            >
               <KeyboardArrowDownIcon />
             </IconButton>
           )}
@@ -78,11 +82,15 @@ export const FieldsItem = ({ field, index }: FieldItemPropsType) => {
           <IconButton
             onClick={onEditField}
             sx={{ marginRight: renderBtnDelete ? "36px" : "0" }}
+            data-testid="editBtn"
           >
             <ModeEditIcon fontSize="small" />
           </IconButton>
           {!renderBtnDelete && (
-            <IconButton onClick={() => setOpenConfirmDialog(true)}>
+            <IconButton
+              data-testid="deleteBtn"
+              onClick={() => setOpenConfirmDialog(true)}
+            >
               <DeleteOutlineIcon fontSize="small" />
             </IconButton>
           )}
@@ -109,4 +117,4 @@ export const FieldsItem = ({ field, index }: FieldItemPropsType) => {
       />
     </Paper>
   );
-};
+});
