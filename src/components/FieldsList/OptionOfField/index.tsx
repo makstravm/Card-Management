@@ -41,7 +41,10 @@ export const OptionOfField = ({
     >
       <Typography variant="subtitle2">{value}</Typography>
       {field.options.length > 2 && (
-        <IconButton onClick={() => setOpenConfirmDialog(true)}>
+        <IconButton
+          onClick={() => setOpenConfirmDialog(true)}
+          data-testid="deleteBtn"
+        >
           <DeleteOutlineIcon fontSize="small" />
         </IconButton>
       )}
