@@ -8,6 +8,7 @@ export const CheckBox = ({
   handleChange,
 }: CheckBoxPropsType) => (
   <FormControlLabel
+    data-testid="checkbox"
     labelPlacement="start"
     sx={{ padding: "0", margin: "0" }}
     label={name}
