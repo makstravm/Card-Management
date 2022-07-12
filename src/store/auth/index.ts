@@ -77,7 +77,6 @@ export class Authentication {
 
   getDataUserAction = async (id: string) => {
     this.loading = true;
-
     try {
       const { data } = await GET(`${USERS}/${id}`);
 
