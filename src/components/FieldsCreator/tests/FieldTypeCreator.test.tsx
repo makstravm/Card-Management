@@ -42,7 +42,7 @@ describe("FieldTypeCreator", () => {
     render(<FieldTypeCreator />);
   });
 
-  it("should be rendered", async () => {
+  it("should be changed select value", async () => {
     await userEvent.click(screen.getByRole("button", { name: /text/i }));
     await userEvent.click(screen.getByRole("option", { name: /select/i }));
     expect(screen.getByRole("button", { name: /select/i })).toBeInTheDocument();
