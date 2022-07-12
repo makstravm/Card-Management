@@ -14,7 +14,7 @@ export const Preloader = observer(() => {
 
   if (isLoading) {
     return (
-      <Box className="preloader">
+      <Box className="preloader" data-testid="preloader">
         <CircularProgress className="preloader__spiner" />
       </Box>
     );

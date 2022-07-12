@@ -1,44 +1,10 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { FieldStateType } from "store/fields/types";
 import userEvent from "@testing-library/user-event";
 import { RootStore, StoreContext } from "store/index";
-import { axiosInstance } from "api/index";
 import { Board } from "components/Board";
 import { Header } from "..";
-
-const responseFieldList: { data: FieldStateType[] } = {
-  data: [
-    {
-      name: "Name",
-      type: "text",
-      required: true,
-      options: [],
-      id: 1,
-    },
-  ],
-};
-
-jest.mock("axios", () => ({
-  create: jest.fn(() => ({
-    interceptors: {
-      request: {
-        use: jest.fn(),
-        eject: jest.fn(),
-      },
-      response: {
-        use: jest.fn(),
-        eject: jest.fn(),
-      },
-    },
-    get: jest.fn(),
-    post: jest.fn(),
-    put: jest.fn(),
-  })),
-}));
-
-jest.spyOn(axiosInstance, "get").mockResolvedValue(responseFieldList);
 
 const root = new RootStore();
 
@@ -70,7 +36,7 @@ describe("Header", () => {
     expect(screen.queryByText(/bob/i)).toBeInTheDocument();
   });
 
-  it("should", async () => {
+  it("should be log out", async () => {
     await userEvent.click(screen.getByTestId("logout-btn"));
     expect(auth.user).toBeNull();
     expect(screen.queryByText(/bob/i)).not.toBeInTheDocument();
