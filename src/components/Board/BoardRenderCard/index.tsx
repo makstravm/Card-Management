@@ -47,10 +47,10 @@ export const BoardRenderCard = observer(() => {
 
   const renderTitle = (title: string | boolean) => {
     if (title === "true") {
-      return <CheckBoxIcon />;
+      return <CheckBoxIcon data-testid="groupcard-title__true" />;
     }
     if (title === "false") {
-      return <CheckBoxOutlineBlankIcon />;
+      return <CheckBoxOutlineBlankIcon data-testid="groupcard-title__false" />;
     }
 
     return title;

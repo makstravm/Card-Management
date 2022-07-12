@@ -40,8 +40,8 @@ export const CardActions = observer(({ card }: CardActionsPropsType) => {
   };
 
   return (
-    <Box>
-      <IconButton onClick={handleClick}>
+    <Box data-testid="card-actions--box">
+      <IconButton onClick={handleClick} data-testid="button-more">
         <MoreVertIcon fontSize="small" />
       </IconButton>
       <Popover
@@ -58,11 +58,11 @@ export const CardActions = observer(({ card }: CardActionsPropsType) => {
         }}
       >
         <ButtonGroup aria-label="small button group">
-          <IconButton onClick={onEditCard}>
+          <IconButton onClick={onEditCard} data-testid="button-edit">
             <EditIcon fontSize="small" />
           </IconButton>
           <Divider orientation="vertical" flexItem />
-          <IconButton onClick={onDeleteCard}>
+          <IconButton onClick={onDeleteCard} data-testid="button-delete">
             <DeleteForeverRoundedIcon fontSize="small" />
           </IconButton>
         </ButtonGroup>

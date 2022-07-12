@@ -53,6 +53,7 @@ export const renderFieldByType = (
           error={!!(touched[name] && errors[name])}
           helperText={touched[name] && errors[name]}
           onChange={handleChange}
+          inputProps={{ "data-testid": `input-${name}` }}
         />
       );
   }

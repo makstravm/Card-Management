@@ -26,7 +26,7 @@ export const SelectInput = ({
   }, []);
 
   return (
-    <FormControl fullWidth size="small">
+    <FormControl fullWidth size="small" data-testid="selectInput">
       <InputLabel id={`select-label-${name}`}>{name}</InputLabel>
       <Select
         fullWidth

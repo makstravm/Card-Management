@@ -26,7 +26,12 @@ export const Header = observer(() => {
   };
 
   return (
-    <AppBar className="Header" color="transparent" position="relative">
+    <AppBar
+      className="Header"
+      color="transparent"
+      position="relative"
+      data-testid="header"
+    >
       <Container>
         <Grid container justifyContent="space-between" alignItems="center" item>
           <Grid item>
@@ -42,7 +47,7 @@ export const Header = observer(() => {
                 <Typography variant="h6" pr={1} color="textSecondary">
                   {`Hi, ${auth?.user?.name}`}
                 </Typography>
-                <IconButton onClick={onLogOut}>
+                <IconButton onClick={onLogOut} data-testid="logout-btn">
                   <LogoutIcon fontSize="small" />
                 </IconButton>
               </Grid>

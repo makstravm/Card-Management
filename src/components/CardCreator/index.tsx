@@ -48,7 +48,7 @@ export const CardCreator = observer(({ card }: CardCreatorType) => {
           validationSchema={validateSchemaCard(fieldsList)}
         >
           {(formik) => (
-            <Form>
+            <Form data-testid="form-cardcreate">
               <Box className="card-create">
                 {fieldsList.map((field: FieldStateType) => (
                   <Box key={field.id} pt={1}>
